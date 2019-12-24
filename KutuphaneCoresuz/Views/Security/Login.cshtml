@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <style type="text/css">
+        .lbl {
+            text-align: center;
+            background-color:#452696
+            
+            
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+        @using (Html.BeginForm("Login", "Security", FormMethod.Post))
+        {
+            <table align="center">
+                <tr>
+                    <td class="lbl">
+                        Kullanici Adi:
+                    </td>
+                    <td>
+                        @Html.TextBox("kAdi")
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl">
+                        Şifre:
+                    </td>
+                    <td>
+                        @Html.Password("uye_sifre")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Log IN</button>
+                        <br>
+                        @Html.ActionLink("Kayıt için tıklayın", "IndexUye");
+
+                    </td>
+                </tr>
+                <tr>
+                    <button type="button" class="btn btn-default">Default</button>
+                </tr>
+
+            </table>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">Default</button>
+                <button type="button" class="btn btn-primary">Primary</button>
+                <button type="button" class="btn btn-success">Success</button>
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Option 1</a></li>
+                    <li><a href="#">Option 2</a></li>
+                </ul>
+            </div>
+
+
+        }
+    </div>
+</body>

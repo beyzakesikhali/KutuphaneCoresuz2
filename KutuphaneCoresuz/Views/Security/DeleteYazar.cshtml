@@ -1,0 +1,56 @@
+﻿@model KutuphaneCoresuz.Models.TableModels.Yazar
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Yazar</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.yazar_ismi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yazar_ismi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.yazar_sifre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yazar_sifre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.yazar_email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yazar_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kitap_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kitap_id)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
