@@ -1,69 +1,94 @@
-﻿@{
-    Layout = null;
+﻿@*<style type="text/css">
 
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Index</title>
-    <style type="text/css">
+        /*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" >*/
         .lbl {
             text-align: center;
-            background-color:#452696
-            
-            
+            background-color: #452696
         }
-    </style>
-</head>
-<body>
-    <div>
+    </style>*@
 
-        @using (Html.BeginForm("Login", "Security", FormMethod.Post))
-        {
-            <table align="center">
-                <tr>
-                    <td class="lbl">
-                        Kullanici Adi:
-                    </td>
-                    <td>
-                        @Html.TextBox("kAdi")
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lbl">
-                        Şifre:
-                    </td>
-                    <td>
-                        @Html.Password("uye_sifre")
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="submit">Log IN</button>
-                        <br>
-                        @Html.ActionLink("Kayıt için tıklayın", "IndexUye");
+<html>
+<head>
+    link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/cssLogin.css" rel="stylesheet" />
+</head>/>
 
-                    </td>
-                </tr>
-                <tr>
-                    <button type="button" class="btn btn-default">Default</button>
-                </tr>
-
-            </table>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default">Default</button>
-                <button type="button" class="btn btn-primary">Primary</button>
-                <button type="button" class="btn btn-success">Success</button>
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-8 login-box">
+            <div class="col-lg-12 login-key">
+                <i class="carousel-fade" aria-hidden="true"></i>
             </div>
+            <div class="col-lg-12 login-title">
+                GİRİŞ EKRANI
+            </div>
+            <div class="col-lg-12 login-form">
+                <div class="col-lg-12 login-form">
+                    @using (Html.BeginForm("Login", "Security", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            @Html.Label("Kullanıcı Adı", "adı", new { @class = "form-control-label" })
+
+                            @*<input type="text" class="form-control" />*@
+                            @Html.TextBox("kAdi", "", new { placeholder = "Kullanıcı Adınız:", @class = "form-control" })
+                            @{
+                               
+                            }
 
 
-        }
+                            @* @Html.ValidationMessage("kAdi")*@
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Şifre:", "sifre", new { @class = "form-control-label" })
+                            @* <input type="password" class="form-control" />*@
+                            @Html.Password("uye_sifre", "", new { placeholder = "Şifreniz:", @class = "form-control" })
+                            @* @Html.ValidationMessage("uye_sifre");*@
+                        </div>
+
+
+                        <div class="col-lg-6 login-btm login-text">
+                            <div class="alert alert-dark" role="alert" style="color:aliceblue">
+                                <!-- Error Message -->
+
+                                @ViewData["hata"];
+
+                            </div>
+
+                            <div class="col-lg-6 login-btm login-button">
+                                @Html.BeginForm("anasayfa", "Security", FormMethod.Post)
+                                {
+                                @Html.ActionLink("anasayfa", "Security")
+                                <button type="submit" class="btn btn-outline-light">GİRİŞ YAP</button>
+                                @*<h2>@TempData["HGmesaj"]</h2>*@
+                                }
+                            </div>
+
+                            <div class="col-lg-12">
+
+                                <br>
+                                @Html.ActionLink("Kayıt olmak için Tıklayınız!", "CreateUye", "Uye")
+                                @*<a href="~/Uye/CreateUye.cshtml" style="color:white">tıklayın</a>*@
+                            </div>
+
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-2">
+
+            </div>
+        </div>
     </div>
-</body>
+</div>
+</html>

@@ -1,6 +1,54 @@
-﻿
+﻿@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+<script src="~/Content/easing.js"></script>
+<link href="~/Content/css/animate.css" rel="stylesheet" />
+<link href="~/Content/css/animate.min.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/cssLogin.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<img src="~/Content/img/hero-bg.jpg" />
+<img src="~/Content/img/call-to-action-bg.jpg" />
+<script src="~/Content/bootstrap.bundle.min.js"></script>
+<script src="~/Content/bootstrap.min.js"></script>
+<script src="~/Content/counterup.min.js"></script>
+<script src="~/Content/easing.js"></script>
+<script src="~/Content/easing.min.js"></script>
+<script src="~/Content/hoverIntent.js"></script>
+<script src="~/Content/jquery-migrate.min.js"></script>
+<script src="~/Content/jquery.min.js"></script>
+<script src="~/Content/superfish.js"></script>
+<script src="~/Content/superfish.min.js"></script>
+<script src="~/Content/waypoints.min.js"></script>
 @{
     ViewBag.Title = "anasayfa";
 }
 
-<h2>anasayfa geldin tebrikler</h2>
+<html>
+<header id="header">
+    <div class="container">
+
+        <div id="logo" class="pull-left">
+            <a href="#hero"><img src="img/logo.png" alt="" title="" /></img></a>
+            <!-- Uncomment below if you prefer to use a text logo -->
+            <!--<h1><a href="#hero">Regna</a></h1>-->
+        </div>
+        </div>
+</header>
+<section id="hero">
+    <div class="hero-container">
+        <h1>Projeye Hoşgeldiniz</h1>
+        <h2>BEYZA KESİKHALI</h2>
+        @Html.ActionLink("HADİ BAŞLAYALIM", "Index", "Home", new { @class = "btn-get-started" })
+    </div>
+</section>
+
+</html>
+
+

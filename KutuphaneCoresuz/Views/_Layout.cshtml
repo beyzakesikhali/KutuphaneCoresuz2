@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Content/css/animate.css" rel="stylesheet" />
+    <link href="~/Content/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/cssLogin.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <img src="~/Content/img/call-to-action-bg.jpg" style="opacity:0.4" />
+
+ 
+    <script src="~/Content/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/bootstrap.min.js"></script>
+    <script src="~/Content/counterup.min.js"></script>
+    <script src="~/Content/easing.js"></script>
+    <script src="~/Content/easing.min.js"></script>
+    <script src="~/Content/hoverIntent.js"></script>
+    <script src="~/Content/jquery-migrate.min.js"></script>
+    <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/superfish.js"></script>
+    <script src="~/Content/superfish.min.js"></script>
+    <script src="~/Content/waypoints.min.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style=" background-color:#FFD180  ">
+    @RenderSection("Header", false)
+    <header id="header">
+        <div class="container">
+
+            <div id="logo" class="pull-left">
+                <!-- Uncomment below if you prefer to use a text logo -->
+                <!--<h1><a href="#hero">Regna</a></h1>-->
+            </div>
+
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    <li>@Html.ActionLink("Anasayfa", "anasayfa", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+
+                    <li>@Html.ActionLink("Giriş Sayfası", "Login", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li>@Html.ActionLink("Kaydol", "CreateUye", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li>@Html.ActionLink("İletişim", "", "", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li class="menu-has-children">
+                        @*@Html.ActionLink("Keşfet", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                    <li class="menu-has-children">
+                        @Html.ActionLink("Keşfet", "Contact", "Home")
+                        <ul>
+                            <li>@Html.ActionLink("Keşfet", "", "")</li>
+                            <li>@Html.ActionLink("İncelemeler", "", "")</li>
+                            <li>@Html.ActionLink("Alıntılar", "", "")</li>
+                            <li>@Html.ActionLink("Yazarlar", "DetailsYazar", "Security")</li>
+                            <li>@Html.ActionLink("Kitaplar", "DetailsKitap", "Security")</li>
+                        </ul>
+                    </li>
+                    @*<li><a href="#">Drop Down 3</a></li>
+                        <li><a href="#">Drop Down 4</a></li>
+                        <li><a href="#">Drop Down 5</a></li>*@
+                </ul>
+                </li>
+
+                </ul>
+            </nav><!-- #nav-menu-container -->
+        </div>
+    </header>
+
+    @RenderBody()
+    </body>
+    <!-- #heade
+
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Kitap Oku Deneme Projesi</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
+        -->

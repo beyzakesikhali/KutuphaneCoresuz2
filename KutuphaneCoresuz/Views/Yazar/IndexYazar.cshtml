@@ -1,0 +1,69 @@
+﻿@model IEnumerable<KutuphaneCoresuz.Models.TableModels.Yazar>
+
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h2>Create</h2>
+@section Header{
+
+    <div id="header">
+        <div class="container">
+
+            <div id="logo" class="pull-left">
+
+                <h2>Index</h2>
+
+                <p>
+                    @Html.ActionLink("Create New", "CreateYazar")
+                </p>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.yazar_ismi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.yazar_sifre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.yazar_email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.kitap_id)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.yazar_ismi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.yazar_sifre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.yazar_email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.kitap_id)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Düzenle", "EditYazar", new { id = item.yazarID }) |
+                                @Html.ActionLink("Detaylar", "DetailsYazar", new { id = item.yazarID }) |
+                                @Html.ActionLink("Sil", "DeleteYazar", new { id = item.yazarID })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+}

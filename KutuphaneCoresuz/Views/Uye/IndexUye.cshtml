@@ -1,0 +1,83 @@
+﻿@model IEnumerable<KutuphaneCoresuz.Models.TableModels.Uye>
+
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h2>Create</h2>
+@section Header{
+
+    <div id="header">
+        <div class="container">
+
+            <div id="logo" class="pull-left">
+                <h2>Index</h2>
+
+                <p>
+                    @Html.ActionLink("Create New", "CreateUye")
+                </p>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.isim)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.kAdi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.soyisim)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.uye_sifre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.uye_email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.aciklama)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.isim)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.kAdi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.soyisim)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.uye_sifre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.uye_email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.aciklama)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditUye", new { id = item.uyeID }) |
+                                @Html.ActionLink("Details", "DetailsUye", new { id = item.uyeID }) |
+                                @Html.ActionLink("Delete", "DeleteUye", new { id = item.uyeID })
+                            </td>
+                        </tr>
+                    }
+
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+}

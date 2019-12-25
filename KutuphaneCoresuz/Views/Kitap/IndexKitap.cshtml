@@ -1,0 +1,81 @@
+﻿@model IEnumerable<KutuphaneCoresuz.Models.TableModels.Kitap>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+<h2>Index</h2>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@{
+    ViewBag.Title = "Create";
+}
+@section Header{
+    <div id="header">
+        <div class="container">
+
+            <div id="logo" class="pull-left">
+                <p>
+                    @Html.ActionLink("Create New", "CreateKitap")
+                </p>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.k_isim)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.yazar_adi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.uye_id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.yazar_id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.yayinci)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.k_aciklama)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.k_isim)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.yazar_adi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.uye_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.yazar_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.yayinci)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.k_aciklama)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditKitap", new { id = item.kitapID }) |
+                                @Html.ActionLink("Details", "DetailsKitap", new { id = item.kitapID }) |
+                                @Html.ActionLink("Delete", "DeleteKitap", new { id = item.kitapID })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+}

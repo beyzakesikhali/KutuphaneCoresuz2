@@ -1,0 +1,87 @@
+﻿@model KutuphaneCoresuz.Models.TableModels.Kitap
+
+@{
+    ViewBag.Title = "Delete";
+}
+<script src="~/Content/table/JavaScriptTable.js"></script>
+<link href="~/Content/table/tableCss.css" rel="stylesheet" />
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@{
+    ViewBag.Title = "Create";
+}
+@section Header{
+    <div id="header">
+        <div class="container">
+
+            <div id="logo" class="pull-left">
+
+                <dl class="dl-horizontal">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.k_isim)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.k_isim)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.yazar_adi)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.yazar_adi)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.uye_id)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.uye_id)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.yazar_id)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.yazar_id)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.yayinci)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.yayinci)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.k_aciklama)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.k_aciklama)
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-default" /> |
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    }
+            </div>
+        </div>
+    </div>
+}
