@@ -44,6 +44,7 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult CreateUye()
         {
+
             return View();
         }
 
@@ -55,6 +56,7 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult CreateUye([Bind(Include = "uyeID,isim,kAdi,soyisim,uye_sifre,uye_email,aciklama")] Uye uye)
         {
+
             if (ModelState.IsValid)
             {
                 db.Uyeler.Add(uye);
@@ -64,6 +66,7 @@ namespace KutuphaneCoresuz.Controllers
 
             return View(uye);
         }
+        
 
         // GET: Uyes/Edit/5
         [AllowAnonymous]

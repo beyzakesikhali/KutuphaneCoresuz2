@@ -1,14 +1,8 @@
-﻿@model KutuphaneCoresuz.Models.TableModels.Kitap
-
-@{
-    ViewBag.Title = "Create";
-}
-
-
+﻿@model KutuphaneCoresuz.Models.TableModels.Kitap   
 @{
     Layout = "~/Views/_Layout.cshtml";
+    ViewBag.Title = "Create";
 }
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,22 +23,27 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.k_isim, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.TextBox("k_ismi", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.k_isim, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.yazar_adi, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextBox("yazar_adi", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.yazar_adi, "", new { @class = "text-danger" })
+                                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
+                                {
+                                    @Html.DropDownList("yazarlarlistesi")
+                                }
 
-                            </div>
+                                @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
+
+                            </div>'There is no ViewData item of type 'IEnumerable<SelectListItem>' that has the
+
                         </div>
-
+    
                         @*<div class="form-group">
                                 @Html.LabelFor(model => model.uye_id, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
@@ -62,18 +61,18 @@
                             </div>*@
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.yayinci, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Yayinci, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.TextBox("yayinci", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.yayinci, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.Yayinci, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.k_aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.TextBox("aciklama", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.k_aciklama, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -91,3 +90,10 @@
         @Html.ActionLink("Back to List", "Index")
     </div>
 }
+<script type="text/javascript">
+    $(function () {
+        $("#yazalarlistesi").change(function () {
+            $('#ListeForm').submit();
+        });
+    });
+</script>

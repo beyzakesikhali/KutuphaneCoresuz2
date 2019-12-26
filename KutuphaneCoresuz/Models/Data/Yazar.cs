@@ -12,18 +12,11 @@ namespace KutuphaneCoresuz.Models.TableModels
     {
         [Key]
         public int yazarID { get; set; }
-        public string yazar_ismi { get; set; }
-        public string yazar_sifre { get; set; }
-        public string yazar_email { get; set; }
+        public string Isim { get; set; }
+        public string Sifre { get; set; }
+        public string Email { get; set; }
+
         
-        public bool YazarAdKontrol(string kullaniciAd)
-
-        {
-
-            KutuphaneContext dbKontrol = new KutuphaneContext();
-
-            return dbKontrol.Uyeler.Where(u => u.kAdi == kullaniciAd).Count() > 0 ? true : false;
-
-        }
+        
     }
 }

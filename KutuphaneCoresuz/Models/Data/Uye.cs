@@ -13,30 +13,24 @@ namespace KutuphaneCoresuz.Models.TableModels
         [Key]
         public int uyeID { get; set; }
         public string isim { get; set; }
-        public string kAdi { get; set; }
-        public string soyisim { get; set; }
+        public string KullaniciAdi { get; set; }
+        public string Soyisim { get; set; }
 
-        public string uye_sifre { get; set; }
-        public string uye_email { get; set; }
-        public string aciklama { get; set; }
+        public string Sifre { get; set; }
+        public string Email { get; set; }
+        public string Aciklama { get; set; }
       
 
     }
     public class UyelerLogin
     {
        
-        public static bool KullaniciAdKontrol(string kullaniciAd)
-
-        { 
-            KutuphaneContext dbKontrol = new KutuphaneContext();
-            return dbKontrol.Uyeler.Where(u => u.kAdi == kullaniciAd).Count() > 0 ? true : false;
-
-        }
+       
         public static List<Uye> UyelerInit()
         {
             return new List<Uye>
                 {
-                new Uye { uyeID = 1, kAdi = "beyza", uye_sifre = "pas1" } };
+                new Uye { uyeID = 1, KullaniciAdi = "beyza", Sifre = "pas1" } };
         }
     }
 

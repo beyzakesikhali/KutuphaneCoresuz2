@@ -25,17 +25,15 @@
                 <table class="table">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.yazar_ismi)
+                            @Html.DisplayNameFor(model => model.Isim)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.yazar_sifre)
+                            @Html.DisplayNameFor(model => model.Sifre)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.yazar_email)
+                            @Html.DisplayNameFor(model => model.Email)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.kitap_id)
-                        </th>
+                      
                         <th></th>
                     </tr>
 
@@ -43,17 +41,15 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.yazar_ismi)
+                                @Html.DisplayFor(modelItem => item.Isim)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.yazar_sifre)
+                                @Html.DisplayFor(modelItem => item.Sifre)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.yazar_email)
+                                @Html.DisplayFor(modelItem => item.Email)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.kitap_id)
-                            </td>
+                           
                             <td>
                                 @Html.ActionLink("Düzenle", "EditYazar", new { id = item.yazarID }) |
                                 @Html.ActionLink("Detaylar", "DetailsYazar", new { id = item.yazarID }) |

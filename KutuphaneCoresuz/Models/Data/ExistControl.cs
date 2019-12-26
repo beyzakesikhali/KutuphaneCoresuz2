@@ -17,21 +17,21 @@ namespace KutuphaneCoresuz.Models
         public string yazarAdi { get; set; }
         public string kitapAdi { get; set; }
         private KutuphaneContext dbKontrol = new KutuphaneContext();
-        public bool YazarAdKontrol(string kullaniciAd)
+        public bool YazarAdKontrol(string yazarAdi)
         {
-            return dbKontrol.Uyeler.Where(u => u.kAdi == kullaniciAd).Count() > 0 ? true : false;
+            return dbKontrol.Uyeler.Where(u => u.KullaniciAdi == yazarAdi).Count() > 0 ? true : false;
 
         }
         public bool KullaniciAdKontrol(string kullaniciAd)
 
         {
-            return dbKontrol.Uyeler.Where(u => u.kAdi == kullaniciAd).Count() > 0 ? true : false;
+            return dbKontrol.Uyeler.Where(u => u.KullaniciAdi == kullaniciAd).Count() > 0 ? true : false;
 
         }
-        public bool KitapAdKontrol(string kullaniciAd)
+        public bool KitapAdKontrol(string kitapAdi)
         {
             KutuphaneContext dbKontrol = new KutuphaneContext();
-            return dbKontrol.Uyeler.Where(u => u.kAdi == kullaniciAd).Count() > 0 ? true : false;
+            return dbKontrol.Uyeler.Where(u => u.KullaniciAdi == kitapAdi).Count() > 0 ? true : false;
         }
 
     }

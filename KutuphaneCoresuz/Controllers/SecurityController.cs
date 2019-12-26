@@ -16,8 +16,6 @@ namespace KutuphaneCoresuz.Controllers
 {
     public class SecurityController : Controller
     {
-
-
         private void CreateCookie(string name, string value)
         {
             HttpCookie cookieVisitor = new HttpCookie(name, value);
@@ -47,48 +45,19 @@ namespace KutuphaneCoresuz.Controllers
         }
 
         private KutuphaneContext db = new KutuphaneContext();
+    
         [AllowAnonymous]
-        // GET: Login
-        [Authorize]
-        public ActionResult Index()
-        {
-            var model = new Uye();
-            return View();
-            //return RedirectToAction("anasayfa");
-        }
-        [AllowAnonymous]
-        [Authorize]
-        public ActionResult Menu()
+        public ActionResult Login(FormCollection nesneler)
         {
             return View();
         }
 
-        [AllowAnonymous]
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        
         [AllowAnonymous]
         [HttpPost]
 
         public ActionResult Login(Uye user, FormCollection nesneler)
         {
-            string actionName = this.ControllerContext.RouteData.Values["action"].ToString(); 
-            string KAdi = nesneler["kAdi"].ToString();
-            //böyle bir cookiemiz var mı diye soruyoruz
-            if (GetCookie(actionName) == null)
-            {
-                //yoksa yeni bir cookie oluştuyoruz
-                CreateCookie(actionName, KAdi);
-            }
-            else
-            {
-                //Ekranda görünmesini sitediğimiz mesajımız
-               // ViewBag.Message = "Hoşgeldiniz!"+KAdi;
-            }
-           
+            //string actionName = this.ControllerContext.RouteData.Values["action"].ToString(); 
 
             //if (ModelState.IsValid)
             //{
@@ -111,10 +80,10 @@ namespace KutuphaneCoresuz.Controllers
 
             //return View();
 
-            var u = UyelerLogin.UyelerInit().FirstOrDefault(x => x.kAdi == user.kAdi && x.uye_sifre == user.uye_sifre);
+            var u = UyelerLogin.UyelerInit().FirstOrDefault(x => x.KullaniciAdi == user.KullaniciAdi && x.Sifre == user.Sifre);
             if (u != null)
             {
-                FormsAuthentication.SetAuthCookie(u.kAdi, false);
+                FormsAuthentication.SetAuthCookie(u.KullaniciAdi, false);
                 //false -> beni hatırla kısmıyla alakalı
                 return RedirectToAction("UyeSayfasi");
             }
@@ -127,10 +96,9 @@ namespace KutuphaneCoresuz.Controllers
 
         }
         [AllowAnonymous]
-        [HttpGet]
+        //[HttpGet]
         public ActionResult anasayfa()
         {
-
             return View();
         }
         public ActionResult LogOut()
@@ -139,23 +107,19 @@ namespace KutuphaneCoresuz.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult UyeSayfasi()
+        public ActionResult UyeSayfasi(FormCollection nesneler)
         {
-            string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
-            //string KAdi = nesneler["kAdi"].ToString();
+            var KAdi = nesneler["kAdi"];
             //böyle bir cookiemiz var mı diye soruyoruz
-            if(GetCookie(actionName) != null)
+            if (GetCookie(KAdi) == null)
             {
                 //yoksa yeni bir cookie oluştuyoruz
-                ViewBag.Message = "Hoşgeldiniz!" + actionName;
+                CreateCookie("Kullanici", KAdi);
             }
-            
+            //Ekranda görünmesini sitediğimiz mesajımız
+            return View(ViewBag.Message = "Hoşgeldiniz!" + KAdi);
 
-
-
-            return View();
         }
-
 
         protected override void Dispose(bool disposing)
         {

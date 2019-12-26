@@ -10,7 +10,7 @@ namespace KutuphaneCoresuz.Models.Data
     public class YazarlarinKitaplari
     {
         [Key]
-        public int yazarKitapID { get; set; }
+        public int YazarKitapID { get; set; }
         public int YazarID { get; set; }
         public int KitapID { get; set; }
         public virtual ICollection<Yazar> Yazarlar { get; set; }

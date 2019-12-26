@@ -1,5 +1,6 @@
 ﻿using KutuphaneCoresuz.Models;
 using KutuphaneCoresuz.Models.Context;
+using KutuphaneCoresuz.Models.Data;
 using KutuphaneCoresuz.Models.TableModels;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,9 @@ namespace KutuphaneCoresuz.Controllers
 {
     public class KitapController : Controller
     {
-        private KutuphaneContext db = new KutuphaneContext();
+        KutuphaneContext db = new KutuphaneContext();
         private ExistControl control = new ExistControl();
-            // GET: Kitap
+        // GET: Kitap
         public ActionResult Index()
         {
             return View();
@@ -47,7 +48,27 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult CreateKitap()
         {
+            Yazar yazarlar = new Yazar();
+            // List<string> yazarlistesi = new List<string>();
+            List<SelectListItem> yazarlistesi = (from k in db.Yazarlar
+                                                 select new SelectListItem
+                                                 {
+                                                     Text = k.Isim
+
+                                                 }
+                ).ToList();
+            //ViewBag.yazarlarlistesi = new SelectList(yazarlistesi, "Isim");
+            ViewBag.yazarlarlistesi = yazarlistesi;
             return View();
+
+            ;
+            //var yazarlar = db.Yazarlar.Select(q => q.Isim).OrderBy(q => q);
+            
+            //foreach (var item in yazarlar)
+            //{
+            //    yazarlistesi.Add(item);
+            //}
+           
         }
 
         // POST: Kitaps/Create
@@ -56,39 +77,40 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult CreateKitap([Bind(Include = "kitapID,k_isim,yazar_adi,yayinci,k_aciklama")]Kitap kitap, Uye uye, Yazar yazar,int yazarID, int uyeID, FormCollection nesneler)
+        public ActionResult CreateKitap([Bind(Include = "kitapID,Isim,Yayinci,Aciklama")]Kitap kitap, Uye uye, Yazar yazar, int yazarID, int uyeID, FormCollection nesneler)
         {
-            string KAdi = nesneler["k_ismi"].ToString();
-            string yazarAdi = nesneler["yazar_adi"].ToString();
-            //var yazarSonuc = db.Yazarlar.Where(i => i.yazar_ismi == yazarAdi);
-            var result1=from b in db.Yazarlar
-                        select new
-                        {
-                            b.yazarID,
-                            b.kitap_id,
-                            checked=((from ab in db.))
-                        }
-            if(KAdi !=null && yazarAdi!=null)
+
+            var seciliYazar = nesneler["yazalarlistesi"];
+            if (seciliYazar != null)
             {
-                if (yazarSonuc == null)
+                var mevcutKitap = db.Kitaplar.Where(k => k.Isim == kitap.Isim);
+                if (mevcutKitap == null)
                 {
-                    Kitap kitapYeni = new Kitap();
-                    kitapYeni.k_isim = KAdi;
+                    if (ModelState.IsValid)
+                    {
+                        db.Kitaplar.Add(kitap);
+                        db.SaveChanges();
+                        var yazarIdResult = db.Yazarlar.Where(r => r.Isim == seciliYazar).Select(r => r.yazarID);
+                        //yazar yazarlar tablosunda varsa id sini çek 
+                        if (yazarIdResult == null)
+                        {
+                            //id boş değilse yani yazar yazarlar tablosunda yoksa,
+                            //hem yazarlarikitaplarina hem yazar tablosuna eklencek.
 
-                    
 
-                    db.Kitaplar.Add(kitap);
-                    Yazar yeniYazar = new Yazar();
-                    yeniYazar.yazar_ismi = yazarAdi;
-                   db.Yazarlar.Add(y=>y.yazar_ismi=yazarAdi);
-               }
-            }
-           
-                
-            if (ModelState.IsValid)
-            {
-                db.Kitaplar.Add(kitap);
-                db.SaveChanges();
+                            YazarlarinKitaplari YeniYazar = new YazarlarinKitaplari();
+                            YeniYazar.YazarID = Convert.ToInt32(yazarIdResult);
+                            YeniYazar.KitapID = kitap.kitapID;
+                            db.YazarlarinKitaplariDb.Add(YeniYazar);
+
+                            Yazar YeniYazarT = new Yazar();
+                            YeniYazarT.yazarID = Convert.ToInt32(yazarIdResult);
+                            db.Yazarlar.Add(YeniYazarT);
+                        }
+                    }
+
+
+                }
                 return RedirectToAction("IndexKitap");
             }
 

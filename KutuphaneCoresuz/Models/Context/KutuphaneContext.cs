@@ -8,6 +8,7 @@ using KutuphaneCoresuz.Models.TableModels;
 //using DbContext = System.Data.Entity.DbContext;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using KutuphaneCoresuz.Models.Data;
 
 namespace KutuphaneCoresuz.Models.Context
 {
@@ -24,6 +25,8 @@ namespace KutuphaneCoresuz.Models.Context
         public DbSet<Uye> Uyeler { get; set; }
         public DbSet<Yazar> Yazarlar { get; set; }
         public DbSet<Kitap> Kitaplar { get; set; }
+        public DbSet<YazarlarinKitaplari> YazarlarinKitaplariDb { get; set; }
+        public DbSet<UyelerinKitaplari> UyelerinKitaplariDb { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<KutuphaneContext>(new DropCreateDatabaseAlways<KutuphaneContext>());

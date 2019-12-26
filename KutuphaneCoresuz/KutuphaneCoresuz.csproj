@@ -543,6 +543,7 @@
     <Compile Include="Models\Context\KutuphaneContext.cs" />
     <Compile Include="Models\Context\KutuphaneVTInitializer.cs" />
     <Compile Include="Models\Data\Kitap.cs" />
+    <Compile Include="Models\Data\SelectedList.cs" />
     <Compile Include="Models\Data\Uye.cs" />
     <Compile Include="Models\Data\UyelerinKitaplari.cs" />
     <Compile Include="Models\Data\Yazar.cs" />
