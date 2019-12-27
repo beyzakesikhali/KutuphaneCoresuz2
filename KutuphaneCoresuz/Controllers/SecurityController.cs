@@ -1,14 +1,11 @@
 ﻿using KutuphaneCoresuz.Models.Context;
 using KutuphaneCoresuz.Models.TableModels;
-
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-
 using System.Web;
 using System.Web.Mvc;
-
 using System.Web.Security;
 
 
@@ -16,6 +13,7 @@ namespace KutuphaneCoresuz.Controllers
 {
     public class SecurityController : Controller
     {
+        
         private void CreateCookie(string name, string value)
         {
             HttpCookie cookieVisitor = new HttpCookie(name, value);
@@ -45,10 +43,16 @@ namespace KutuphaneCoresuz.Controllers
         }
 
         private KutuphaneContext db = new KutuphaneContext();
-    
+
+        public object Application { get; private set; }
+
         [AllowAnonymous]
+       
         public ActionResult Login(FormCollection nesneler)
         {
+            //string kim="";
+            //Session["Kimlik"] = kim.ToString();
+            //ViewBag.kimlik = Application["ToplamZiyaretci"].ToString();
             return View();
         }
 
@@ -83,9 +87,12 @@ namespace KutuphaneCoresuz.Controllers
             var u = UyelerLogin.UyelerInit().FirstOrDefault(x => x.KullaniciAdi == user.KullaniciAdi && x.Sifre == user.Sifre);
             if (u != null)
             {
+                Session.Add("KullaniciAdi",u.isim.ToString());
+
+                        
                 FormsAuthentication.SetAuthCookie(u.KullaniciAdi, false);
                 //false -> beni hatırla kısmıyla alakalı
-                return RedirectToAction("UyeSayfasi");
+                return RedirectToAction("UyeAnasayfasi","Security");
             }
             else
             {
@@ -97,28 +104,16 @@ namespace KutuphaneCoresuz.Controllers
         }
         [AllowAnonymous]
         //[HttpGet]
-        public ActionResult anasayfa()
+        public ActionResult UyeAnasayfasi()
         {
+            Session["KullaniciAdi"]=ViewBag.KullaniciAdi;
+            
             return View();
         }
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
-        }
-
-        public ActionResult UyeSayfasi(FormCollection nesneler)
-        {
-            var KAdi = nesneler["kAdi"];
-            //böyle bir cookiemiz var mı diye soruyoruz
-            if (GetCookie(KAdi) == null)
-            {
-                //yoksa yeni bir cookie oluştuyoruz
-                CreateCookie("Kullanici", KAdi);
-            }
-            //Ekranda görünmesini sitediğimiz mesajımız
-            return View(ViewBag.Message = "Hoşgeldiniz!" + KAdi);
-
         }
 
         protected override void Dispose(bool disposing)

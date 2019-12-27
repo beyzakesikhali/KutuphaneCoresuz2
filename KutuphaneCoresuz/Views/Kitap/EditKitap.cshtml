@@ -1,9 +1,7 @@
-﻿@model KutuphaneCoresuz.Models.TableModels.Kitap
+﻿@model KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
 
 @{
     ViewBag.Title = "Edit";
-}
-@{
     Layout = "~/Views/_Layout.cshtml";
 }
 
@@ -30,34 +28,26 @@
                         @Html.HiddenFor(model => model.kitapID)
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.k_isim, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.k_isim, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.k_isim, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Isim, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.yazar_adi, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.YazarAdi, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.yazar_adi, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.yazar_adi, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.YazarAdi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.YazarAdi, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.uye_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.YazarSoyadi, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.uye_id, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.uye_id, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.yazar_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.yazar_id, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.yazar_id, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.YazarSoyadi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.YazarSoyadi, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -70,10 +60,10 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.k_aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.k_aciklama, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.k_aciklama, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -85,9 +75,11 @@
                     </div>
                 }
 
-                <div>
-                    @Html.ActionLink("Back to List", "Index")
-                </div>
+                <form>
+                    @Html.EditorForModel()
+                    <br />
+                    <button type="button" onclick="location.href='@Url.Action("Login","Security")'" class="btn-dark btn-outline-light" style="width:100px; height:50px; position:page; " name="giris">Giriş Yap</button>
+                </form>
             </div>
         </div>
     </div>

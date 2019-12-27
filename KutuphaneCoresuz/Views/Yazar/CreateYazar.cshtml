@@ -1,66 +1,69 @@
 ﻿@model KutuphaneCoresuz.Models.TableModels.Yazar
 
+
+    <img src="~/Content/img/hero-bg.jpg" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 @{
-    ViewBag.Title = "Create";
-}
-@{
+    ViewBag.Title = "Create"; 
     Layout = "~/Views/_Layout.cshtml";
 }
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h2>Create</h2>
-@section Header{
 
-    <div id="header">
-        <div class="container">
+    @section Header{
 
-            <div id="logo" class="pull-left">
-                <h2>Create</h2>
 
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
 
-                    <div class="form-horizontal">
-                        <h4>Yazar</h4>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Isim, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
+        @using (Html.BeginForm())
+        {<div id="header">
+                <div class="container">
+
+                    <div id="logo" class="pull-left">
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <h4>Yazar Ekle</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Isim, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Sifre, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Sifre, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Soyisim, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Soyisim, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Soyisim, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Yorum, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Yorum, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Yorum, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                                               
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-default" />
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-warning" />
+                                    <form action="IndexYazar">
+                                        <button class="btn btns-warning " type="button">Listeyi Gör</button>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                }
-
-                <div>
-                    @Html.ActionLink("Back to List", "Index")
                 </div>
             </div>
-        </div>
-    </div>}
+        }
+
+    }

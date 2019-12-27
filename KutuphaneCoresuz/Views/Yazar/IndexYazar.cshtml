@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<KutuphaneCoresuz.Models.TableModels.Yazar>
 
 @{
-    ViewBag.Title = "Index";
-}
-@{
+    ViewBag.Title = "Index"; 
     Layout = "~/Views/_Layout.cshtml";
 }
+
+   
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h2>Create</h2>
 @section Header{
 
     <div id="header">
@@ -17,7 +17,7 @@
 
             <div id="logo" class="pull-left">
 
-                <h2>Index</h2>
+                <h2>Yazarlar</h2>
 
                 <p>
                     @Html.ActionLink("Create New", "CreateYazar")
@@ -28,10 +28,10 @@
                             @Html.DisplayNameFor(model => model.Isim)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Sifre)
+                            @Html.DisplayNameFor(model => model.Soyisim)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Email)
+                            @Html.DisplayNameFor(model => model.Yorum)
                         </th>
                       
                         <th></th>
@@ -44,10 +44,10 @@
                                 @Html.DisplayFor(modelItem => item.Isim)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Sifre)
-                            </td>
+                                @Html.DisplayFor(modelItem => item.Soyisim)
+                            </td>   
                             <td>
-                                @Html.DisplayFor(modelItem => item.Email)
+                                @Html.DisplayFor(modelItem => item.Yorum)
                             </td>
                            
                             <td>

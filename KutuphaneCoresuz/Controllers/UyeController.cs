@@ -54,7 +54,7 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult CreateUye([Bind(Include = "uyeID,isim,kAdi,soyisim,uye_sifre,uye_email,aciklama")] Uye uye)
+        public ActionResult CreateUye([Bind(Include = "uyeID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
         {
 
             if (ModelState.IsValid)
@@ -90,7 +90,7 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult EditUye([Bind(Include = "uyeID,isim,kAdi,soyisim,uye_sifre,uye_email,aciklama")] Uye uye)
+        public ActionResult EditUye([Bind(Include = "uyeID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
         {
             if (ModelState.IsValid)
             {

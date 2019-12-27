@@ -13,10 +13,8 @@ namespace KutuphaneCoresuz.Models.TableModels
         [Key]
         public int yazarID { get; set; }
         public string Isim { get; set; }
-        public string Sifre { get; set; }
-        public string Email { get; set; }
-
-        
-        
+        public string Soyisim { get; set; }
+        public string Yorum { get; set; }
+  
     }
 }

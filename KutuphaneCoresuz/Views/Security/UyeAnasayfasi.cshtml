@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewBag.Title = "anasayfa";
+
+}
+@section Header{<header id="header">
+        <div class="container">
+
+            <div id="logo" class="pull-left">
+            </div>
+        </div>
+    </header>
+    <section id="hero">
+        <div class="hero-container">
+            <h1>Projeye Hoşgeldiniz</h1>@ViewBag.KullaniciAdi
+
+            @Html.ActionLink("HADİ BAŞLAYALIM", "Login", "Security", new { @class = "btn-get-started" })
+        </div>
+    </section>
+}
+
+
+
+

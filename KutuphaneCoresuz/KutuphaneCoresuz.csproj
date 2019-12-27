@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props" Condition="Exists('..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props')" />
   <Import Project="..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props" Condition="Exists('..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props')" />
@@ -271,6 +272,9 @@
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
@@ -540,6 +544,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelforDB\KitapUyeAddModel.cs" />
+    <Compile Include="Models\ModelforDB\KitapYazarAddModel.cs" />
     <Compile Include="Models\Context\KutuphaneContext.cs" />
     <Compile Include="Models\Context\KutuphaneVTInitializer.cs" />
     <Compile Include="Models\Data\Kitap.cs" />
@@ -573,6 +579,27 @@
     <Content Include="Content\img\menu.png" />
     <Content Include="Content\jquery-migrate.min.js" />
     <Content Include="Content\jquery.min.js" />
+    <Content Include="Content\Regna\css\scss-files.txt" />
+    <Content Include="Content\Regna\css\style.css" />
+    <Content Include="Content\Regna\img\hero-bg.jpg" />
+    <Content Include="Content\Regna\img\logo.png" />
+    <Content Include="Content\Regna\index.html" />
+    <Content Include="Content\Regna\js\main.js" />
+    <Content Include="Content\Regna\lib\animate\animate.css" />
+    <Content Include="Content\Regna\lib\animate\animate.min.css" />
+    <Content Include="Content\Regna\lib\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Regna\lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Regna\lib\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\Regna\lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Regna\lib\counterup\counterup.min.js" />
+    <Content Include="Content\Regna\lib\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\Regna\lib\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\Regna\lib\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Regna\lib\jquery\jquery-migrate.min.js" />
+    <Content Include="Content\Regna\lib\jquery\jquery.min.js" />
+    <Content Include="Content\Regna\lib\wow\wow.js" />
+    <Content Include="Content\Regna\lib\wow\wow.min.js" />
+    <Content Include="Content\Regna\Readme.txt" />
     <Content Include="Content\superfish.js" />
     <Content Include="Content\superfish.min.js" />
     <Content Include="Content\table\JavaScriptTable.js" />
@@ -604,6 +631,11 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\Regna\lib\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Regna\lib\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Regna\lib\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Regna\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Regna\lib\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -714,7 +746,7 @@
     <Content Include="Views\Yazar\IndexYazar.cshtml" />
     <Content Include="Views\Security\Login.cshtml" />
     <Content Include="Views\Security\LogOut.cshtml" />
-    <Content Include="Views\Security\anasayfa.cshtml" />
+    <Content Include="Views\Security\UyeAnasayfasi.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -725,7 +757,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Security\UyeSayfasi.cshtml" />
+    <Content Include="Views\Security\UyeKitaplarSayfasi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -782,6 +814,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.DiaSymReader.Native.1.7.0\build\Microsoft.DiaSymReader.Native.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.targets'))" />
+    <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
   <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />

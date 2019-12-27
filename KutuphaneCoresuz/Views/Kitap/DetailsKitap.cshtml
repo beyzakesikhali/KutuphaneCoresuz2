@@ -1,7 +1,8 @@
-﻿@model KutuphaneCoresuz.Models.TableModels.Kitap
+﻿@model KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/_Layout.cshtml";
 }
 @{
     Layout = "~/Views/_Layout.cshtml";
@@ -22,53 +23,30 @@
 
                 <dl class="dl-horizontal">
                     <dt>
-                        @Html.DisplayNameFor(model => model.k_isim)
+                        @Html.DisplayNameFor(model => model.Isim)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.k_isim)
+                        @Html.DisplayFor(model => model.Isim)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.yazar_adi)
+                        @Html.DisplayNameFor(model => model.Yayinci)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.yazar_adi)
+                        @Html.DisplayFor(model => model.Yayinci)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.uye_id)
+                        @Html.DisplayNameFor(model => model.Aciklama)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.uye_id)
+                        @Html.DisplayFor(model => model.Aciklama)
                     </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.yazar_id)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.yazar_id)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.yayinci)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.yayinci)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.k_aciklama)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.k_aciklama)
-                    </dd>
-
+                   
                 </dl>
             </div>
             <p>

@@ -1,19 +1,19 @@
-﻿@model KutuphaneCoresuz.Models.TableModels.Kitap   
+﻿@model KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
 @{
     Layout = "~/Views/_Layout.cshtml";
     ViewBag.Title = "Create";
+
 }
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h2>Create</h2>
 @section Header{
 
     <div id="header">
         <div class="container">
 
             <div id="logo" class="pull-left">
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("CreateKitap", "Kitap", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @*   bu satır küçük çaplı sadırılara karşı koruma sağlar *@
@@ -23,77 +23,71 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(m => m.KitapAdi, "Kitabın ismi", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextBox("k_ismi", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
+                                @Html.TextBox("k_ismi", "", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.KitapAdi, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(m => m.YazarAdi, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
                                 {
-                                    @Html.DropDownList("yazarlarlistesi")
+                                    @Html.DropDownListFor(model => model.YazarAdi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
+                                    @ViewBag.YazarIdYok
+
                                 }
 
-                                @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
 
-                            </div>'There is no ViewData item of type 'IEnumerable<SelectListItem>' that has the
-
-                        </div>
-    
-                        @*<div class="form-group">
-                                @Html.LabelFor(model => model.uye_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.YazarSoyadi, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.uye_id, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.uye_id, "", new { @class = "text-danger" })
-                                </div>
-                            </div>*@
+                                    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
+                                    {
+                                        @Html.DropDownListFor(model => model.YazarSoyadi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
+                                        <div class="form-group">
+                                            
+                                        </div>
 
-                        @*<div class="form-group">
-                                @Html.LabelFor(model => model.yazar_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    }
+
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.yayinci, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.yazar_id, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.yazar_id, "", new { @class = "text-danger" })
+                                    @Html.TextBox("yayinci", "", new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.yayinci, "", new { @class = "text-danger" })
                                 </div>
-                            </div>*@
+                            </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Yayinci, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.TextBox("yayinci", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Yayinci, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBox("aciklama", "", new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" value="" class="btn btn-warning" name="dfdf" id="dfdf">hjkhjk</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.TextBox("aciklama", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-warning" />
-                            </div>
-                        </div>
+                      
                     </div>
+
+                    <div>
+                        @Html.ActionLink("Kitaplari Gör", "DetailsKitap","Kitap")
+                    </div>
+
                 }
-            </div>
-        </div>
-    </div>
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-}
-<script type="text/javascript">
-    $(function () {
-        $("#yazalarlistesi").change(function () {
-            $('#ListeForm').submit();
-        });
-    });
-</script>
+                </div></div></div>
+     }

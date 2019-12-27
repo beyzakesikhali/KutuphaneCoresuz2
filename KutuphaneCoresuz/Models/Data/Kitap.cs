@@ -15,7 +15,7 @@ namespace KutuphaneCoresuz.Models.TableModels
         [Display(Name = "Kitabın Adı:")]
         public string Isim { get; set; }
         [Display(Name = "Yayıncı:")]
-        public int Yayinci { get; set; }
+        public string Yayinci { get; set; }
         [Display(Name = "Açıklama:")]
         public string Aciklama { get; set; }
 

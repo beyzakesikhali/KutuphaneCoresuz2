@@ -1,38 +1,37 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+﻿
+    <head>
+        <img src="~/Content/img/hero-bg.jpg" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
 
-    <link href="~/Content/css/animate.css" rel="stylesheet" />
-    <link href="~/Content/css/animate.min.css" rel="stylesheet" />
-    <link href="~/Content/css/style.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/cssLogin.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
-    <img src="~/Content/img/call-to-action-bg.jpg" style="opacity:0.4" />
-    <script src="~/Content/bootstrap.bundle.min.js"></script>
-    <script src="~/Content/bootstrap.min.js"></script>
-    <script src="~/Content/counterup.min.js"></script>
-    <script src="~/Content/easing.js"></script>
-    <script src="~/Content/easing.min.js"></script>
-    <script src="~/Content/hoverIntent.js"></script>
-    <script src="~/Content/jquery-migrate.min.js"></script>
-    <script src="~/Content/jquery.min.js"></script>
-    <script src="~/Content/superfish.js"></script>
-    <script src="~/Content/superfish.min.js"></script>
-    <script src="~/Content/waypoints.min.js"></script>
+        <link href="~/Content/css/animate.css" rel="stylesheet" />
+        <link href="~/Content/css/animate.min.css" rel="stylesheet" />
+        <link href="~/Content/css/style.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/cssLogin.css" rel="stylesheet" />
+        <link href="~/Content/Site.css" rel="stylesheet" />
+        <script src="~/Content/bootstrap.bundle.min.js"></script>
+        <script src="~/Content/bootstrap.min.js"></script>
+        <script src="~/Content/counterup.min.js"></script>
+        <script src="~/Content/easing.js"></script>
+        <script src="~/Content/easing.min.js"></script>
+        <script src="~/Content/hoverIntent.js"></script>
+        <script src="~/Content/jquery-migrate.min.js"></script>
+        <script src="~/Content/jquery.min.js"></script>
+        <script src="~/Content/superfish.js"></script>
+        <script src="~/Content/superfish.min.js"></script>
+        <script src="~/Content/waypoints.min.js"></script>
 
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body style=" background-color:#FFD180">
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+<body style=" background-color:goldenrod">
     @RenderSection("Header", false)
     <header id="header">
         <div class="container">
@@ -54,9 +53,9 @@
                     <li class="menu-has-children">
                         @Html.ActionLink("Keşfet", "Contact", "Home")
                         <ul>
-                            <li>@Html.ActionLink("Keşfet", "", "")</li>
-                            <li>@Html.ActionLink("İncelemeler", "", "")</li>
-                            <li>@Html.ActionLink("Alıntılar", "", "")</li>
+                            <li>@Html.ActionLink("Yazar Ekle", "CreateYazar", "Yazar")</li>
+                            <li>@Html.ActionLink("Kitap Ekle", "CreateKitap", "Kitap")</li>
+                            <li>@Html.ActionLink("Dokümanlar", "", "")</li>
                             <li>@Html.ActionLink("Yazarlar", "DetailsYazar", "Security")</li>
                             <li>@Html.ActionLink("Kitaplar", "DetailsKitap", "Security")</li>
                         </ul>
@@ -72,17 +71,8 @@
 
     @RenderBody()
     </body>
-    <!-- #heade
-
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Kitap Oku Deneme Projesi</p>
-            </footer>
-        </div>
-
+  
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)
-    </body>
-    </html>
-        -->
+    
