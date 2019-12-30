@@ -1,4 +1,10 @@
-﻿<link href="~/Content/bootstrap.css" rel="stylesheet" />
+﻿@model KutuphaneCoresuz.Models.Data.Uye
+
+@{ 
+    Layout = null;
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
@@ -6,53 +12,48 @@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/Site.css" rel="stylesheet" />
 <link href="~/Content/cssLogin.css" rel="stylesheet" />
+
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-8 login-box">
             <div class="col-lg-12 login-key">
                 <i class="carousel-fade" aria-hidden="true"></i>
+                @*<p class="alert-danger">@ViewBag.Error</p>*@ 
             </div>
             <div class="col-lg-12 login-title">
                 GİRİŞ EKRANI
             </div>
             <div class="col-lg-12 login-form">
                 <div class="col-lg-12 login-form">
-                    @using (Html.BeginForm("UyeSayfasi", "Security", FormMethod.Post))
+                   
+                    @using (Html.BeginForm("Login", "Security", FormMethod.Post))
                     {
                         <div class="form-group">
                             @Html.Label("Kullanıcı Adı", "adı", new { @class = "form-control-label" })
 
-                            @*<input type="text" class="form-control" />*@
-                            @Html.TextBox("kAdi", "", new { placeholder = "Kullanıcı Adınız:", @class = "form-control" })
-                            @{
-
-                            }
-
-
-                            @* @Html.ValidationMessage("kAdi")*@
-
-                        </div>
-
-                        <div class="form-group">
-                            @Html.Label("Şifre:", "sifre", new { @class = "form-control-label" })
-                            @* <input type="password" class="form-control" />*@
-                            @Html.Password("uye_sifre", "", new { placeholder = "Şifreniz:", @class = "form-control" })
-                            @* @Html.ValidationMessage("uye_sifre");*@
+                            @Html.TextBoxFor(model=>model.KullaniciAdi, "", new { placeholder = "Kullanıcı Adınız:", @class = "form-control" })
+                        
                         </div>
 
                         <div>
+                            @Html.Label("Şifre:", "sifre", new { @class = "form-control-label" })
+                         
+                            @Html.PasswordFor(model=>model.Sifre,new {placeholder = "Şifreniz:", @class = "form-control" })
+                         
+                        </div>
+                                             
+                        <div>
                             <div class="col-lg-6 login-btm login-button">
-                                <form method="post">
-                                    @Html.EditorForModel()
+                           
                                     <br />
 
-                                    <button type="button" onclick="location.href='@Url.Action("UyeAnaSayfasi","Security")'" class="btn-dark btn-outline-light" name="kayit" style="width:100px; height:50px; position:page; ">Giriş Yap</button>
-                                </form>
-                                <form>
-                                    @Html.EditorForModel()
+                                    <button type="submit" class="btn-dark btn-outline-light" name="kayit" style="width:100px; height:50px; position:page; ">Giriş Yap</button>
+                               
+                                @*<form>*@
+                                   
                                     <br />
                                     <button type="button" onclick="location.href='@Url.Action("CreateUye","Uye")'" class="btn-dark btn-outline-light" style="width:100px; height:50px; position:page; " name="giris"> Kayıt Ol</button>
-                                </form>
+                                @*</form>*@
 
                             </div>
 

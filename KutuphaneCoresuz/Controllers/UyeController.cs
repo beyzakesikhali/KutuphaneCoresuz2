@@ -1,5 +1,5 @@
 ﻿using KutuphaneCoresuz.Models.Context;
-using KutuphaneCoresuz.Models.TableModels;
+using KutuphaneCoresuz.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -42,9 +42,8 @@ namespace KutuphaneCoresuz.Controllers
 
         // GET: Uyes/Create
         [AllowAnonymous]
-        public ActionResult CreateUye()
+              public ActionResult CreateUye()
         {
-
             return View();
         }
 
@@ -61,7 +60,7 @@ namespace KutuphaneCoresuz.Controllers
             {
                 db.Uyeler.Add(uye);
                 db.SaveChanges();
-                return RedirectToAction("IndexUye");
+                return RedirectToAction("Login","Security");
             }
 
             return View(uye);

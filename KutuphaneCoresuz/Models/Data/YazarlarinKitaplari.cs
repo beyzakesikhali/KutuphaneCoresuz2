@@ -1,4 +1,4 @@
-﻿using KutuphaneCoresuz.Models.TableModels;
+﻿using KutuphaneCoresuz.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

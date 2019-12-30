@@ -1,6 +1,6 @@
 ﻿using KutuphaneCoresuz.Models.Context;
-using KutuphaneCoresuz.Models.TableModels;
-using NUnit.Framework;
+using KutuphaneCoresuz.Models.Data;
+using KutuphaneCoresuz.Models.ModelforDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace KutuphaneCoresuz.Controllers
 {
     public class SecurityController : Controller
     {
-        
+
         private void CreateCookie(string name, string value)
         {
             HttpCookie cookieVisitor = new HttpCookie(name, value);
@@ -47,19 +47,21 @@ namespace KutuphaneCoresuz.Controllers
         public object Application { get; private set; }
 
         [AllowAnonymous]
-       
-        public ActionResult Login(FormCollection nesneler)
+
+        public ActionResult Login()
         {
-            //string kim="";
-            //Session["Kimlik"] = kim.ToString();
-            //ViewBag.kimlik = Application["ToplamZiyaretci"].ToString();
+            if (Session["AdminIsLogedIn"] != null)
+            {
+                return RedirectToAction("index", "AdminProfile");
+            }
+
             return View();
         }
 
         [AllowAnonymous]
         [HttpPost]
 
-        public ActionResult Login(Uye user, FormCollection nesneler)
+        public ActionResult Login([Bind(Include = "uyeID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
         {
             //string actionName = this.ControllerContext.RouteData.Values["action"].ToString(); 
 
@@ -68,7 +70,7 @@ namespace KutuphaneCoresuz.Controllers
             //    Uye uyekontrol = new Uye();
             //    var control = UyelerLogin.KullaniciAdKontrol(KAdi);
 
-            //    if (control==true)
+            //    if (control==true)x=
             //    {
 
             //        FormsAuthentication.SetAuthCookie(uyekontrol.kAdi, false);
@@ -83,16 +85,20 @@ namespace KutuphaneCoresuz.Controllers
             //} 
 
             //return View();
+            // var u = (from s in db.Uyeler where s.KullaniciAdi == uye.KullaniciAdi select s.KullaniciAdi);
+            //sor sor sor sor sor 
+            bool mevcut = db.Uyeler.Any(p => p.KullaniciAdi == uye.KullaniciAdi);
+                //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
 
-            var u = UyelerLogin.UyelerInit().FirstOrDefault(x => x.KullaniciAdi == user.KullaniciAdi && x.Sifre == user.Sifre);
-            if (u != null)
+            if (mevcut != false)
             {
-                Session.Add("KullaniciAdi",u.isim.ToString());
+                //Session.Add("KullaniciAdi",u.isim.ToString());
 
-                        
-                FormsAuthentication.SetAuthCookie(u.KullaniciAdi, false);
+                HttpContext.Session["kullaniciAdi"] = uye.KullaniciAdi;
+                return RedirectToAction("UyeAnaSayfasi", "Security");
+                FormsAuthentication.SetAuthCookie(uye.KullaniciAdi, false);
                 //false -> beni hatırla kısmıyla alakalı
-                return RedirectToAction("UyeAnasayfasi","Security");
+                return RedirectToAction("UyeAnasayfasi", "Security");
             }
             else
             {
@@ -103,27 +109,61 @@ namespace KutuphaneCoresuz.Controllers
 
         }
         [AllowAnonymous]
-        //[HttpGet]
         public ActionResult UyeAnasayfasi()
         {
-            Session["KullaniciAdi"]=ViewBag.KullaniciAdi;
-            
+            Session["kullanciAdi"] = ViewBag.KullaniciAdi;
+            Uye uye = new Uye();
+            UyelerinKitaplari uyeKitap = new UyelerinKitaplari();
+            //var uyeID = db.Uyeler.Where(x => x.KullaniciAdi == Session["kullaniciAdi"].ToString()).Select(x => x.uyeID);
+            //if(uyeID!=null)
+            //{
+            //    var uyeKitapIdResult = db.UyelerinKitaplariDb.Find();
+            //}
+            ////int UyeID = Convert.ToInt32(uyeID);
+            ////uye tablosundaki uye id getirildi 
+
+
+            //if(uyeKitapIdResult!=null)
+            //{
+            //    Kitap kitap = db.Kitaplar.Find(Convert.ToInt32(uyeKitapIdResult));
+            //    if (kitap == null)
+            //    {
+
+            //        return View(ViewBag( "Hiç Kitap Eklmemişsiniz!"));
+            //    }
+            //    return View(kitap);
+            //}
+
             return View();
         }
+
+        public ActionResult UyeKitaplarSayfasi()
+        {
+            UyelerinKitaplari uyeKitap = new UyelerinKitaplari();
+            Uye uye = new Uye();
+            Kitap kitap = new Kitap();
+
+            return View();
+        }
+        //
         public ActionResult LogOut()
         {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Login");
+            Session["AdminIsLogedIn"] = null;
+            return RedirectToAction("Login", "Account");
+
+            //FormsAuthentication.SignOut();
+            //return RedirectToAction("Login");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //    
+        //}
+
     }
-
 }

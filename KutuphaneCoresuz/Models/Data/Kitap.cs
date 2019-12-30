@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace KutuphaneCoresuz.Models.TableModels
+namespace KutuphaneCoresuz.Models.Data
 {
     public class Kitap
     {

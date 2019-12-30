@@ -1,17 +1,19 @@
-﻿@model  KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
+﻿@model IEnumerable<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/_Layout.cshtml";
+
 }
 
+@{
+    Layout = "~/Views/_Layout.cshtml";
+}
 <h2>Index</h2>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-@{
-    ViewBag.Title = "Create";
-}
+
 @section Header{
+
     <div id="header">
         <div class="container">
 
@@ -22,7 +24,7 @@
                 <table class="table">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Isim)
+                            @Html.DisplayNameFor(model => model.KitapAdi)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.YazarAdi)
@@ -31,12 +33,12 @@
                             @Html.DisplayNameFor(model => model.YazarSoyadi)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Yayinci)
+                            @Html.DisplayNameFor(model => model.yayinci)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Aciklama)
                         </th>
-                        
+
                         <th></th>
                     </tr>
 
@@ -44,25 +46,25 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Isim)
+                                @Html.DisplayFor(modelItem => item.KitapAdi)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.YazarAdi   )
+                                @Html.DisplayFor(modelItem => item.YazarAdi)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.YazarSoyadi  )
+                                @Html.DisplayFor(modelItem => item.YazarSoyadi)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Yayinci)
+                                @Html.DisplayFor(modelItem => item.yayinci)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Aciklama)
                             </td>
-                           
+
                             <td>
-                                @Html.ActionLink("Edit", "EditKitap", new { id = item.kitapID }) |
-                                @Html.ActionLink("Details", "DetailsKitap", new { id = item.kitapID }) |
-                                @Html.ActionLink("Delete", "DeleteKitap", new { id = item.kitapID })
+                                @*@Html.ActionLink("Edit", "EditKitap", new { id = item.kitapID }) |
+                                    @Html.ActionLink("Details", "DetailsKitap", new { id = item.kitapID }) |
+                                    @Html.ActionLink("Delete", "DeleteKitap", new { id = item.kitapID })*@
                             </td>
                         </tr>
                     }

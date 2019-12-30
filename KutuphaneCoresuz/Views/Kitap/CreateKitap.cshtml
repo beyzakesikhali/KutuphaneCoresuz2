@@ -41,18 +41,21 @@
                                 }
 
 
+
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.YazarSoyadi, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(m => m.YazarSoyadi, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
                                     {
-                                        @Html.DropDownListFor(model => model.YazarSoyadi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
+                                        @Html.DropDownListFor(m => m.YazarSoyadi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
                                         <div class="form-group">
-                                            
-                                        </div>
 
+                                        </div>
                                     }
+                                    @Html.ActionLink("Aradığınız Yazar Yoksa Tıklayın..", "CreateYazar", "Yazar")
+                                  
+
 
 
                                 </div>

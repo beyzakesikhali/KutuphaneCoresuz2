@@ -2,7 +2,7 @@
 using KutuphaneCoresuz.Models.Context;
 using KutuphaneCoresuz.Models.Data;
 using KutuphaneCoresuz.Models.ModelforDB;
-using KutuphaneCoresuz.Models.TableModels;
+
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -49,27 +49,27 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult CreateKitap()
         {
-            Yazar yazarlar = new Yazar();
-            // List<string> yazarlistesi = new List<string>();
-            List<SelectListItem> yazarIsimListesi = (from k in db.Yazarlar
-                                                     select new SelectListItem
-                                                     {
-                                                         Text = k.Isim
+            //Yazar yazarlar = new Yazar();
+            //// List<string> yazarlistesi = new List<string>();
+            //List<SelectListItem> yazarIsimListesi = (from k in db.Yazarlar
+            //                                         select new SelectListItem
+            //                                         {
+            //                                             Text = k.Isim
 
-                                                     }
-                ).ToList();
-            //ViewBag.yazarlarlistesi = new SelectList(yazarlistesi, "Isim");
-            ViewBag.yazarlarIsimlistesi = yazarIsimListesi;
+            //                                         }
+            //    ).ToList();
+            ////ViewBag.yazarlarlistesi = new SelectList(yazarlistesi, "Isim");
+            //ViewBag.yazarlarIsimlistesi = yazarIsimListesi;
 
-            List<SelectListItem> yazarSoyisimListesi = (from k in db.Yazarlar
-                                                        select new SelectListItem
-                                                        {
-                                                            Text = k.Soyisim
+            //List<SelectListItem> yazarSoyisimListesi = (from k in db.Yazarlar
+            //                                            select new SelectListItem
+            //                                            {
+            //                                                Text = k.Soyisim
 
-                                                        }
-               ).ToList();
-            //ViewBag.yazarlarlistesi = new SelectList(yazarlistesi, "Isim");
-            ViewBag.yazarlarSoyisimlistesi = yazarSoyisimListesi;
+            //                                            }
+            //   ).ToList();
+            ////ViewBag.yazarlarlistesi = new SelectList(yazarlistesi, "Isim");
+            //ViewBag.yazarlarSoyisimlistesi = yazarSoyisimListesi;
 
             return View();
 
@@ -87,6 +87,7 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         public ActionResult CreateKitap(KitapYazarAddModel model)
         {
+
             Kitap yeniKitap = new Kitap();
             Yazar yeniYazar = new Yazar();
             YazarlarinKitaplari yeniYazarKitap = new YazarlarinKitaplari();
@@ -118,6 +119,7 @@ namespace KutuphaneCoresuz.Controllers
                         db.SaveChanges();
                     }
                 }
+                
 
             }
             return View();

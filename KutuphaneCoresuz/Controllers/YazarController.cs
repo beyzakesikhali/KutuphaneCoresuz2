@@ -1,5 +1,5 @@
 ﻿using KutuphaneCoresuz.Models.Context;
-using KutuphaneCoresuz.Models.TableModels;
+using KutuphaneCoresuz.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

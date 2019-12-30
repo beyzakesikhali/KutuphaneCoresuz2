@@ -1,83 +1,85 @@
-﻿@model IEnumerable<KutuphaneCoresuz.Models.TableModels.Uye>
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.Data.Uye>
 
-@{
-    ViewBag.Title = "Index";
-}
-@{
-    Layout = "~/Views/_Layout.cshtml";
-}
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h2>Create</h2>
-@section Header{
 
-    <div id="header">
-        <div class="container">
+    @{
+        Layout = "~/Views/_Layout.cshtml";
+    }
 
-            <div id="logo" class="pull-left">
-                <h2>Index</h2>
 
-                <p>
-                    @Html.ActionLink("Create New", "CreateUye")
-                </p>
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.isim)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.KullaniciAdi)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Soyisim)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Sifre)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Email)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Aciklama)
-                        </th>
-                        <th></th>
-                    </tr>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/table/tableCss.css" rel="stylesheet" />
+    <h2>Create</h2>
+    @section Header{
 
-                    @foreach (var item in Model)
-                    {
+        <div id="header">
+            <div class="container">
+
+                <div id="logo" class="pull-left">
+                    <h2>Index</h2>
+
+                    <p>
+                        @Html.ActionLink("Create New", "CreateUye")
+                    </p>
+                    <table id="keywords" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.isim)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.KullaniciAdi)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Soyisim)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Sifre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Aciklama)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "EditUye", new { id = item.uyeID }) |
-                                @Html.ActionLink("Details", "DetailsUye", new { id = item.uyeID }) |
-                                @Html.ActionLink("Delete", "DeleteUye", new { id = item.uyeID })
-                            </td>
+                            <th class="lalign">
+                                @Html.DisplayNameFor(model => model.isim)
+                            </th>
+                            <th class="lalign">
+                                @Html.DisplayNameFor(model => model.KullaniciAdi)
+                            </th>
+                            <th class="lalign">
+                                @Html.DisplayNameFor(model => model.Soyisim)
+                            </th>
+                            <th class="lalign">
+                                @Html.DisplayNameFor(model => model.Sifre)
+                            </th>
+                            <th class="lalign">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th class="lalign">
+                                @Html.DisplayNameFor(model => model.Aciklama)
+                            </th>
+
                         </tr>
-                    }
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="lalign">
+                                    @Html.DisplayFor(modelItem => item.isim)
+                                </td>
+                                <td class="lalign">
+                                    @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                                </td>
+                                <td class="lalign">
+                                    @Html.DisplayFor(modelItem => item.Soyisim)
+                                </td>
+                                <td class="lalign">
+                                    @Html.DisplayFor(modelItem => item.Sifre)
+                                </td>
+                                <td class="lalign">
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td class="lalign">
+                                    @Html.DisplayFor(modelItem => item.Aciklama)
+                                </td>
+                                <td class="lalign">
+                                    @Html.ActionLink("Edit", "EditUye", new { id = item.uyeID }) |
+                                    @Html.ActionLink("Details", "DetailsUye", new { id = item.uyeID }) |
+                                    @Html.ActionLink("Delete", "DeleteUye", new { id = item.uyeID })
+                                </td>
+                            </tr>
+                        }
 
 
+                    </table>
 
-                </table>
-
+                </div>
             </div>
         </div>
-    </div>
-}
+
+        <script src="~/Content/table/JavaScriptTable.js"></script>
+    }

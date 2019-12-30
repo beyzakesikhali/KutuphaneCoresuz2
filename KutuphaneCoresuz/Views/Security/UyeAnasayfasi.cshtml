@@ -1,24 +1,89 @@
-﻿@{
+﻿@model List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
+
+
+@{
     Layout = "~/Views/_Layout.cshtml";
     ViewBag.Title = "anasayfa";
 
 }
-@section Header{<header id="header">
-        <div class="container">
 
-            <div id="logo" class="pull-left">
-            </div>
-        </div>
-    </header>
-    <section id="hero">
-        <div class="hero-container">
-            <h1>Projeye Hoşgeldiniz</h1>@ViewBag.KullaniciAdi
 
-            @Html.ActionLink("HADİ BAŞLAYALIM", "Login", "Security", new { @class = "btn-get-started" })
-        </div>
-    </section>
+<div class="hero-container">
+    <p>
+        <h1>Projeye Hoşgeldiniz @Session["kullaniciAdi"]</h1>
+
+    </p>
+    <div id="wrapper">
+        <h1>Var Olan Kitaplarınız</h1>
+
+        <table id="keywords" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <td class="lalign">
+                        @Html.Label("Kitap Adi:")
+
+                    </td>
+
+                <tr>
+                    <td class="lalign">
+                        @Html.Label("Yazar Adi:")
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lalign">
+                        @Html.Label("Yazar Soyadi:")
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="lalign">
+                        @Html.Label("Yayinci:")
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lalign">
+                        @Html.Label("Yorum:")
+                    </td>
+                </tr>
+           
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    
+                    <td>@item.KitapAdi</td>
+                    <td>@item.YazarAdi</td>
+                    <td>@item.YazarSoyadi</td>
+                    <td>@item.yayinci</td>
+                </tr>
+                }
+
+            </tbody>
+
+
+        </table>
+    </div>
+
+
+
+    @Html.ActionLink("HADİ BAŞLAYALIM", "Login", "UyeKitaplarSayfasi", new { @class = "btn-get-started" })
+</div>
+
 }
+@section styles{
+    <style>
+        .body {
+            background: black;
+        }
+    </style>
+}
+@section scripts{
+    <script>
 
-
-
-
+    </script>
+}

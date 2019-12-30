@@ -653,6 +653,7 @@ C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Microsoft.Win32.Registry.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Newtonsoft.Json.Bson.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Newtonsoft.Json.dll
+C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\nunit.framework.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\System.Buffers.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\System.Collections.Immutable.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\System.ComponentModel.Annotations.dll
@@ -750,6 +751,8 @@ C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Microsoft.IdentityModel.Tokens.xml
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Microsoft.Net.Http.Headers.xml
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Newtonsoft.Json.Bson.xml
+C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\nunit.framework.pdb
+C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\nunit.framework.xml
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\System.Buffers.xml
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\System.Collections.Immutable.xml
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\System.Diagnostics.DiagnosticSource.xml
@@ -780,7 +783,7 @@ C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\ru\Microsoft.Data.SqlClient.resources.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\zh-Hans\Microsoft.Data.SqlClient.resources.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\zh-Hant\Microsoft.Data.SqlClient.resources.dll
-C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csproj.CopyComplete
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.pdb
+C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache

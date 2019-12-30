@@ -1,4 +1,4 @@
-﻿@model KutuphaneCoresuz.Models.TableModels.Uye
+﻿@model KutuphaneCoresuz.Models.Data.Uye
 
 @{
     Layout = "~/Views/_Layout.cshtml";
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 @section Header{
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("CreateUye", "Uye", FormMethod.Post))
     {
         <div id="header">
 
