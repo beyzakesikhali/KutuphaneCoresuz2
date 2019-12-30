@@ -91,13 +91,17 @@ namespace KutuphaneCoresuz.Controllers
             Kitap yeniKitap = new Kitap();
             Yazar yeniYazar = new Yazar();
             YazarlarinKitaplari yeniYazarKitap = new YazarlarinKitaplari();
+            UyelerinKitaplari yeniUyeKitap = new UyelerinKitaplari();
             var SeciliYazarAdi = model.YazarAdi;
             var SeciliYazarSoyadi = model.YazarSoyadi;
             var SeciliKitapAdi = model.KitapAdi;
-            var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi);
-            var YazarIsmi = db.Yazarlar.Select(i => i.Isim);
-            var YazarSoyismi = db.Yazarlar.Select(s => s.Soyisim);
-            var yazarIdResult = db.Yazarlar.Where(r => r.Isim == SeciliYazarAdi).Where(r => r.Soyisim == SeciliYazarSoyadi).Select(r => r.yazarID);
+            string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
+            var AktifUyeResult = db.Uyeler.Where(i => i.KullaniciAdi == AktifUye).Single();
+            var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi).Single();
+            var YazarIsmi = db.Yazarlar.Where(i => i.Isim == SeciliYazarAdi).Single();
+            var YazarSoyismi = db.Yazarlar.Where(s => s.Soyisim == SeciliYazarSoyadi).Single();
+            var yazarIdResult = db.Yazarlar.Where(r => r.Isim == SeciliYazarAdi).Where(r => r.Soyisim == SeciliYazarSoyadi).Single();
+            yeniUyeKitap.UyeID = AktifUyeResult.uyeID;
             if (KitapVarmi == null)
             {
                 if (yazarIdResult == null)
@@ -109,72 +113,36 @@ namespace KutuphaneCoresuz.Controllers
                         yeniKitap.Aciklama = model.Aciklama;
                         yeniYazar.Isim = model.YazarAdi;
                         yeniYazar.Soyisim = model.YazarSoyadi;
-                        yeniYazar.yazarID = Convert.ToInt32(yazarIdResult);
-                        yeniYazarKitap.YazarID = Convert.ToInt32(yazarIdResult);
-                        yeniYazarKitap.KitapID=Convert.ToInt32(KitapVarmi.Select(k=>k.kitapID));
+                        yeniYazar.yazarID = yazarIdResult.yazarID;
+                        yeniYazarKitap.YazarID = yazarIdResult.yazarID;
+                        yeniYazarKitap.KitapID = KitapVarmi.kitapID;
 
+                        yeniUyeKitap.KitapID = KitapVarmi.kitapID;
                         db.Yazarlar.Add(yeniYazar);
                         db.Kitaplar.Add(yeniKitap);
                         db.YazarlarinKitaplariDb.Add(yeniYazarKitap);
+                        db.UyelerinKitaplariDb.Add(yeniUyeKitap);
                         db.SaveChanges();
                     }
-                }
-                
 
+
+
+
+
+                }
+                else
+                {
+                    return View(ViewBag("Yazar Seçmediniz!"));
+                }
+
+
+            }
+            else
+            {
+                return View(ViewBag("Kitap İsmi Giriniz!s"));
             }
             return View();
         }
-
-        // POST: Kitaps/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[AllowAnonymous]
-        //public ActionResult CreateKitap([Bind(Include = "kitapID,Isim,YazarAdi,YazarSoyadi,Yayinci,Aciklama")] Kitap kitap, Uye uye, Yazar yazar, int yazarID, int uyeID, FormCollection nesneler)
-        //{
-
-        //    var seciliYazar = nesneler["yazalarlistesi"];
-        //    if (seciliYazar != null)
-        //    {
-        //        var mevcutKitap = db.Kitaplar.Where(k => k.Isim == kitap.Isim);
-        //        if (mevcutKitap == null)
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                db.Kitaplar.Add(kitap);
-        //                db.SaveChanges();
-        //                var yazarIdResult = db.Yazarlar.Where(r => r.Isim == seciliYazar).Select(r => r.yazarID);
-        //                //yazar yazarlar tablosunda varsa id sini çek 
-        //                if (yazarIdResult == null)
-        //                {
-        //                    //id boş değilse yani yazar yazarlar tablosunda yoksa,
-        //                    //hem yazarlarikitaplarina hem yazar tablosuna eklencek.
-
-
-        //                    YazarlarinKitaplari YeniYazar = new YazarlarinKitaplari();
-        //                    YeniYazar.YazarID = Convert.ToInt32(yazarIdResult);
-        //                    YeniYazar.KitapID = kitap.kitapID;
-        //                    db.YazarlarinKitaplariDb.Add(YeniYazar);
-
-        //                    Yazar YeniYazarT = new Yazar();
-        //                    YeniYazarT.yazarID = Convert.ToInt32(yazarIdResult);
-        //                    db.Yazarlar.Add(YeniYazarT);
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.YazarIdYok("Yazar Seçmediniz!");
-
-        //                }
-        //            }
-
-
-        //        }
-        //        return RedirectToAction("IndexKitap");
-        //    }
-
-        //    return View(kitap);
-        //}
 
         // GET: Kitaps/Edit/5
         [AllowAnonymous]
