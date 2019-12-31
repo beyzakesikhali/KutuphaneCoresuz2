@@ -372,6 +372,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -537,6 +538,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Cache\Cache.cs" />
+    <Compile Include="Cache\CachedModelsrepository.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\KitapController.cs" />
     <Compile Include="Filters\AutherizeAdmin.cs" />
@@ -547,6 +550,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelforDB\KitapUyeAddModel.cs" />
+    <Compile Include="Models\ModelforDB\KitapUyeViewModel.cs" />
     <Compile Include="Models\ModelforDB\KitapYazarAddModel.cs" />
     <Compile Include="Models\Context\KutuphaneContext.cs" />
     <Compile Include="Models\Context\KutuphaneVTInitializer.cs" />
@@ -554,7 +558,6 @@
     <Compile Include="Models\Data\Uye.cs" />
     <Compile Include="Models\Data\UyelerinKitaplari.cs" />
     <Compile Include="Models\Data\Yazar.cs" />
-    <Compile Include="Models\Data\ExistControl.cs" />
     <Compile Include="Models\Data\YazarlarinKitaplari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

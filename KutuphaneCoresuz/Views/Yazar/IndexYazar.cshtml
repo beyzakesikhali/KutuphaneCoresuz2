@@ -1,65 +1,63 @@
 ﻿@model IEnumerable<KutuphaneCoresuz.Models.Data.Yazar>
 
 @{
-    ViewBag.Title = "Index"; 
-    Layout = "~/Views/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-   
+
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-@section Header{
 
-    <div id="header">
-        <div class="container">
+<div id="header">
+    <div class="container">
 
-            <div id="logo" class="pull-left">
+        <div id="logo" class="pull-left">
 
-                <h2>Yazarlar</h2>
+            <h2>Yazarlar</h2>
 
-                <p>
-                    @Html.ActionLink("Create New", "CreateYazar")
-                </p>
-                <table class="table">
+            <p>
+                |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">YENİ BİR YAZAR EKLE</button> |
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                       -İsim-
+                    </th>
+                    <th>
+                       -Soyisim-
+                    </th>
+                    <th>
+                      -Yorum-
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
                     <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Isim)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Soyisim)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Yorum)
-                        </th>
-                      
-                        <th></th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Isim)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Soyisim)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Yorum)
+                        </td>
+
+                        <td>
+                          |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("EditYazar","Yazar")'">YAZARI DÜZENLE</button> 
+                          |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DeleteYazar","Yazar")'">YAZARI SİL</button> 
+                          |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar","Yazar")'">YAZAR DETAY</button>|
+                        </td>
                     </tr>
+                }
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Isim)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Soyisim)
-                            </td>   
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Yorum)
-                            </td>
-                           
-                            <td>
-                                @Html.ActionLink("Düzenle", "EditYazar", new { id = item.yazarID }) |
-                                @Html.ActionLink("Detaylar", "DetailsYazar", new { id = item.yazarID }) |
-                                @Html.ActionLink("Sil", "DeleteYazar", new { id = item.yazarID })
-                            </td>
-                        </tr>
-                    }
-
-                </table>
-            </div>
+            </table>
         </div>
     </div>
-}
+</div>

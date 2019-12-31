@@ -1,51 +1,54 @@
 ﻿
-    <head>
-        <img src="~/Content/img/hero-bg.jpg" />
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - My ASP.NET Application</title>
+<head>
 
-        <link href="~/Content/css/animate.css" rel="stylesheet" />
-        <link href="~/Content/css/animate.min.css" rel="stylesheet" />
-        <link href="~/Content/css/style.css" rel="stylesheet" />
-        <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
-        <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
-        <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
-        <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
-        <link href="~/Content/bootstrap.css" rel="stylesheet" />
-        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-        <link href="~/Content/cssLogin.css" rel="stylesheet" />
-        <link href="~/Content/Site.css" rel="stylesheet" />
-        <script src="~/Content/bootstrap.bundle.min.js"></script>
-        <script src="~/Content/bootstrap.min.js"></script>
-        <script src="~/Content/counterup.min.js"></script>
-        <script src="~/Content/easing.js"></script>
-        <script src="~/Content/easing.min.js"></script>
-        <script src="~/Content/hoverIntent.js"></script>
-        <script src="~/Content/jquery-migrate.min.js"></script>
-        <script src="~/Content/jquery.min.js"></script>
-        <script src="~/Content/superfish.js"></script>
-        <script src="~/Content/superfish.min.js"></script>
-        <script src="~/Content/waypoints.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/css/animate.css" rel="stylesheet" />
+    <link href="~/Content/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/cssLogin.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/bootstrap.min.js"></script>
+    <script src="~/Content/counterup.min.js"></script>
+    <script src="~/Content/easing.js"></script>
+    <script src="~/Content/easing.min.js"></script>
+    <script src="~/Content/hoverIntent.js"></script>
+    <script src="~/Content/jquery-migrate.min.js"></script>
+    <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/superfish.js"></script>
+    <script src="~/Content/superfish.min.js"></script>
+    <script src="~/Content/waypoints.min.js"></script>
 
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-
-        @RenderSection("styles")
-    </head>
-    <body style=" background-color:goldenrod">
-        @RenderSection("Header", false)
-
-        @Html.Partial("_Header")
-
-        @RenderBody()
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
 
+</head>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts")
-    </body>
+<body>
+   
+
+    @RenderSection("Header", false)
+
+    @Html.Partial("_Header")
+
+    @RenderBody()
   
-       
-    
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("Scripts", false)
+
+</body>
+
+
+

@@ -57,7 +57,7 @@ namespace KutuphaneCoresuz.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
 
-        public ActionResult CreateYazar([Bind(Include = "yazarID,yazar_ismi,yazar_sifre,yazar_email,kitap_id")] Yazar yazar)
+        public ActionResult CreateYazar(Yazar yazar)
         {
             if (ModelState.IsValid)
             {

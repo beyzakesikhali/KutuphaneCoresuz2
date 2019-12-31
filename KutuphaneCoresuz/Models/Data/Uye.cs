@@ -11,14 +11,16 @@ namespace KutuphaneCoresuz.Models.Data
     public class Uye
     {
         [Key]
-        public int uyeID { get; set; }
+        public int ID { get; set; }
         public string isim { get; set; }
-        public string KullaniciAdi { get; set; }
+       public string KullaniciAdi { get; set; }
+        //[DataType(DataType.Password)]
         public string Soyisim { get; set; }
         public string Sifre { get; set; }
         public string Email { get; set; }
         public string Aciklama { get; set; }
-      
+        public ICollection<UyelerinKitaplari> UyeFK { get; set; }
+
 
     }
     public class UyelerLogin
@@ -27,7 +29,7 @@ namespace KutuphaneCoresuz.Models.Data
         {
             return new List<Uye>
                 {
-                new Uye { uyeID = 1, KullaniciAdi = "beyza", Sifre = "pas1" } };
+                new Uye { ID = 1, KullaniciAdi = "beyza", Sifre = "pas1" } };
         }
     }
 

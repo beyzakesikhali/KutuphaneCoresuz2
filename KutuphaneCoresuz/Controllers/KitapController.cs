@@ -16,13 +16,13 @@ namespace KutuphaneCoresuz.Controllers
     public class KitapController : Controller
     {
         KutuphaneContext db = new KutuphaneContext();
-        private ExistControl control = new ExistControl();
+       
         // GET: Kitap
         public ActionResult Index()
         {
             return View();
         }
-        [AllowAnonymous]
+        
         // GET: Kitaps
         public ActionResult IndexKitap()
         {
@@ -101,7 +101,7 @@ namespace KutuphaneCoresuz.Controllers
             var YazarIsmi = db.Yazarlar.Where(i => i.Isim == SeciliYazarAdi).Single();
             var YazarSoyismi = db.Yazarlar.Where(s => s.Soyisim == SeciliYazarSoyadi).Single();
             var yazarIdResult = db.Yazarlar.Where(r => r.Isim == SeciliYazarAdi).Where(r => r.Soyisim == SeciliYazarSoyadi).Single();
-            yeniUyeKitap.UyeID = AktifUyeResult.uyeID;
+            yeniUyeKitap.UyeID = AktifUyeResult.ID;
             if (KitapVarmi == null)
             {
                 if (yazarIdResult == null)
@@ -113,21 +113,17 @@ namespace KutuphaneCoresuz.Controllers
                         yeniKitap.Aciklama = model.Aciklama;
                         yeniYazar.Isim = model.YazarAdi;
                         yeniYazar.Soyisim = model.YazarSoyadi;
-                        yeniYazar.yazarID = yazarIdResult.yazarID;
-                        yeniYazarKitap.YazarID = yazarIdResult.yazarID;
-                        yeniYazarKitap.KitapID = KitapVarmi.kitapID;
+                        yeniYazar.ID = yazarIdResult.ID;
+                        yeniYazarKitap.YazarID = yazarIdResult.ID;
+                        yeniYazarKitap.KitapID = KitapVarmi.ID;
 
-                        yeniUyeKitap.KitapID = KitapVarmi.kitapID;
+                        yeniUyeKitap.KitapID = KitapVarmi.ID;
                         db.Yazarlar.Add(yeniYazar);
                         db.Kitaplar.Add(yeniKitap);
                         db.YazarlarinKitaplariDb.Add(yeniYazarKitap);
                         db.UyelerinKitaplariDb.Add(yeniUyeKitap);
                         db.SaveChanges();
                     }
-
-
-
-
 
                 }
                 else
@@ -206,7 +202,6 @@ namespace KutuphaneCoresuz.Controllers
             db.SaveChanges();
             return RedirectToAction("IndexKitap");
         }
-
 
     }
 }

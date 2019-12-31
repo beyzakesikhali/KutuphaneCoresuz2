@@ -10,6 +10,8 @@ namespace KutuphaneCoresuz.Controllers
     public class AutorizeAdmin : System.Web.Mvc.ActionFilterAttribute, System.Web.Mvc.IActionFilter
     {
         public override void OnActionExecuting(System.Web.Mvc.ActionExecutingContext filterContext)
+            //tetiklendiği anda devreye girer.
+            //OnActionResult olsaydı sonuc dönderilmeden önce devreye girerdi.
         {
             if (HttpContext.Current.Session["AdminIsLogedIn"] == null)
             {

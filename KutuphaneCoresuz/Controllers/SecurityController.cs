@@ -9,11 +9,17 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 
+
 namespace KutuphaneCoresuz.Controllers
 {
     public class SecurityController : Controller
     {
-
+        /*
+         * 
+         * 
+         * 
+         * 
+         * COOKİEE
         private void CreateCookie(string name, string value)
         {
             HttpCookie cookieVisitor = new HttpCookie(name, value);
@@ -44,8 +50,17 @@ namespace KutuphaneCoresuz.Controllers
 
 
 
-        //public object Application { get; private set; }
-        private KutuphaneContext db = new KutuphaneContext();
+
+            COOKİE
+
+    */
+
+
+
+
+
+
+         KutuphaneContext db = new KutuphaneContext();
         [AllowAnonymous]
 
         public ActionResult Login()
@@ -61,13 +76,13 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         [HttpPost]
 
-        public ActionResult Login([Bind(Include = "uyeID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
+        public ActionResult Login(Uye uye)
         {
 
-            bool mevcut = db.Uyeler.Any(p => p.KullaniciAdi == uye.KullaniciAdi);
+            var mevcut = db.Uyeler.FirstOrDefault(p => p.Sifre == uye.Sifre && p.KullaniciAdi==uye.KullaniciAdi);
             //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
 
-            if (mevcut != false)
+            if (mevcut != null)
             {
                 //Session.Add("KullaniciAdi",u.isim.ToString());
 
@@ -85,23 +100,47 @@ namespace KutuphaneCoresuz.Controllers
             return View();
 
         }
-        [AllowAnonymous]
+         [AllowAnonymous]
+     
+        //[OutputCache(Duration = 5, VaryByParam = "none")]
         public ActionResult UyeAnasayfasi()
         {
-            Session["kullanciAdi"] = ViewBag.KullaniciAdi;
+
+            //SOR SOR SOR
+            // Session["kullanciAdi"] = ViewBag.KullaniciAdi;
+           
             Uye uye = new Uye();
             Kitap kitap = new Kitap();
             UyelerinKitaplari uyeKitap = new UyelerinKitaplari();
-            var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == Session["kullaniciAdi"].ToString()).Single();
-            int uyeID = uyeResult.uyeID;
-            var kitapResult = db.UyelerinKitaplariDb.Where(z => z.UyeID == uyeID).Single();
-            int kitapID = kitapResult.KitapID;
-            var UyeKitapResult = db.UyelerinKitaplariDb.Where(a => a.UyeID == uyeID).Where(a => a.KitapID == kitapID).Single();
-            if (UyeKitapResult != null)
+            if (HttpContext.Session["kullaniciAdi"]==null)
             {
-                return View(UyeKitapResult);
+                return Redirect("Login");
             }
-            return View(ViewBag("Hiç Kitap Eklememişsiniz"));
+            string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
+            var model = new KitapYazarAddModel();
+            var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
+            int uyeID = uyeResult.ID;
+            var kitapIdResult = db.UyelerinKitaplariDb.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
+            if(kitapIdResult.Count!=0)
+            { 
+                    foreach (var item in kitapIdResult)
+                    {
+                        var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
+                        var yazarResult = db.Yazarlar.Where(y => y.ID == Convert.ToInt32(kitapResult.YazarKitapFK)).Single();
+                        model.KitapAdi = kitapResult.Isim; 
+                        model.yayinci = kitapResult.Yayinci;
+                        model.YazarAdi = yazarResult.Isim; 
+                        model.YazarSoyadi = yazarResult.Soyisim;
+                    }
+                if(model!=null)
+                {
+                     return View(model);
+                }
+            }
+          
+           
+            return View();
+
 
         }
 
@@ -119,8 +158,6 @@ namespace KutuphaneCoresuz.Controllers
             HttpContext.Session.Remove("KullaniciAdi");
             return RedirectToAction("Login", "Security");
 
-            //FormsAuthentication.SignOut();
-            //return RedirectToAction("Login");
         }
 
         //protected override void Dispose(bool disposing)

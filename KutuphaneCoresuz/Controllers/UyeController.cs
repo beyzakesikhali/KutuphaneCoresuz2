@@ -53,7 +53,7 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult CreateUye([Bind(Include = "uyeID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
+        public ActionResult CreateUye([Bind(Include = "ID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
         {
 
             if (ModelState.IsValid)
@@ -89,7 +89,7 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult EditUye([Bind(Include = "uyeID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
+        public ActionResult EditUye([Bind(Include = "ID,isim,KullaniciAdi,Soyisim,Sifre,Email,Aciklama")] Uye uye)
         {
             if (ModelState.IsValid)
             {
@@ -115,7 +115,7 @@ namespace KutuphaneCoresuz.Controllers
             }
             return View(uye);
         }
-
+     
         // POST: Uyes/Delete/5
         [AllowAnonymous]
         [HttpPost, ActionName("DeleteUye")]
@@ -127,6 +127,7 @@ namespace KutuphaneCoresuz.Controllers
             db.SaveChanges();
             return RedirectToAction("IndexUye");
         }
+
 
 
     }

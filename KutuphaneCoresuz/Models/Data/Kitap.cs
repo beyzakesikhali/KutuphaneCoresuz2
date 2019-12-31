@@ -11,13 +11,16 @@ namespace KutuphaneCoresuz.Models.Data
     {
         [Key]
 
-        public int kitapID { get; set; }
+        public int ID { get; set; }
         [Display(Name = "Kitabın Adı:")]
         public string Isim { get; set; }
         [Display(Name = "Yayıncı:")]
         public string Yayinci { get; set; }
         [Display(Name = "Açıklama:")]
         public string Aciklama { get; set; }
+        public ICollection<UyelerinKitaplari> UyeKitapFK { get; set; }
+        public ICollection<YazarlarinKitaplari> YazarKitapFK { get; set; }
+
 
 
     }

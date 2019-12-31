@@ -2,7 +2,7 @@
 
 
     @{
-        Layout = "~/Views/_Layout.cshtml";
+          Layout ="~/Views/Shared/_Layout.cshtml";
     }
 
 
@@ -11,9 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Content/table/tableCss.css" rel="stylesheet" />
     <h2>Create</h2>
-    @section Header{
-
-        <div id="header">
+     <div id="header">
             <div class="container">
 
                 <div id="logo" class="pull-left">
@@ -67,9 +65,9 @@
                                     @Html.DisplayFor(modelItem => item.Aciklama)
                                 </td>
                                 <td class="lalign">
-                                    @Html.ActionLink("Edit", "EditUye", new { id = item.uyeID }) |
-                                    @Html.ActionLink("Details", "DetailsUye", new { id = item.uyeID }) |
-                                    @Html.ActionLink("Delete", "DeleteUye", new { id = item.uyeID })
+                                    @Html.ActionLink("Edit", "EditUye", new { id = item.ID }) |
+                                    @Html.ActionLink("Details", "DetailsUye", new { id = item.ID }) |
+                                    @Html.ActionLink("Delete", "DeleteUye", new { id = item.ID })
                                 </td>
                             </tr>
                         }
@@ -82,4 +80,4 @@
         </div>
 
         <script src="~/Content/table/JavaScriptTable.js"></script>
-    }
+   
