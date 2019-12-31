@@ -10,7 +10,8 @@
 
 <div class="hero-container">
     <p>
-        <h1>Projeye Hoşgeldiniz @Session["kullaniciAdi"]</h1>
+        @Html.ActionLink("HADİ BAŞLAYALIM", "Login", "UyeKitaplarSayfasi", new { @class = "btn-get-started" })
+        <h1>Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString()</h1>
 
     </p>
     <div id="wrapper">
@@ -47,22 +48,37 @@
                         @Html.Label("Yorum:")
                     </td>
                 </tr>
-           
+
             </thead>
 
             <tbody>
 
                 @foreach (var item in Model)
                 {
-                <tr>
-                    
-                    <td>@item.KitapAdi</td>
-                    <td>@item.YazarAdi</td>
-                    <td>@item.YazarSoyadi</td>
-                    <td>@item.yayinci</td>
-                </tr>
-                }
+                    <tr>
 
+                        <td>@item.KitapAdi</td>
+                        <td>@item.YazarAdi</td>
+                        <td>@item.YazarSoyadi</td>
+                        <td>@item.yayinci</td>
+                    </tr>
+                    <tr>
+                       
+
+                            <td><button class="btn-outline-warning" type="submit" name="update"onclick="location.href='@Url.Action("EditKitap","Kitap")'">Düzenle</button></td>
+                           
+                                <td>
+                                    <button class="btn-outline-success" type="button" name="detaylar"onclick="location.href='@Url.Action("DetailsKitap","Kitap")'">Detaylar</button>
+                                </td>
+                                                      
+                                <td>
+                                    <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteKitap","Kitap")'">Sil</button>
+                                </td>
+                         
+                        }
+                    </tr>
+                    
+                }
             </tbody>
 
 
@@ -71,7 +87,7 @@
 
 
 
-    @Html.ActionLink("HADİ BAŞLAYALIM", "Login", "UyeKitaplarSayfasi", new { @class = "btn-get-started" })
+ 
 </div>
 
 }
