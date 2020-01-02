@@ -1,95 +1,135 @@
-﻿@model KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
-@{  
-    Layout ="~/Views/Shared/_Layout.cshtml";
+﻿@model  List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Create";
 
 }
+@Html.Partial("~/Views/Shared/_Header.cshtml")
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="~/Content/jquery.min.js"></script>
+<div id="header">
+    <div class="container">
 
-    <div id="header">
-        <div class="container">
-
-            <div id="logo" class="pull-left">
-                @using (Html.BeginForm("CreateKitap", "Kitap", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    @*   bu satır küçük çaplı sadırılara karşı koruma sağlar *@
-                    <div class="form-horizontal">
-                        <h4>Kitap</h4>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.KitapAdi, "Kitabın ismi", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.TextBox("k_ismi", "", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.KitapAdi, "", new { @class = "text-danger" })
-                            </div>
+        <div id="logo" class="pull-left">
+            @using (Html.BeginForm("CreateKitap", "Kitap", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @*   bu satır küçük çaplı sadırılara karşı koruma sağlar *@
+                <div class="form-horizontal">
+                    <h4>Kitap</h4>
+                    <hr />
+                    @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
+                    <div class="form-group">
+                        @Html.Label("Kitabın ismi", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBox("k_ismi", "", new { @class = "form-control" })
                         </div>
+                    </div>
 
+                    <div class="form-group">
+                        @Html.Label("Yazar Adi", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
+                            {
+                                @*@Html.DropDownListFor(m=>m.YazarAdlari,new  SelectList(Model.YazarSoyadllari,"ID", "Value"), new {  @Id="adlar", @class = "form-control" })*@
+                                @*@Html.DropDownList("adlar", ViewBag.adlar as SelectList, "Lütfen Yazar Seçin..")*@
+
+                                <select name="yazar" class="form-control">
+                                    <option value="">Yazar Seçiniz</option>
+                                    @foreach (var yazar in Model)
+                                    {
+                                        <option value="@yazar.Id">@yazar.YazarAdlari</option>
+                                    }
+                                </select>
+                            }
+
+                        </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.YazarAdi, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @*@Html.Label("Yazar Soyadı", new { @class = "control-label col-md-2" })*@
                             <div class="col-md-10">
                                 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
                                 {
-                                    @Html.DropDownListFor(model => model.YazarAdi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
-                                    @ViewBag.YazarIdYok
 
+                                    <select name="yazar" class="form-control">
+                                        <option value="">Yazar Soyadı Seçiniz</option>
+                                        @foreach (var yazar in Model)
+                                        {
+                                            <option value="@yazar.Id">@yazar.YazarSoyadlari</option>
+
+                                        }
+                                    </select>
+
+                                    @*@Html.DropDownListFor(m => m.YazarSoyadllari, new SelectList(Model.YazarSoyadllari, "ID", "Value"), new {@Id="soyadlar", @class = "form-control" })*@
+                                    <div class="form-group">
+
+                                    </div>
                                 }
+                                @Html.ActionLink("Aradığınız Yazar Yoksa Tıklayın..", "CreateYazar", "Yazar")
+
 
 
 
                             </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.YazarSoyadi, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
-                                    {
-                                        @Html.DropDownListFor(m => m.YazarSoyadi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
-                                        <div class="form-group">
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Yayıncı", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBox("yayinci", "", new { @class = "form-control" })
 
-                                        </div>
-                                    }
-                                    @Html.ActionLink("Aradığınız Yazar Yoksa Tıklayın..", "CreateYazar", "Yazar")
-                                  
-
-
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.yayinci, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextBox("yayinci", "", new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.yayinci, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextBox("aciklama", "", new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" value="" class="btn btn-warning" name="dfdf" id="dfdf">hjkhjk</button>
-                                </div>
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBox("AÇıklama", "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-                      
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" value="" class="btn btn-warning" name="dfdf" id="dfdf">hjkhjk</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        @Html.ActionLink("Kitaplari Gör", "DetailsKitap","Kitap")
-                    </div>
 
-                }
-                </div></div></div>
+
+                </div>
+
+                <div>
+                    @Html.ActionLink("Kitaplari Gör", "DetailsKitap", "Kitap")
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
      }
+@*@section Scripts
+    {
+        <script type="text/javascript">
+            $(document).ready($(function () {
+                $('#adlar').change(function () {
+                    var yazarId = $('#DrpAdlar').val();
+                    alert(yazarId);
+                    $.ajax({
+                        url: '';
+                        data: {}
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                            $("#DrpSoyadlar").empty();
+                        }
+
+
+                    })
+                })
+            })
+        </script>
+        }*@

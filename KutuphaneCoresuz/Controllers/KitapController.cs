@@ -87,6 +87,22 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         public ActionResult CreateKitap(KitapYazarAddModel model)
         {
+            //List<KitapYazarAddModel> modelKy = new List<KitapYazarAddModel>();
+            //foreach (var item in modelKy)
+            //{
+            //    return View(modelKy);
+
+            //}
+
+            //dropdown doldurmak için
+            KitapYazarAddModel kitapYazarAddModel= new KitapYazarAddModel();
+            List<SelectListItem> modelAdList = new List<SelectListItem>();
+            List<SelectListItem> modelSoyadList = new List<SelectListItem>();
+            modelSoyadList = kitapYazarAddModel.YazarSoyadlari.ToList();
+            modelAdList = kitapYazarAddModel.YazarAdlari.ToList();
+            ViewBag.adlar = modelAdList;
+            ViewBag.soyadlar = modelSoyadList;
+
 
             Kitap yeniKitap = new Kitap();
             Yazar yeniYazar = new Yazar();
@@ -97,9 +113,9 @@ namespace KutuphaneCoresuz.Controllers
             var SeciliKitapAdi = model.KitapAdi;
             string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
             var AktifUyeResult = db.Uyeler.Where(i => i.KullaniciAdi == AktifUye).Single();
-            var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi).Single();
-            var YazarIsmi = db.Yazarlar.Where(i => i.Isim == SeciliYazarAdi).Single();
-            var YazarSoyismi = db.Yazarlar.Where(s => s.Soyisim == SeciliYazarSoyadi).Single();
+            var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi).FirstOrDefault();
+            var YazarIsmi = db.Yazarlar.Where(i => i.Isim == SeciliYazarAdi).FirstOrDefault();
+            var YazarSoyismi = db.Yazarlar.Where(s => s.Soyisim == SeciliYazarSoyadi).FirstOrDefault();
             var yazarIdResult = db.Yazarlar.Where(r => r.Isim == SeciliYazarAdi).Where(r => r.Soyisim == SeciliYazarSoyadi).Single();
             yeniUyeKitap.UyeID = AktifUyeResult.ID;
             if (KitapVarmi == null)

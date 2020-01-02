@@ -10,7 +10,7 @@
 
 @Html.Partial("~/Views/Shared/_Header.cshtml")
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("CreateYazar","Yazar",FormMethod.Post))
 {
     <div id="header">
         <div class="container">
@@ -26,7 +26,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Isim, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Isim, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -49,7 +49,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">YAZAR EKLE</button>
+                            <button class="btn-outline-success" type="submit" name="DetailsUye" onclick="location.href='@Url.Action("UyeAnasayfasi","Security")'">YAZAR EKLE</button>
                             <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexYazar","Yazar")'">YAZARLARI GÖR</button>
                         </div>
 

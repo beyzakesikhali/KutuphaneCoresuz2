@@ -1051,4 +1051,3 @@ C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csproj.CopyComplete
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.pdb
-C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache

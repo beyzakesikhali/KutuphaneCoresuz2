@@ -7,131 +7,121 @@
 
 }
 
+<div class="form-row" style="position:absolute; right:10px; top:5px; display:inline-grid">
 
-    <div class="hero-container" style="background-image:url(~/Content/img/hero-bg.jpg)">
+    <button class="btn-outline-secondary" type="button" name="editUye" onclick="location.href='@Url.Action("EditUye","Uye")'">Profil Düzenle</button>
 
 
-        <h1>Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString()</h1>
-        <button class="btn-outline-success" type="button" name="editUye" onclick="location.href='@Url.Action("EditUye","Uye")'">Profil Düzenle</button>
-        <hr />
-        <hr />
+    <button class="btn-outline-secondary" type="button" name="deleteUye" onclick="location.href='@Url.Action("DeleteUye","Uye")'">Profil Sil</button>
 
-        <button class="btn-outline-success" type="button" name="deleteUye" onclick="location.href='@Url.Action("DeleteUye","Uye")'">Profil Sil</button>
-        <hr />
-        <hr />
+    <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsUye","Uye")'">Profil Detay</button>
 
-        <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsUye","Uye")'">Profil Detay</button>
-     
+</div>
+<span class="border-dark border-bottom">
+    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
+</span>
+<hr />
+<hr />
 
-        @Html.Partial("~/Views/Shared/_Header.cshtml")
-     
-      
-        </p>
 
-        <div id="wrapper">
-            <h1>Var Olan Kitaplarınız</h1>
+@Html.Partial("~/Views/Shared/_Header.cshtml")
 
-            <table id="keywords" cellspacing="0" cellpadding="0">
-                <thead>
-                    @*<tr>
+
+<div id="wrapper">
+    <h3 align="center">Var Olan Kitaplarınız</h3>
+
+    <table id="keywords" align="center" style="position:relative; width:550px; height:200px" cellspacing="0" cellpadding="0">
+        <thead>
+            @*<tr>
+                    <td>
+                        <button name="Kitaplar" class="btn-get-started" onclick="">Kitaplarınızı Görmek İçin Tıklayın..</button>
+
+                    </td>
+                    <td>
+                        <button name="Yazarlar" class="btn-get-started" onclick="">Yazarlarınızı Görmek İçin Tıklayın..</button>
+                    </td>
+                </tr>*@
+            <tr>
+                <td class="lalign">
+                    @Html.Label("Kitap Adi:")
+
+                </td>
+            </tr>
+
+            <tr>
+                <td class="lalign">
+                    @Html.Label("Yazar Adi:")
+
+                </td>
+            </tr>
+            <tr>
+                <td class="lalign">
+                    @Html.Label("Yazar Soyadi:")
+
+                </td>
+            </tr>
+
+            <tr>
+                <td class="lalign">
+                    @Html.Label("Yayinci:")
+                </td>
+            </tr>
+            <tr>
+                <td class="lalign">
+                    @Html.Label("Yorum:")
+                </td>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.KitapAdi</td>
+                        <td>@item.YazarAdi</td>
+                        <td>@item.YazarSoyadi</td>
+                        <td>@item.yayinci</td>
+                    </tr>
+                    <tr>
+
+
+                        <td><button class="btn-outline-warning" type="submit" name="update" onclick="location.href='@Url.Action("EditKitap", "Kitap")'">Düzenle</button></td>
+
                         <td>
-                            <button name="Kitaplar" class="btn-get-started" onclick="">Kitaplarınızı Görmek İçin Tıklayın..</button>
-
+                            <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsKitap", "Kitap")'">Detaylar</button>
                         </td>
+
                         <td>
-                            <button name="Yazarlar" class="btn-get-started" onclick="">Yazarlarınızı Görmek İçin Tıklayın..</button>
+                            <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
                         </td>
-                    </tr>*@
-                    <tr>
-                        <td class="lalign">
-                            @Html.Label("Kitap Adi:")
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="lalign">
-                            @Html.Label("Yazar Adi:")
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lalign">
-                            @Html.Label("Yazar Soyadi:")
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="lalign">
-                            @Html.Label("Yayinci:")
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lalign">
-                            @Html.Label("Yorum:")
-                        </td>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    @if (Model != null)
-                    {
-                        foreach (var item in Model)
-                        {
-                            <tr>
-
-                                <td>@item.KitapAdi</td>
-                                <td>@item.YazarAdi</td>
-                                <td>@item.YazarSoyadi</td>
-                                <td>@item.yayinci</td>
-                            </tr>
-                            <tr>
-
-
-                                <td><button class="btn-outline-warning" type="submit" name="update" onclick="location.href='@Url.Action("EditKitap", "Kitap")'">Düzenle</button></td>
-
-                                <td>
-                                    <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsKitap", "Kitap")'">Detaylar</button>
-                                </td>
-
-                                <td>
-                                    <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
-                                </td>
-
-                                }
-                            </tr>
 
                         }
-                    }
-
-                    else
-                    {
-
-
-
-                    }
-
-                    <tr>
-                        <td>
-                            <button class="btn-outline-success" type="submit" name="yeniKitap" onclick="location.href='@Url.Action("CreateKitap","Kitap")'">Yeni Kitap Ekle</button>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="btn-outline-success" type="submit" name="yeniYazar" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">Yeni Kitap Ekle</button>
-                        </td>
-
                     </tr>
 
-                </tbody>
+                }
+            }
+
+            <tr>
+                <td>
+                    <button class="btn-outline-success" type="button" name="yeniKitap" onclick="location.href='@Url.Action("CreateKitap","Kitap")'">Yeni Kitap Ekle</button>
+                </td>
+                <td>
+                    <button class="btn-outline-success" type="button" name="yeniYazar" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">Yeni Yazar Ekle</button>
+                </td>
 
 
-            </table>
-        </div>
+            </tr>
+
+        </tbody>
+
+
+    </table>
+</div>
 
     </div>
 
@@ -143,12 +133,12 @@
         //       ;
         //    });
         //});
-         
+
         $(document).ready(function () {
             if ($("#keywords tbody tr").length == 0) {
                 alert("Hiç Kitabınız yok.");
             }
-           
+
         })
     </script>
 }
