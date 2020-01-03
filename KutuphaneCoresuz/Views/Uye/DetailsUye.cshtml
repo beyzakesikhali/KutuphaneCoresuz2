@@ -2,10 +2,13 @@
 
 @{
     ViewBag.Title = "Details";
-     Layout ="~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+
+
+
+@Html.Partial("~/Views/Shared/_Header.cshtml")
 
 <div>
     <h4>Uye</h4>
@@ -62,6 +65,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "UyeAnaSayfasi", "Security")
 </p>

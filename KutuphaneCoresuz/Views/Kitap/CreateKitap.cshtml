@@ -1,5 +1,7 @@
 ﻿@model  List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
-@{
+
+
+@{ 
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Create";
 
@@ -19,7 +21,7 @@
                 @Html.AntiForgeryToken()
                 @*   bu satır küçük çaplı sadırılara karşı koruma sağlar *@
                 <div class="form-horizontal">
-                    <h4>Kitap</h4>
+                    <h4>Kitap Ekle</h4>
                     <hr />
                     @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
                     <div class="form-group">
@@ -30,49 +32,56 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Yazar Adi", new { @class = "control-label col-md-2" })
+                        @Html.Label("Yazar Adı Seçiniz", new { @class = "control-label col-md-3" })
                         <div class="col-md-10">
-                            @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
-                            {
-                                @*@Html.DropDownListFor(m=>m.YazarAdlari,new  SelectList(Model.YazarSoyadllari,"ID", "Value"), new {  @Id="adlar", @class = "form-control" })*@
-                                @*@Html.DropDownList("adlar", ViewBag.adlar as SelectList, "Lütfen Yazar Seçin..")*@
+                            @*@using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
+                                {*@
+                            @*@Html.DropDownListFor(m=>m.YazarAdlari,new  SelectList(Model.YazarSoyadllari,"ID", "Value"), new {  @Id="adlar", @class = "form-control" })*@
+                            @*@Html.DropDownList("adlar", ViewBag.adlar as SelectList, "Lütfen Yazar Seçin..")*@
 
-                                <select name="yazar" class="form-control">
+                            @*<select name="yazar" class="form-control" id="ad">
                                     <option value="">Yazar Seçiniz</option>
                                     @foreach (var yazar in Model)
                                     {
                                         <option value="@yazar.Id">@yazar.YazarAdlari</option>
                                     }
-                                </select>
-                            }
+                                </select>*@
+                            @* } *@
 
-                        </div>
-                        <div class="form-group">
+                            @*</div>*@
+
                             @*@Html.Label("Yazar Soyadı", new { @class = "control-label col-md-2" })*@
-                            <div class="col-md-10">
-                                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
-                                {
 
-                                    <select name="yazar" class="form-control">
-                                        <option value="">Yazar Soyadı Seçiniz</option>
-                                        @foreach (var yazar in Model)
-                                        {
-                                            <option value="@yazar.Id">@yazar.YazarSoyadlari</option>
-
-                                        }
-                                    </select>
-
-                                    @*@Html.DropDownListFor(m => m.YazarSoyadllari, new SelectList(Model.YazarSoyadllari, "ID", "Value"), new {@Id="soyadlar", @class = "form-control" })*@
-                                    <div class="form-group">
-
-                                    </div>
-                                }
-                                @Html.ActionLink("Aradığınız Yazar Yoksa Tıklayın..", "CreateYazar", "Yazar")
-
-
-
+                            @*@using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
+                                {*@
+                            <div class="form-group">
+                                <select class="form-control" name="adlar" id="ad"> </select>
 
                             </div>
+                            <div class="form-group">
+
+                                <label>Yazar Soyadları</label>
+                                <select class="form-control" name="soyadlar" id="soyad">
+                                    <option>Yazar Adı Seçiniz.</option>
+                                </select>
+
+                            </div>
+
+                            @*<select name="yazar" class="form-control" id="soyad">
+                                    <option value="">Yazar Soyadı Seçiniz</option>
+                                    @foreach (var yazar in Model)
+                                    {
+                                        <option value="@yazar.Id">@yazar.YazarSoyadlari</option>
+
+                                    }
+                                </select>*@
+
+                            @*@Html.DropDownListFor(m => m.YazarSoyadllari, new SelectList(Model.YazarSoyadllari, "ID", "Value"), new {@Id="soyadlar", @class = "form-control" })*@
+
+                            @*  }  *@
+                            @Html.ActionLink("Aradığınız Yazar Yoksa Tıklayın..", "CreateYazar", "Yazar")
+
+
                         </div>
                         <div class="form-group">
                             @Html.Label("Yayıncı", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -110,26 +119,78 @@
     </div>
 </div>
      }
-@*@section Scripts
+@section Scripts
     {
-        <script type="text/javascript">
-            $(document).ready($(function () {
-                $('#adlar').change(function () {
-                    var yazarId = $('#DrpAdlar').val();
-                    alert(yazarId);
-                    $.ajax({
-                        url: '';
-                        data: {}
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function (data) {
-                            console.log(data);
-                            $("#DrpSoyadlar").empty();
-                        }
+    <script type="text/javascript">
+        //$(document).ready($(function () {
+        //    $('#adlar').change(function () {
+        //        var yazarId = $('#DrpAdlar').val();
+        //        alert(yazarId);
+        //        $.ajax({
+        //            url: '';
+        //            data: {}
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            success: function (data) {
+        //                console.log(data);
+        //                $("#DrpSoyadlar").empty();
+        //            }
 
 
-                    })
-                })
-            })
-        </script>
-        }*@
+        //        })
+        //    })
+        //})
+        $(document).ready(function () {
+
+            GetNames();
+            var ad = $("#ad");
+
+           ad.change(function () {
+               var yazarID = ad.val();
+               alert(yazarID + "yazarId");
+               GetSurnames(yazarID);
+               alert(GetSurnames(yazarID));
+           });
+       });
+
+        function GetNames() {
+
+            $.ajax({
+                url: `https://localhost:44339/Kitap/AdSoyad?id=0`,
+                method: "post",
+                dataType: "json",
+                success: function (data) {
+
+                    $.each(data.text, function (key, yazarDetaylari) {
+
+
+                        $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                    });
+                }, complete: function () {
+
+                }
+            });
+        }
+
+        function GetSurnames(yazarID) {
+            alert(yazarID);
+            $.ajax({
+                url:`https://localhost:44339/Kitap/AdSoyad?id="${yazarID}&tip=yazarSoyadGetir`,
+                @*url:`@Url.Action("AdSoyad", "Kitap", new { id = "yazarID", tip = "yazarSoyadGetir" })`,*@
+
+                method: "post",
+                dataType: "json",
+                success: function (sonuc) {
+                  //  $("#soyad option").remove();
+                    $("#soyad").prop("disabled", false);
+                    $.each(sonuc.text, function (index, item) {
+                            $("#soyad").append(`<option value="${item["Value"]}">${item["Text"]}</option>`);
+                        });
+                    }
+                , complete: function () {
+
+                }
+            });
+        }
+    </script>
+}

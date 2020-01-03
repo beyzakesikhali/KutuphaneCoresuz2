@@ -95,6 +95,17 @@ namespace KutuphaneCoresuz.Controllers
 
         //  GET: Yazars/Edit/5
 
+        public ActionResult EditYazarId(Yazar yazar)
+        {
+            if (HttpContext.Session["kullaniciAdi"] == null)
+            {
+                return Redirect("Login");
+            }
+
+            return Redirect("EditYazarId");
+        }
+
+        [HttpPost]
         [AllowAnonymous]
         public ActionResult EditYazarId(int? id, Yazar model)
         {
@@ -123,7 +134,7 @@ namespace KutuphaneCoresuz.Controllers
                     db.Entry(yazar).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("IndexYazar");
-                    return View(yazar);
+                    //return View(yazar);
 
                 }
 
@@ -184,7 +195,7 @@ namespace KutuphaneCoresuz.Controllers
             //Yazar yazarSorgu = new Yazar();
             var yazarIdResult = db.Yazarlar.Where(y => y.Isim == model.Isim).Single();
             int id = yazarIdResult.ID;
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

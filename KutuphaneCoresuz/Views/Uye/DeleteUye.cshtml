@@ -1,87 +1,86 @@
 ﻿@model KutuphaneCoresuz.Models.Data.Uye
 
 @{
-    ViewBag.Title = "Delete"; 
-     Layout ="~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <img src="~/Content/img/hero-bg.jpg" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h2>Create</h2>
 
-    <div id="header">
-        <div class="container">
 
-            <div id="logo" class="pull-left">
-                <h2>Delete</h2>
+@Html.Partial("~/Views/Shared/_Header.cshtml")
 
-                <h3>Are you sure you want to delete this?</h3>
-                <div>
-                    <h4>Uye</h4>
-                    <hr />
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.isim)
-                        </dt>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.isim)
-                        </dd>
+<div id="header">
+    <div class="container">
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.KullaniciAdi)
-                        </dt>
+        <div id="logo" class="pull-left">
+            <h2>Delete</h2>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.KullaniciAdi)
-                        </dd>
+            <h3>Are you sure you want to delete this?</h3>
+            <div>
+                <h4>Uye</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.isim)
+                    </dt>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Soyisim)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.isim)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Soyisim)
-                        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.KullaniciAdi)
+                    </dt>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Sifre)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.KullaniciAdi)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Sifre)
-                        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Soyisim)
+                    </dt>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Email)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Soyisim)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Email)
-                        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Sifre)
+                    </dt>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Aciklama)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Sifre)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Aciklama)
-                        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
 
-                    </dl>
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
 
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Aciklama)
+                    </dt>
 
-                        <div class="form-actions no-color">
-                            <input type="submit" value="Delete" class="btn btn-default" /> |
-                            @Html.ActionLink("Back to List", "Index")
-                        </div>
-                    }
-                </div>
+                    <dd>
+                        @Html.DisplayFor(model => model.Aciklama)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-default" /> |
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                }
             </div>
         </div>
     </div>
+</div>
 

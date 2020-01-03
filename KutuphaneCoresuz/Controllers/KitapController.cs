@@ -2,7 +2,6 @@
 using KutuphaneCoresuz.Models.Context;
 using KutuphaneCoresuz.Models.Data;
 using KutuphaneCoresuz.Models.ModelforDB;
-
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,13 +15,13 @@ namespace KutuphaneCoresuz.Controllers
     public class KitapController : Controller
     {
         KutuphaneContext db = new KutuphaneContext();
-       
+
         // GET: Kitap
         public ActionResult Index()
         {
             return View();
         }
-        
+
         // GET: Kitaps
         public ActionResult IndexKitap()
         {
@@ -44,7 +43,62 @@ namespace KutuphaneCoresuz.Controllers
             }
             return View(kitap);
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult AdSoyad(int? id, string tip = "yazarAdGetir")
+        {
 
+            List<SelectListItem> sonuc = new List<SelectListItem>();
+            bool basariliMi = true;
+            try
+            {
+                switch (tip)
+                {
+                    case "yazarAdGetir":
+                        foreach (var ad in db.Yazarlar.ToList())
+                        {
+                            sonuc.Add(new SelectListItem
+                            {
+                                Text = ad.Isim,
+                                Value = ad.ID.ToString()
+                            });
+
+                        }
+                        break;
+                    case "yazarSoyadGetir":
+                       
+                        foreach (var soyad in db.Yazarlar.Where(y => y.ID ==id).ToList())
+                            
+                        {
+                            if (id == null)
+                            {
+                                sonuc.Add(new SelectListItem
+                                {
+                                    Text = soyad.Soyisim,
+                                    Value = soyad.ID.ToString()
+                                });
+                            }
+
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                basariliMi = false;
+                sonuc = new List<SelectListItem>();
+                sonuc.Add(new SelectListItem
+                {
+                    Text = "Bir hata oluştu!",
+                    Value = "default"
+                });
+
+            }
+            return Json(new { ok = basariliMi, text = sonuc });
+        }
         // GET: Kitaps/Create
         [AllowAnonymous]
         public ActionResult CreateKitap()
@@ -71,6 +125,13 @@ namespace KutuphaneCoresuz.Controllers
             ////ViewBag.yazarlarlistesi = new SelectList(yazarlistesi, "Isim");
             //ViewBag.yazarlarSoyisimlistesi = yazarSoyisimListesi;
 
+            if (HttpContext.Session["KullaniciAdi"] == null)
+            {
+               
+                return RedirectToAction("Login","Security");
+            }
+
+
             return View();
 
 
@@ -95,7 +156,7 @@ namespace KutuphaneCoresuz.Controllers
             //}
 
             //dropdown doldurmak için
-            KitapYazarAddModel kitapYazarAddModel= new KitapYazarAddModel();
+            KitapYazarAddModel kitapYazarAddModel = new KitapYazarAddModel();
             List<SelectListItem> modelAdList = new List<SelectListItem>();
             List<SelectListItem> modelSoyadList = new List<SelectListItem>();
             modelSoyadList = kitapYazarAddModel.YazarSoyadlari.ToList();
