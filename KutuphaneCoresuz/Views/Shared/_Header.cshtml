@@ -1,40 +1,75 @@
-﻿<header id="header">
-    <div class="container">
+﻿
+        <header id="header">
+            <div class="container">
 
                 <div id="logo" class="pull-left">
-            <!-- Uncomment below if you prefer to use a text logo -->
-            <!--<h1><a href="#hero">Regna</a></h1>-->
-        </div>
+                    <!-- Uncomment below if you prefer to use a text logo -->
+                    <!--<h1><a href="#hero">Regna</a></h1>-->
+                </div>
 
-        @*@if(ViewContext.RouteData.Values["controller"].ToString()=="UyeAnaSayfasi")
-        {
-           
-        }*@
+                @*@if(ViewContext.RouteData.Values["controller"].ToString()=="UyeAnaSayfasi")
+                    {
 
-        <nav id="nav-menu-container">
-            <ul class="nav-menu">
-                <li>@Html.ActionLink("Anasayfa", "anasayfa", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    }*@
 
-                <li>@Html.ActionLink("Giriş Sayfası", "Login", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
-                <li>@Html.ActionLink("Kaydol", "CreateUye", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
-                <li>@Html.ActionLink("İletişim", "", "", new { area = "" }, new { @class = "navbar-brand" })</li>
-                <li class="menu-has-children">
-                    @*@Html.ActionLink("Keşfet", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                <li class="menu-has-children">
-                    @Html.ActionLink("Keşfet", "Contact", "Home")
-                    <ul>
-                        <li>@Html.ActionLink("Yazar Ekle", "CreateYazar", "Yazar")</li>
-                        <li>@Html.ActionLink("Kitap Ekle", "CreateKitap", "Kitap")</li>
-                        <li>@Html.ActionLink("Dokümanlar", "", "")</li>
-                        <li>@Html.ActionLink("Yazarlar", "DetailsYazar", "Security")</li>
-                        <li>@Html.ActionLink("Kitaplar", "DetailsKitap", "Security")</li>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li>@Html.ActionLink("Anasayfa", "UyeAnaSayfasi", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+
+                        <li>@Html.ActionLink("Giriş Sayfası", "Login", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li>@Html.ActionLink("Kaydol", "CreateUye", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li>@Html.ActionLink("İletişim", "", "", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li class="menu-has-children">
+                            @*@Html.ActionLink("Keşfet", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                        <li class="menu-has-children">
+                            @Html.ActionLink("Keşfet", "Contact", "Home")
+                            <ul>
+                                <li>@Html.ActionLink("Yazar Ekle", "CreateYazar", "Yazar")</li>
+                                <li>@Html.ActionLink("Kitap Ekle", "CreateKitap", "Kitap")</li>
+                                <li>@Html.ActionLink("Dokümanlar", "", "")</li>
+                                <li>@Html.ActionLink("Yazarlar", "DetailsYazar", "Security")</li>
+                                <li>@Html.ActionLink("Kitaplar", "DetailsKitap", "Security")</li>
+                            </ul>
+                        </li>
+                        <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-facebook-f">   </li>
+                        <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-twitter">   </li>
+                        <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-google">    </li>
+                        <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-linkedin">    </li>
+                        <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-youtube">    </li>
+                        <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-instagram">      </li>
+
+
+
+                        @*<li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                            <li><a href="#">Drop Down 5</a></li>*@
                     </ul>
-                </li>
-                @*<li><a href="#">Drop Down 3</a></li>
-                    <li><a href="#">Drop Down 4</a></li>
-                    <li><a href="#">Drop Down 5</a></li>*@
-            </ul>
 
-        </nav><!-- #nav-menu-container -->
-    </div>
-</header>
+                </nav><!-- #nav-menu-container -->
+
+
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <div class="row-cols-4" style="padding:0; margin:0; font-family:fantasy; color:#01579B; height:250px; width:150px; position:absolute; left:10px ">
+                <aside class="col-md-">
+
+                    <hr style="width:100px; position:absolute; left:10px; " />
+                    <a href="#" style="text-decoration:none;">Alıntılar<br /></a>
+
+                    <hr style="width:100px; position:absolute; left:10px; " />
+                    <a href="#" style="text-decoration:none;">Yazarlar<br /></a>
+
+                    <hr style="width:100px; position:absolute; left:10px; " />
+                    <a href="#" style="text-decoration:none;">Hakkımızda   <br /></a>
+
+                    <hr style="width:100px; position:absolute; left:10px; " />
+                    <a href="#" style="text-decoration:none;">İletişim<br /></a>
+                </aside>
+            </div>
+        </header>
+

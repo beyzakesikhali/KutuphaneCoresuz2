@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KutuphaneCoresuz.Models.Data.Yazar>
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.Data.Yazar>
 
 @{
     ViewBag.Title = "Index";
@@ -6,10 +6,7 @@
 }
 
 
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@Html.Partial("~/Views/Shared/_Header.cshtml")
 
 <div id="header">
     <div class="container">
@@ -24,13 +21,13 @@
             <table class="table">
                 <tr>
                     <th>
-                       -İsim-
+                        -İsim-
                     </th>
                     <th>
-                       -Soyisim-
+                        -Soyisim-
                     </th>
                     <th>
-                      -Yorum-
+                        -Yorum-
                     </th>
 
                     <th></th>
@@ -50,9 +47,9 @@
                         </td>
 
                         <td>
-                          |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("EditYazar","Yazar")'">YAZARI DÜZENLE</button> 
-                          |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DeleteYazar","Yazar")'">YAZARI SİL</button> 
-                          |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar","Yazar")'">YAZAR DETAY</button>|
+                            |  <button data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum class="btn-outline-success btn-duzenle">YAZARI DÜZENLE</button>
+                            |  <button class="btn-outline-success btn-sil" data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
+                            |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar","Yazar")'">YAZAR DETAY</button>|
                         </td>
                     </tr>
                 }
@@ -61,3 +58,53 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btn-duzenle").click(function () {
+                var id = $(this).data("id");
+
+                var isim = $(this).data("isim");
+
+                var soyisim = $(this).data("soisim");
+
+                var yorum = $(this).data("yorum");
+
+                $.ajax({
+                    url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+
+                    }, complete: function () {
+
+                    }
+                });
+            })
+
+        });
+
+        $(document).ready(function () {
+            $(".btn-sil").click(function () {
+                var isim = $(this).data("isim");
+                var soyisim = $(this).data("soisim");
+                var yorum = $(this).data("yorum");
+                $.ajax({
+                    url: `https://localhost:44339/Yazar/DeleteYazar?isim="${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+
+                    }, complete: function () {
+
+                    }
+                });
+            })
+
+        });
+
+    </script>
+
+
+}

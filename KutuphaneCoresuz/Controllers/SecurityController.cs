@@ -102,7 +102,7 @@ namespace KutuphaneCoresuz.Controllers
         }
          [AllowAnonymous]
      
-        //[OutputCache(Duration = 5, VaryByParam = "none")]
+        [OutputCache(CacheProfile = "anaSayfaCache")]
         public ActionResult UyeAnasayfasi()
         {
 

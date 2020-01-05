@@ -1,95 +1,153 @@
-﻿@model KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
-@{  
-    Layout ="~/Views/Shared/_Layout.cshtml";
+﻿@model  KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Create";
 
 }
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div id="header">
-        <div class="container">
+@Html.Partial("~/Views/Shared/_Header.cshtml")
+{
+<div align="center">
+    <br />
+    <br />
+    <br />
+    <div class="form-horizontal">
+        <h4>Kitap Ekle</h4>
+        <hr />
 
-            <div id="logo" class="pull-left">
-                @using (Html.BeginForm("CreateKitap", "Kitap", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    @*   bu satır küçük çaplı sadırılara karşı koruma sağlar *@
-                    <div class="form-horizontal">
-                        <h4>Kitap</h4>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.KitapAdi, "Kitabın ismi", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.TextBox("k_ismi", "", new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.KitapAdi, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+        @using (Html.BeginForm("CreateKitap", "Kitap", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
 
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.YazarAdi, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
-                                {
-                                    @Html.DropDownListFor(model => model.YazarAdi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
-                                    @ViewBag.YazarIdYok
+        @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
+        <div class="form-group">
+            @Html.Label("Kitabın ismi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" class="form-control" name=@Html.NameFor(m=>m.KitapAdi)>
+            </div>
+        </div>
 
-                                }
+        <div class="form-group">
+            @Html.Label("Yazar Adı Seçiniz", new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+
+                <div class="form-group">
+                    <select class="form-control" name=@Html.NameFor(m => m.YazarAdi) id="ad">
+                        <option>Yazar Adı Seçiniz</option>
+                    </select>
 
 
 
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.YazarSoyadi, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListeForm" }))
-                                    {
-                                        @Html.DropDownListFor(m => m.YazarSoyadi, new SelectList(new List<string>()), "-- Yazar Seçin --", new { @class = "form-control" })
-                                        <div class="form-group">
+                </div>
+                <div class="form-group">
 
-                                        </div>
-                                    }
-                                    @Html.ActionLink("Aradığınız Yazar Yoksa Tıklayın..", "CreateYazar", "Yazar")
-                                  
+                    <label>Yazar Soyadları</label>
+                    <select class="form-control" name=@Html.NameFor(m=>m.YazarSoyadi) id="soyad">
+                        <option>Yazar Soyadı Seçiniz.</option>
+
+                    </select>
+
+                </div>
 
 
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.yayinci, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextBox("yayinci", "", new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.yayinci, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextBox("aciklama", "", new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" value="" class="btn btn-warning" name="dfdf" id="dfdf">hjkhjk</button>
-                                </div>
-                            </div>
-                        </div>
+                @Html.ActionLink("Aradığınız Yazar Yoksa Tıklayın..", "CreateYazar", "Yazar")
 
 
-                      
-                    </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Yayıncı", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="@Html.NameFor(m=>m.yayinci)>
 
-                    <div>
-                        @Html.ActionLink("Kitaplari Gör", "DetailsKitap","Kitap")
-                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name=@Html.NameFor(m=>m.Aciklama)>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" value="" class="btn btn-warning" name="dfdf" id="dfdf">hjkhjk</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div>
+        @Html.ActionLink("Kitaplari Gör", "DetailsKitap", "Kitap")
+    </div>
+}
+
+
+
+    </div>
+
+
+    @section Scripts
+    {
+        <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            GetNames();
+            var ad = $("#ad");
+
+           ad.change(function () {
+               var yazarID = ad.val();
+               alert(yazarID + "yazarId");
+               GetSurnames(yazarID);
+               alert(GetSurnames(yazarID));
+           });
+       });
+
+        function GetNames() {
+
+            $.ajax({
+                url: `https://localhost:44339/Kitap/AdSoyad?id=0`,
+                method: "post",
+                dataType: "json",
+                success: function (data) {
+
+                    $.each(data.text, function (key, yazarDetaylari) {
+
+
+                        $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                    });
+                }, complete: function () {
 
                 }
-                </div></div></div>
-     }
+            });
+        }
+
+        function GetSurnames(yazarID) {
+            //var id = $("#ad").val();
+
+            $.ajax({
+              //  url:`https://localhost:44339/Kitap/AdSoyad?id="${id}&tip=yazarSoyadGetir`,
+                @*url:`@Url.Action("AdSoyad", "Kitap", new { id = "yazarID", tip = "yazarSoyadGetir" })`,*@
+                url: '@Url.Action("AdSoyad","Kitap")',
+                method: "post",
+                dataType: "json",
+                data: {id:yazarID, tip:"yazarSoyadGetir"},
+                success: function (sonuc) {
+                    $("#soyad option").remove();
+                    $("#soyad").prop("disabled", false);
+                    $.each(sonuc.text, function (index, item) {
+                            $("#soyad").append(`<option value="${item["Value"]}">${item["Text"]}</option>`);
+                        });
+                    }
+                , complete: function () {
+
+                }
+            });
+        }
+        </script>
+    }

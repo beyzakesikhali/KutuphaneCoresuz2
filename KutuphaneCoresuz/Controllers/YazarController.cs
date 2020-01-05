@@ -1,5 +1,6 @@
 ﻿using KutuphaneCoresuz.Models.Context;
 using KutuphaneCoresuz.Models.Data;
+using KutuphaneCoresuz.Models.ModelforDB;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -54,7 +55,7 @@ namespace KutuphaneCoresuz.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+
         [AllowAnonymous]
 
         public ActionResult CreateYazar(Yazar yazar)
@@ -63,27 +64,83 @@ namespace KutuphaneCoresuz.Controllers
             {
                 db.Yazarlar.Add(yazar);
                 db.SaveChanges();
+                KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
+                List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
+                                            select new SelectListItem
+                                            {
+                                                Text = i.Isim,
+                                                Value = i.ID.ToString()
+
+                                            }).ToList();
+                List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
+                                               select new SelectListItem
+                                               {
+                                                   Text = j.Soyisim,
+                                                   Value = j.ID.ToString()
+                                               }).ToList();
+                kitapYazarModel.YazarAdlari = adi;
+                kitapYazarModel.YazarSoyadlari = soyadi;
+                //ViewBag.adlar = adi;
+                //ViewBag.soyadlar = soyadi;
+
+                //model.Add(new KitapYazarAddModel() { YazarSoyadi = yazar.Soyisim });
+
+
+
                 return RedirectToAction("IndexYazar");
             }
 
             return View(yazar);
         }
 
-        // GET: Yazars/Edit/5
-        [AllowAnonymous]
+        //  GET: Yazars/Edit/5
 
-        public ActionResult EditYazar(int? id)
+        public ActionResult EditYazarId(Yazar yazar)
         {
-            if (id == null)
+            if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Redirect("Login");
             }
-            Yazar yazar = db.Yazarlar.Find(id);
-            if (yazar == null)
+
+            return Redirect("EditYazarId");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult EditYazarId(int? id, Yazar model)
+        {
+            if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return HttpNotFound();
+                return Redirect("Login");
             }
-            return View(yazar);
+            else
+            {
+                var yazarIdResult = db.Yazarlar.Single(y => y.Isim == model.Isim && y.Soyisim == model.Soyisim);
+                int gelenId = yazarIdResult.ID;
+                // var ad = model.Isim;
+                id = gelenId;
+                if (gelenId == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Yazar yazar = db.Yazarlar.Find(id);
+                if (yazar == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+
+                    db.Entry(yazar).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("IndexYazar");
+                    //return View(yazar);
+
+                }
+
+            }
+
+
         }
 
 
@@ -91,26 +148,54 @@ namespace KutuphaneCoresuz.Controllers
         // POST: Yazars/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [AllowAnonymous]
-        public ActionResult EditYazar([Bind(Include = "yazarID,yazar_ismi,yazar_sifre,yazar_email,kitap_id")] Yazar yazar)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(yazar).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("IndexYazar");
-            }
-            return View(yazar);
-        }
+
+
+
+        //[AllowAnonymous]
+        //public ActionResult EditYazar(Yazar yazar)
+        //{
+        //    if (HttpContext.Session["kullaniciAdi"] == null)
+        //    {
+        //        return Redirect("Login");
+        //    }
+        //    //var yazarIdResult = db.Yazarlar.Where(y => y.Isim == model.Isim && y.Soyisim == model.Soyisim).Single();
+        //    //int id = yazarIdResult.ID;
+
+        //    //if (id == null)
+        //    //{
+        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    //}
+        //    //else
+        //    //{
+        //    //Yazar yazar = db.Yazarlar.Find(id);
+        //    if (yazar == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    else
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            db.Entry(yazar).State = EntityState.Modified;
+        //            db.SaveChanges();
+        //            return RedirectToAction("IndexYazar");
+        //        }
+        //        return View(yazar);
+
+        //    }
+        //}
+
+
 
         [AllowAnonymous]
 
         // GET: Yazars/Delete/5
-        public ActionResult DeleteYazar(int? id)
+        public ActionResult DeleteYazar(Yazar model)
         {
-            if (id == null)
+            //Yazar yazarSorgu = new Yazar();
+            var yazarIdResult = db.Yazarlar.Where(y => y.Isim == model.Isim).Single();
+            int id = yazarIdResult.ID;
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
