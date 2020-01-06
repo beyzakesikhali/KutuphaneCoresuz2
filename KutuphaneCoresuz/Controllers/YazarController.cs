@@ -140,10 +140,7 @@ namespace KutuphaneCoresuz.Controllers
 
             }
 
-
         }
-
-
 
         // POST: Yazars/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
