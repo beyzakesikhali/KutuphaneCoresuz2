@@ -33,8 +33,19 @@ namespace KutuphaneCoresuz.Models.Context
             modelBuilder.Entity<Uye>().ToTable("Uye");
             modelBuilder.Entity<Kitap>().ToTable("Kitap");
             modelBuilder.Entity<Yazar>().ToTable("Yazar");
-            modelBuilder.Entity<UyelerinKitaplari>().ToTable("UyelerinKitaplari");
-            modelBuilder.Entity<YazarlarinKitaplari>().ToTable("YazarlarinKitaplari");
+            modelBuilder.Entity<Yazar>().HasMany(yk => yk.YazarID).WithMany(yk=>yk.KitapID).Map(
+                m =>
+                {
+                    m.ToTable(YazarlarinKitaplari);
+                    m.MapLeftKey("YazarID");
+                    m.MapRightKey("KitapID");
+                }
+                );
+            modelBuilder.Entity<UyelerinKitaplari>().HasKey(uk => new { uk.KitapID, uk.UyeID });
+            //modelBuilder
+           
+
+
 
         }
        

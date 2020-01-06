@@ -69,14 +69,14 @@ namespace KutuphaneCoresuz.Controllers
                                             select new SelectListItem
                                             {
                                                 Text = i.Isim,
-                                                Value = i.ID.ToString()
+                                                Value = i.YazarID.ToString()
 
                                             }).ToList();
                 List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
                                                select new SelectListItem
                                                {
                                                    Text = j.Soyisim,
-                                                   Value = j.ID.ToString()
+                                                   Value = j.YazarID.ToString()
                                                }).ToList();
                 kitapYazarModel.YazarAdlari = adi;
                 kitapYazarModel.YazarSoyadlari = soyadi;
@@ -94,15 +94,15 @@ namespace KutuphaneCoresuz.Controllers
         }
 
         //  GET: Yazars/Edit/5
-
+        [AllowAnonymous]
         public ActionResult EditYazarId(Yazar yazar)
         {
             if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return Redirect("Login");
+                return RedirectToAction("Login","Security");
             }
 
-            return Redirect("EditYazarId");
+            return View("EditYazarId");
         }
 
         [HttpPost]
@@ -111,12 +111,12 @@ namespace KutuphaneCoresuz.Controllers
         {
             if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return Redirect("Login");
+                return RedirectToAction("Login","Security");
             }
             else
             {
                 var yazarIdResult = db.Yazarlar.Single(y => y.Isim == model.Isim && y.Soyisim == model.Soyisim);
-                int gelenId = yazarIdResult.ID;
+                int gelenId = yazarIdResult.YazarID;
                 // var ad = model.Isim;
                 id = gelenId;
                 if (gelenId == 0)
@@ -191,7 +191,7 @@ namespace KutuphaneCoresuz.Controllers
         {
             //Yazar yazarSorgu = new Yazar();
             var yazarIdResult = db.Yazarlar.Where(y => y.Isim == model.Isim).Single();
-            int id = yazarIdResult.ID;
+            int id = yazarIdResult.YazarID;
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

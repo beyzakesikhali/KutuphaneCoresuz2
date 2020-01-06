@@ -47,8 +47,8 @@
                         </td>
 
                         <td>
-                            |  <button data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum class="btn-outline-success btn-duzenle">YAZARI DÜZENLE</button>
-                            |  <button class="btn-outline-success btn-sil" data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
+                            |  <button data-id=@item.YazarID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum class="btn-outline-success btn-duzenle">YAZARI DÜZENLE</button>
+                            |  <button class="btn-outline-success btn-sil" data-id=@item.YazarID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
                             |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar","Yazar")'">YAZAR DETAY</button>|
                         </td>
                     </tr>
@@ -64,17 +64,19 @@
         $(document).ready(function () {
             $(".btn-duzenle").click(function () {
                 var id = $(this).data("id");
-
+                alert(id);
                 var isim = $(this).data("isim");
-
+                alert(isim);
                 var soyisim = $(this).data("soisim");
 
                 var yorum = $(this).data("yorum");
 
                 $.ajax({
-                    url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                   url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    @*url:'@Url.Action("EditYazarId","Yazar")',*@
                     method: "post",
                     dataType: "json",
+                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
                     success: function (data) {
 
                     }, complete: function () {
@@ -92,8 +94,10 @@
                 var yorum = $(this).data("yorum");
                 $.ajax({
                     url: `https://localhost:44339/Yazar/DeleteYazar?isim="${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
                     method: "post",
                     dataType: "json",
+                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
                     success: function (data) {
 
                     }, complete: function () {

@@ -23,5 +23,5 @@ namespace KutuphaneCoresuz.Models.ModelforDB
         public IEnumerable<SelectListItem> YazarAdlari { get; set; }
         public IEnumerable<SelectListItem> YazarSoyadlari { get; set; }
 
-}
+    }
 }
