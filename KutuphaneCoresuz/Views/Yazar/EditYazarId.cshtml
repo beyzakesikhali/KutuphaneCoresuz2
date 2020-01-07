@@ -62,7 +62,9 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                            <button class="btn-outline-warning btn-duzenle" data-id=ID data-isim=Isim data-soisim=Soyisim data-yorum=Yorum>YAZARI DÜZENLE</button>
+                            @*<button class="btn-outline-danger btn-sil" data-id=@Model.ID data-isim=@Model.Isim data-soisim=@Model.Soyisim data-yorum=@Model.Yorum>BU YAZARI SİL</button>*@
+                            <button class="btn-outline-danger btn-sil" data-id=ID data-isim=Isim data-soisim=Soyisim data-yorum=Yorum>BU YAZARI SİL</button>
                         </div>
                     </div>
 
@@ -70,9 +72,64 @@
             }
 
             <div>
-                <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexYazar","Yazar")'">Profil Detay</button> |
+               | <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexYazar","Yazar")'">Profil Detay</button> |
 
             </div>
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btn-duzenle").click(function () {
+                var id = $(this).data("id");
+                alert(id);
+                var isim = $(this).data("isim");
+                alert(isim);
+                var soyisim = $(this).data("soisim");
+
+                var yorum = $(this).data("yorum");
+
+                $.ajax({
+                   url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    @*url:'@Url.Action("EditYazarId","Yazar")',*@
+                    method: "post",
+                    dataType: "json",
+                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (data) {
+
+                    }, complete: function () {
+
+                    }
+                });
+            })
+
+        });
+
+        $(document).ready(function () {
+            $(".btn-sil").click(function () {
+                var isim = $(this).data("isim");
+                var soyisim = $(this).data("soisim");
+                var yorum = $(this).data("yorum");
+                $.ajax({
+                    url: `https://localhost:44339/Yazar/DeleteYazar?isim="${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
+                    method: "post",
+                    dataType: "json",
+                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (data) {
+
+                    }, complete: function () {
+
+                    }
+                });
+            })
+
+        });
+
+    </script>
+
+
+}
+

@@ -6,22 +6,17 @@
 }
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h2>Create</h2>
-
 @Html.Partial("~/Views/Shared/_Header.cshtml")
 
-<div id="logo" class="pull-left">
-    <h2>Edit</h2>
+<div id="logo" class="pull-left" align="center">
+
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Uye</h4>
+            <h4>Uye Düzenle</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ID)
@@ -76,16 +71,17 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Kaydet" class="btn btn-danger" />
                 </div>
             </div>
         </div>
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+  
+         <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("UyeAnasayfasi", "Security")'">AnaSayfaya Dön</button>
+        
+   
 </div>
-        </div>
-    </div>
+      
+
 

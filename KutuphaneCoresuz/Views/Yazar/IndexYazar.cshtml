@@ -8,103 +8,50 @@
 
 @Html.Partial("~/Views/Shared/_Header.cshtml")
 
-<div id="header">
-    <div class="container">
+    <div class="" align="center">
+        <br />
+        <br />
+        <h2>Yazarlar</h2>
 
-        <div id="logo" class="pull-left">
+        <p>
+            |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">YENİ BİR YAZAR EKLE</button> |
+        </p>
+        <table class="table" align="center" style="width:auto; height:auto">
+            <tr>
+                <th>
+                    -İsim-
+                </th>
+                <th>
+                    -Soyisim-
+                </th>
+                <th>
+                    -Yorum-
+                </th>
 
-            <h2>Yazarlar</h2>
+                <th></th>
+            </tr>
 
-            <p>
-                |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">YENİ BİR YAZAR EKLE</button> |
-            </p>
-            <table class="table">
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>
-                        -İsim-
-                    </th>
-                    <th>
-                        -Soyisim-
-                    </th>
-                    <th>
-                        -Yorum-
-                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Isim)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Soyisim)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Yorum)
+                    </td>
 
-                    <th></th>
+                    <td>
+                        |  <button class="btn-outline-warning" onclick="location.href='@Url.Action("EditYazarId","Yazar")'">YAZARI DÜZENLE</button>
+                        |  <button class="btn-outline-danger" btn-sil" data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
+                        |  <button class="btn-outline-dark" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar","Yazar")'">YAZAR DETAY</button>|
+                    </td>
                 </tr>
+            }
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Isim)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Soyisim)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Yorum)
-                        </td>
-
-                        <td>
-                            |  <button data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum class="btn-outline-success btn-duzenle">YAZARI DÜZENLE</button>
-                            |  <button class="btn-outline-success btn-sil" data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
-                            |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar","Yazar")'">YAZAR DETAY</button>|
-                        </td>
-                    </tr>
-                }
-
-            </table>
-        </div>
+        </table>
     </div>
-</div>
-@section Scripts
-{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".btn-duzenle").click(function () {
-                var id = $(this).data("id");
-
-                var isim = $(this).data("isim");
-
-                var soyisim = $(this).data("soisim");
-
-                var yorum = $(this).data("yorum");
-
-                $.ajax({
-                    url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
-                    method: "post",
-                    dataType: "json",
-                    success: function (data) {
-
-                    }, complete: function () {
-
-                    }
-                });
-            })
-
-        });
-
-        $(document).ready(function () {
-            $(".btn-sil").click(function () {
-                var isim = $(this).data("isim");
-                var soyisim = $(this).data("soisim");
-                var yorum = $(this).data("yorum");
-                $.ajax({
-                    url: `https://localhost:44339/Yazar/DeleteYazar?isim="${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
-                    method: "post",
-                    dataType: "json",
-                    success: function (data) {
-
-                    }, complete: function () {
-
-                    }
-                });
-            })
-
-        });
-
-    </script>
-
-
-}
+  

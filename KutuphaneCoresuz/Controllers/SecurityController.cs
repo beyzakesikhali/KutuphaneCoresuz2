@@ -79,6 +79,7 @@ namespace KutuphaneCoresuz.Controllers
         public ActionResult Login(Uye uye)
         {
 
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             var mevcut = db.Uyeler.FirstOrDefault(p => p.Sifre == uye.Sifre && p.KullaniciAdi==uye.KullaniciAdi);
             //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
 
@@ -102,7 +103,7 @@ namespace KutuphaneCoresuz.Controllers
         }
          [AllowAnonymous]
      
-        //[OutputCache(Duration = 5, VaryByParam = "none")]
+        [OutputCache(CacheProfile = "anaSayfaCache")]
         public ActionResult UyeAnasayfasi()
         {
 
@@ -111,31 +112,32 @@ namespace KutuphaneCoresuz.Controllers
            
             Uye uye = new Uye();
             Kitap kitap = new Kitap();
-            UyelerinKitaplari uyeKitap = new UyelerinKitaplari();
+            UyeKitap uyeKitap = new UyeKitap();
+            Yazar yazarlar = new Yazar();
             if (HttpContext.Session["kullaniciAdi"]==null)
             {
                 return Redirect("Login");
             }
             string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
-            var model = new KitapYazarAddModel();
+            List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
             var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
             int uyeID = uyeResult.ID;
-            var kitapIdResult = db.UyelerinKitaplariDb.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
-            if(kitapIdResult.Count!=0)
-            { 
-                    foreach (var item in kitapIdResult)
-                    {
-                        var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
-                        var yazarResult = db.Yazarlar.Where(y => y.ID == Convert.ToInt32(kitapResult.YazarKitapFK)).Single();
-                        model.KitapAdi = kitapResult.Isim; 
-                        model.yayinci = kitapResult.Yayinci;
-                        model.YazarAdi = yazarResult.Isim; 
-                        model.YazarSoyadi = yazarResult.Soyisim;
-                    }
-                if(model!=null)
+            var kitapIdResult = db.UyeKitap.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
+            if(kitapIdResult.Count()!=0)
+            {       foreach (var item in kitapIdResult)
                 {
-                     return View(model);
+                    var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
+                    var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
+                    model.Add(new KitapYazarAddModel() { KitapAdi = kitapResult.Isim });
+                    model.Add(new KitapYazarAddModel() { Aciklama = kitapResult.Aciklama });
+                    model.Add(new KitapYazarAddModel() { yayinci = kitapResult.Yayinci });
+                    model.Add(new KitapYazarAddModel() { YazarAdi = yazarlar.Isim });
+                    model.Add(new KitapYazarAddModel() { YazarSoyadi = yazarlar.Soyisim });
                 }
+                    if(model!=null)
+                    {
+                         return View(model);
+                    }
             }
           
            
@@ -146,7 +148,7 @@ namespace KutuphaneCoresuz.Controllers
 
         public ActionResult UyeKitaplarSayfasi()
         {
-            UyelerinKitaplari uyeKitap = new UyelerinKitaplari();
+            UyeKitap uyeKitap = new UyeKitap();
             Uye uye = new Uye();
             Kitap kitap = new Kitap();
 

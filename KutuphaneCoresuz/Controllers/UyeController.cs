@@ -81,14 +81,15 @@ namespace KutuphaneCoresuz.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [AllowAnonymous]
         public ActionResult CreateUye(Uye uye)
         {
             string Kadi = uye.KullaniciAdi;
-            var KAdiResult = db.Uyeler.Find(Kadi);
-            if (KAdiResult != null)
+            var KAdiResult = db.Uyeler.Where(u=>u.KullaniciAdi==Kadi).FirstOrDefault();
+            if (KAdiResult == null)
             {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
                 if (ModelState.IsValid)
                 {
                     db.Uyeler.Add(uye);
@@ -102,55 +103,70 @@ namespace KutuphaneCoresuz.Controllers
             ViewBag.KadiMesaj = "Başka bir kullanıcı adı deneyin!";
             return View(uye);
         }
+        [AllowAnonymous]
+        public ActionResult EditUye()
+        {
+            if (HttpContext.Session["KullaniciAdi"] == null)
+            {
+                return RedirectToAction("Login", "Security");
+            }
+            return View();
 
+        }
 
-        // GET: Uyes/Edit/5  
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult EditUye(Uye uye)
+        public ActionResult EditUye(int? id, Uye uye)
         {
-            if (HttpContext.Session["KullaniciAdi"] != null)
-            {
+            string uyeAdi = "";
+           uyeAdi=HttpContext.Session["kullaniciAdi"].ToString();
 
-                HttpContext.Session["kullaniciAdi"] = uye.KullaniciAdi;
-
-                var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
-                int uyeId = 0;
-                uyeId = uyeIdResult.ID;
-                if (uyeId == 0)
+                var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi ==uyeAdi ).FirstOrDefault();
+                //int uyeId = 0;
+                id = uyeIdResult.ID;
+                if (id == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 //Uye uye = db.Uyeler.Find(id);
                 if (uye == null)
+                {   
+                    return HttpNotFound();
+                }
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {       db.Entry(uye).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Login","Security");
+            }
+            return RedirectToAction("Login", "Security");
+          
+        }
+
+        [AllowAnonymous]
+        public ActionResult DeleteUye(Uye uye)
+        {
+            string uyeAdi = "";
+            uyeAdi = HttpContext.Session["kullaniciAdi"].ToString();
+
+            //Yazar yazarSorgu = new Yazar();
+            var UyeIdResult = db.Yazarlar.Where(y => y.Isim == uyeAdi).Single();
+                int id = UyeIdResult.ID;
+                if (id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Yazar yazar = db.Yazarlar.Find(id);
+                if (yazar == null)
                 {
                     return HttpNotFound();
                 }
-                if (ModelState.IsValid)
-                {
-                    db.Entry(uye).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("IndexUye");
-                }
-                return View(uye);
-
+                return View(yazar);
             }
-            else
-            {
-                return RedirectToAction("Login", "Security");
-            }
-        }
 
-        // POST: Uyes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-
-
-
-        // GET: Uyes/Delete/5
         [AllowAnonymous]
         [HttpPost, ActionName("DeleteUye")]
-        public ActionResult DeleteUye()
+        public ActionResult DeleteUye(int id)
         {
 
             if (HttpContext.Session["KullaniciAdi"] == null)
@@ -163,9 +179,9 @@ namespace KutuphaneCoresuz.Controllers
                 HttpContext.Session["kullaniciAdi"] = uye.KullaniciAdi;
 
                 var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
-                int uyeId = 0;
-                uyeId = uyeIdResult.ID;
-                if (uyeId == null)
+                //int uyeId = 0;
+                id = uyeIdResult.ID;
+                if (id == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }

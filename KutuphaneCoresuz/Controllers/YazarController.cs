@@ -44,12 +44,12 @@ namespace KutuphaneCoresuz.Controllers
         }
 
         // GET: Yazars/Create
-        [AllowAnonymous]
+        //[AllowAnonymous]
 
-        public ActionResult CreateYazar()
-        {
-            return View();
-        }
+        //public ActionResult CreateYazar()
+        //{
+        //    return View();
+        //}
 
         // POST: Yazars/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -58,51 +58,72 @@ namespace KutuphaneCoresuz.Controllers
 
         [AllowAnonymous]
 
-        public ActionResult CreateYazar(Yazar yazar)
+        public JsonResult CreateYazar(KitapYazarAddModel yazar)
         {
-            if (ModelState.IsValid)
+            bool basariliMi = true;
+            int code =0;
+            try
             {
-                db.Yazarlar.Add(yazar);
-                db.SaveChanges();
-                KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
-                List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
-                                            select new SelectListItem
-                                            {
-                                                Text = i.Isim,
-                                                Value = i.ID.ToString()
+                if (ModelState.IsValid)
+                {
+                    Yazar yeniYazar = new Yazar();
+                    yeniYazar.Isim = yazar.YazarAdi;
+                    yeniYazar.Soyisim = yazar.YazarSoyadi;
+                    yeniYazar.Yorum = yazar.YazarYorum;
+                    db.Yazarlar.Add(yeniYazar);
+                    db.SaveChanges();
+                    KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
+                    List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
+                                                select new SelectListItem
+                                                {
+                                                    Text = i.Isim,
+                                                    Value = i.ID.ToString()
 
-                                            }).ToList();
-                List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
-                                               select new SelectListItem
-                                               {
-                                                   Text = j.Soyisim,
-                                                   Value = j.ID.ToString()
-                                               }).ToList();
-                kitapYazarModel.YazarAdlari = adi;
-                kitapYazarModel.YazarSoyadlari = soyadi;
-                //ViewBag.adlar = adi;
-                //ViewBag.soyadlar = soyadi;
+                                                }).ToList();
+                    List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = j.Soyisim,
+                                                       Value = j.ID.ToString()
+                                                   }).ToList();
+                    kitapYazarModel.YazarAdlari = adi;
+                    kitapYazarModel.YazarSoyadlari = soyadi;
+                    //ViewBag.adlar = adi;
+                    //ViewBag.soyadlar = soyadi;
 
-                //model.Add(new KitapYazarAddModel() { YazarSoyadi = yazar.Soyisim });
+                    //model.Add(new KitapYazarAddModel() { YazarSoyadi = yazar.Soyisim });
+
+                    
 
 
-
-                return RedirectToAction("IndexYazar");
+                }
+                code = 1; //CreateKitap
+                return Json(new { ok = basariliMi, text = code });//CreateKitap sayfasına yönlendirecek code=1
             }
 
-            return View(yazar);
-        }
+          
+            catch (Exception)
+            {
+                basariliMi = false;
+                code = 2;
+                return Json(new { ok = basariliMi, text = code });//CreateYazarı tekrar açacak kod
+            }
+           
+         }
+
+            
+   
 
         //  GET: Yazars/Edit/5
-
+        [AllowAnonymous]
         public ActionResult EditYazarId(Yazar yazar)
         {
             if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return Redirect("Login");
+                return RedirectToAction("Login","Security");
             }
 
-            return Redirect("EditYazarId");
+            return View("EditYazarId");
         }
 
         [HttpPost]
@@ -111,10 +132,11 @@ namespace KutuphaneCoresuz.Controllers
         {
             if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return Redirect("Login");
+                return RedirectToAction("Login","Security");
             }
             else
             {
+                
                 var yazarIdResult = db.Yazarlar.Single(y => y.Isim == model.Isim && y.Soyisim == model.Soyisim);
                 int gelenId = yazarIdResult.ID;
                 // var ad = model.Isim;
@@ -140,10 +162,7 @@ namespace KutuphaneCoresuz.Controllers
 
             }
 
-
         }
-
-
 
         // POST: Yazars/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
