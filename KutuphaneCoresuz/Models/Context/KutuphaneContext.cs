@@ -8,7 +8,7 @@ using KutuphaneCoresuz.Models.Data;
 //using DbContext = System.Data.Entity.DbContext;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
-
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace KutuphaneCoresuz.Models.Context
 {
@@ -25,30 +25,26 @@ namespace KutuphaneCoresuz.Models.Context
         public DbSet<Uye> Uyeler { get; set; }
         public DbSet<Yazar> Yazarlar { get; set; }
         public DbSet<Kitap> Kitaplar { get; set; }
-        public DbSet<YazarlarinKitaplari> YazarlarinKitaplariDb { get; set; }
-        public DbSet<UyelerinKitaplari> UyelerinKitaplariDb { get; set; }
+        public DbSet<UyeKitap> UyeKitap { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //Database.SetInitializer<KutuphaneContext>(new D<KutuphaneContext>());
-            modelBuilder.Entity<Uye>().ToTable("Uye");
-            modelBuilder.Entity<Kitap>().ToTable("Kitap");
-            modelBuilder.Entity<Yazar>().ToTable("Yazar");
-            modelBuilder.Entity<Yazar>().HasMany(yk => yk.YazarID).WithMany(yk=>yk.KitapID).Map(
-                m =>
-                {
-                    m.ToTable(YazarlarinKitaplari);
-                    m.MapLeftKey("YazarID");
-                    m.MapRightKey("KitapID");
-                }
-                );
-            modelBuilder.Entity<UyelerinKitaplari>().HasKey(uk => new { uk.KitapID, uk.UyeID });
+
+            //modelBuilder.Entity<Yazar>().HasMany(yk => yk.YazarID).WithMany(yk=>yk.KitapID).Map(
+            //    m =>
+            //    {
+            //        m.ToTable(YazarlarinKitaplari);
+            //        m.MapLeftKey("YazarID");
+            //        m.MapRightKey("KitapID");
+            //    }
+            //    );
+            //modelBuilder.Entity<UyeKitap>().HasKey(uk => new { uk.KitapID, uk.UyeID });
             //modelBuilder
-           
+
 
 
 
         }
-       
+
 
     }
 

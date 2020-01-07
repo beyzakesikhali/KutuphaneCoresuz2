@@ -112,8 +112,8 @@ namespace KutuphaneCoresuz.Controllers
            
             Uye uye = new Uye();
             Kitap kitap = new Kitap();
-            UyelerinKitaplari uyeKitap = new UyelerinKitaplari();
-            YazarlarinKitaplari yazarKitap = new YazarlarinKitaplari();
+            UyeKitap uyeKitap = new UyeKitap();
+            Yazar yazarlar = new Yazar();
             if (HttpContext.Session["kullaniciAdi"]==null)
             {
                 return Redirect("Login");
@@ -121,20 +121,18 @@ namespace KutuphaneCoresuz.Controllers
             string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
             List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
             var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
-            int uyeID = uyeResult.UyeID;
-            var kitapIdResult = db.UyelerinKitaplariDb.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
+            int uyeID = uyeResult.ID;
+            var kitapIdResult = db.UyeKitap.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
             if(kitapIdResult.Count()!=0)
             {       foreach (var item in kitapIdResult)
                 {
-                    var kitapResult = db.Kitaplar.Where(z => z.KitapID == item).Single();
-                    var yazarResult = db.YazarlarinKitaplariDb.Where(y => y.KitapID == item).Single();
-                    var yazarlar = db.Yazarlar.Where(y => y.YazarID == yazarResult.YazarID).Single();
+                    var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
+                    var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
                     model.Add(new KitapYazarAddModel() { KitapAdi = kitapResult.Isim });
                     model.Add(new KitapYazarAddModel() { Aciklama = kitapResult.Aciklama });
                     model.Add(new KitapYazarAddModel() { yayinci = kitapResult.Yayinci });
                     model.Add(new KitapYazarAddModel() { YazarAdi = yazarlar.Isim });
                     model.Add(new KitapYazarAddModel() { YazarSoyadi = yazarlar.Soyisim });
-               
                 }
                     if(model!=null)
                     {
@@ -150,7 +148,7 @@ namespace KutuphaneCoresuz.Controllers
 
         public ActionResult UyeKitaplarSayfasi()
         {
-            UyelerinKitaplari uyeKitap = new UyelerinKitaplari();
+            UyeKitap uyeKitap = new UyeKitap();
             Uye uye = new Uye();
             Kitap kitap = new Kitap();
 

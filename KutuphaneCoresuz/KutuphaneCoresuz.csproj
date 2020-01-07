@@ -556,9 +556,8 @@
     <Compile Include="Models\Context\KutuphaneVTInitializer.cs" />
     <Compile Include="Models\Data\Kitap.cs" />
     <Compile Include="Models\Data\Uye.cs" />
-    <Compile Include="Models\Data\UyelerinKitaplari.cs" />
+    <Compile Include="Models\Data\UyeKitap.cs" />
     <Compile Include="Models\Data\Yazar.cs" />
-    <Compile Include="Models\Data\YazarlarinKitaplari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -574,6 +573,7 @@
     <Content Include="Content\cssLogin.css" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\animate.min.css" />
+    <Content Include="Content\css\popupcss\popup.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\easing.js" />
     <Content Include="Content\easing.min.js" />
@@ -2169,10 +2169,19 @@
     <Content Include="Content\fontawesome-free-5.12.0-web\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-free-5.12.0-web\webfonts\fa-solid-900.svg" />
     <Content Include="Content\hoverIntent.js" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\img\call-to-action-bg.jpg" />
     <Content Include="Content\img\hero-bg.jpg" />
     <Content Include="Content\img\menu.png" />
     <Content Include="Content\jquery-migrate.min.js" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\Regna\css\scss-files.txt" />
     <Content Include="Content\Regna\css\style.css" />
@@ -2292,6 +2301,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

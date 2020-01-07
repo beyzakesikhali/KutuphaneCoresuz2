@@ -11,33 +11,19 @@ namespace KutuphaneCoresuz.Models.Data
     public class Kitap
     {
         [Key]
-        public int KitapID { get; set; }
+        public int ID { get; set; }
         [Display(Name = "Kitabın Adı:")]
-        public int UyeID { get; set; }
+        public int YazarID { get; set; }
         public string Isim { get; set; }
         [Display(Name = "Yayıncı:")]
         public string Yayinci { get; set; }
         [Display(Name = "Açıklama:")]
         public string Aciklama { get; set; }
-
-
-        ICollection<YazarKitap> YazarlarinKitaplari { get; set; }
-
+        ICollection<UyeKitap> UyeKitap { get; set; }
         [ForeignKey("YazarID")]
         public virtual Yazar Yazar { get; set; }
-        
-
-        [ForeignKey("UyeID")]
-        public virtual Uye Uye { get; set; }
-        //public virtual ICollection<Uye> Uyeler { get; set; }
-        //public virtual ICollection<Yazar> Yazarlar { get; set; }
-
-        //FluentApi HasMany metod
-
-
-
-
-
+       
+     
 
     }
 

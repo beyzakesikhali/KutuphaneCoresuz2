@@ -9,26 +9,7 @@
 
 @Html.Partial("~/Views/Shared/_Header.cshtml")
 
-<div style="position:absolute; right:10px; top:500px;">
-    <table>
-        <tr>
-            <td><button class="btn-outline-secondary" type="submit" name="update" onclick="location.href='@Url.Action("EditUye", "Uye")'"> Profil Düzenle</button></td>
 
-        </tr>
-        <tr>
-            <td>
-                <button class="btn-outline-secondary" type="button" name="deleteUye" onclick="location.href='@Url.Action("DeleteUye", "Uye")'">Profil Sil</button>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsUye", "Uye")'">Profil Detay</button>
-
-            </td>
-        </tr>
-    </table>
-</div>
 
 <span class="border-dark border-bottom">
     <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
@@ -93,11 +74,11 @@
             {
 
                 <td>
-                <button class="btn-outline-warning" type="submit" name="update" onclick="location.href='@Url.Action("EditKitap", "Kitap")'">Düzenle</button>
+                    <button class="btn-outline-warning" type="submit" name="update" data-id=ID>Düzenle</button>
 
-                <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsKitap", "Kitap")'">Detaylar</button>
+                    <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsKitap", "Kitap")'">Detaylar</button>
 
-                <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
+                    <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
 
                 </td>
             }
@@ -126,21 +107,57 @@
 </table>
 
 
-
 @section Scripts
 {
     <script type="text/javascript">
-        //$(function () {
-        //    $("test").click({
-        //       ;
-        //    });
-        //});
+        $(document).ready(function () {
+            $(".btn-duzenle").click(function () {
+                var id = $(this).data("id");
+                alert(id);
+                var isim = $(this).data("isim");
+                alert(isim);
+                var soyisim = $(this).data("soisim");
+
+                var yorum = $(this).data("yorum");
+
+                $.ajax({
+                   url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    @*url:'@Url.Action("EditYazarId","Yazar")',*@
+                    method: "post",
+                    dataType: "json",
+                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (data) {
+
+                    }, complete: function () {
+
+                    }
+                });
+            })
+
+        });
 
         $(document).ready(function () {
-            if ($("#kitap tbody tr").length == 0) {
-                alert("Hiç Kitabınız yok.");
-            }
+            $(".btn-sil").click(function () {
+                var isim = $(this).data("isim");
+                var soyisim = $(this).data("soisim");
+                var yorum = $(this).data("yorum");
+                $.ajax({
+                    url: `https://localhost:44339/Yazar/DeleteYazar?isim="${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
+                    method: "post",
+                    dataType: "json",
+                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (data) {
 
-        })
+                    }, complete: function () {
+
+                    }
+                });
+            })
+
+        });
+
     </script>
+
+
 }

@@ -48,46 +48,51 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public JsonResult AdSoyad(int? id, string tip = "yazarAdGetir")
         {
-
+            List<Yazar> yazarlarListesi = new List<Yazar>();
+            yazarlarListesi = db.Yazarlar.ToList();
             List<SelectListItem> sonuc = new List<SelectListItem>();
             bool basariliMi = true;
+            string yazarlar = "";
             try
             {
                 switch (tip)
                 {
                     case "yazarAdGetir":
-                        foreach (var ad in db.Yazarlar.ToList())
+                        foreach (var ad in yazarlarListesi)
                         {
+                           
                             sonuc.Add(new SelectListItem
                             {
-                                Text = ad.Isim,
-                                Value = ad.YazarID.ToString()
+                                Text = ad.Isim +" " +ad.Soyisim,
+                                Value = ad.ID.ToString()
                             });
 
                         }
                         break;
-                    case "yazarSoyadGetir":
+                    //case "yazarSoyadGetir":
                        
-                        foreach (var soyad in db.Yazarlar.Where(y => y.YazarID ==id).ToList())
+                    //    foreach (var soyad in db.Yazarlar.Where(y => y.ID ==id).ToList())
                             
-                        {
-                            if (id != null)
-                            {
-                                sonuc.Add(new SelectListItem
-                                {
-                                    Text = soyad.Soyisim,
-                                    Value = soyad.YazarID.ToString()
-                                });
-                            }
+                    //    {
+                    //        if (id != null)
+                    //        {
+                    //            sonuc.Add(new SelectListItem
+                    //            {
+                    //                Text = soyad.Soyisim,
+                    //                Value = soyad.ID.ToString()
+                    //            });
+                    //        }
 
 
-                        }
-                        break;
+                    //    }
+                        //break;
                     default:
                         break;
                 }
+               
             }
-            catch (Exception)
+          
+            catch (Exception) 
             {
                 basariliMi = false;
                 sonuc = new List<SelectListItem>();
@@ -98,8 +103,11 @@ namespace KutuphaneCoresuz.Controllers
                 });
 
             }
-            return Json(new { ok = basariliMi, text = sonuc });
+
+           return Json(new { ok = basariliMi, text = sonuc });
         }
+
+  
         // GET: Kitaps/Create
         [AllowAnonymous]
         public ActionResult CreateKitap()
@@ -144,6 +152,7 @@ namespace KutuphaneCoresuz.Controllers
             //}
 
         }
+        [OutputCache(CacheProfile = "anaSayfaCache")]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         [HttpPost]
@@ -167,9 +176,10 @@ namespace KutuphaneCoresuz.Controllers
 
 
             Kitap yeniKitap = new Kitap();
-            Yazar yeniYazar = new Yazar();
-            YazarlarinKitaplari yeniYazarKitap = new YazarlarinKitaplari();
-            UyelerinKitaplari yeniUyeKitap = new UyelerinKitaplari();
+            //Yazar yeniYazar = new Yazar();
+            //YazarKitap yeniYazarKitap = new YazarKitap();
+            UyeKitap yeniUyeKitap = new UyeKitap();
+            //select option yapısından dolayı Id direk gelir.
             int SeciliYazarID = Convert.ToInt32(model.YazarAdi);
             
          
@@ -177,35 +187,43 @@ namespace KutuphaneCoresuz.Controllers
             string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
             var AktifUyeResult = db.Uyeler.Where(i => i.KullaniciAdi == AktifUye).Single();
             var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi).FirstOrDefault();
-            var YazarResult = db.Yazarlar.Where(i => i.YazarID == SeciliYazarID).FirstOrDefault();
+            var YazarResult = db.Yazarlar.Where(i => i.ID == SeciliYazarID).FirstOrDefault();
             //var YazarSoyismi = db.Yazarlar.Where(s => s.Soyisim == SeciliYazarSoyadi).FirstOrDefault();
             //var yazarIdResult = db.Yazarlar.Where(r => r.Isim == SeciliYazarAdi).Where(r => r.Soyisim == SeciliYazarSoyadi).Single();
-            yeniUyeKitap.UyeID = AktifUyeResult.UyeID;
+           
             if (KitapVarmi == null)
             {
                 if (SeciliYazarID != 0)
                 {
                     if (ModelState.IsValid)
                     {
+                        //önce kitap tablosu
                         yeniKitap.Isim =model.KitapAdi;
                         yeniKitap.Yayinci = model.yayinci;
                         yeniKitap.Aciklama = model.Aciklama;
-                        //var UyeFkResult = db.UyelerinKitaplariDb.Where(i => i.UyeID == AktifUyeResult.ID).FirstOrDefault();
-                        //yeniKitap.UyeKitapFK = UyeFkResult;
-                        //var YazarFkResult = db.YazarlarinKitaplariDb.Where(i => i.YazarID == SeciliYazarID).FirstOrDefault();
-                        //yeniKitap.YazarKitapFK = YazarFkResult;
-
-                        yeniYazar.Isim = YazarResult.Isim;
-                        yeniYazar.Soyisim = YazarResult.Soyisim;
-                        yeniYazar.YazarID = YazarResult.YazarID;
-                        yeniYazarKitap.YazarID = YazarResult.YazarID;
-                        
-                        //db.Yazarlar.Add(yeniYazar);
+                        //yeniKitap.UyeID = AktifUyeResult.ID;
+                        //yeniKitap.YazarID = SeciliYazarID;
+                        //yeniKitap.Uye = AktifUyeResult;
+                        //yeniKitap.Yazar = YazarResult;
                         db.Kitaplar.Add(yeniKitap);
-                       
-                        db.YazarlarinKitaplariDb.Add(yeniYazarKitap);
-                        db.UyelerinKitaplariDb.Add(yeniUyeKitap);
                         db.SaveChanges();
+                        //sonra FK lardan herhangi biri olan YazarKitap
+                        
+                        //yeniYazarKitap.YazarID=YazarResult.ID;
+                        //yeniYazarKitap.KitapID = yeniKitap.ID;
+                        //yeniYazarKitap.Yazar = YazarResult;
+                        //yeniYazarKitap.Kitap = yeniKitap;
+                        //db.SaveChanges();
+                        //sonra FK lardan UyeKitap
+
+                        yeniUyeKitap.UyeID = AktifUyeResult.ID;
+                        yeniUyeKitap.KitapID = yeniKitap.ID;
+                        yeniUyeKitap.Kitap = yeniKitap;
+                        yeniUyeKitap.Uye = AktifUyeResult;
+                        db.UyeKitap.Add(yeniUyeKitap);
+                        db.SaveChanges();
+                      
+                       
                     }
 
                 }
@@ -213,8 +231,6 @@ namespace KutuphaneCoresuz.Controllers
                 {
                     return View(ViewBag("Yazar Seçmediniz!"));
                 }
-
-
             }
             else
             {

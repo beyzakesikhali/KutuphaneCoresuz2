@@ -50,7 +50,7 @@ namespace KutuphaneCoresuz.Controllers
 
                 var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
                 int uyeId = 0;
-                uyeId = uyeIdResult.UyeID;
+                uyeId = uyeIdResult.ID;
                 if (uyeId == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -123,7 +123,7 @@ namespace KutuphaneCoresuz.Controllers
 
                 var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi ==uyeAdi ).FirstOrDefault();
                 //int uyeId = 0;
-                id = uyeIdResult.UyeID;
+                id = uyeIdResult.ID;
                 if (id == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -151,7 +151,7 @@ namespace KutuphaneCoresuz.Controllers
 
             //Yazar yazarSorgu = new Yazar();
             var UyeIdResult = db.Yazarlar.Where(y => y.Isim == uyeAdi).Single();
-                int id = UyeIdResult.YazarID;
+                int id = UyeIdResult.ID;
                 if (id == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -180,7 +180,7 @@ namespace KutuphaneCoresuz.Controllers
 
                 var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
                 //int uyeId = 0;
-                id = uyeIdResult.UyeID;
+                id = uyeIdResult.ID;
                 if (id == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
