@@ -1,4 +1,6 @@
-﻿using KutuphaneCoresuz.Models.Context;
+﻿using KutuphaneCoresuz.Controllers.OrtakSiniflar;
+using KutuphaneCoresuz.Helper;
+using KutuphaneCoresuz.Models.Context;
 using KutuphaneCoresuz.Models.Data;
 using KutuphaneCoresuz.Models.ModelforDB;
 using System;
@@ -55,11 +57,6 @@ namespace KutuphaneCoresuz.Controllers
 
     */
 
-
-
-
-
-
          KutuphaneContext db = new KutuphaneContext();
         [AllowAnonymous]
 
@@ -72,18 +69,34 @@ namespace KutuphaneCoresuz.Controllers
 
             return View();
         }
+        [AutorizeAdminAttiribute]
+        public ActionResult AdminAnasayfasi()
+        {
+
+
+            return View();
+
+        }
+
+
+
 
         [AllowAnonymous]
         [HttpPost]
 
         public ActionResult Login(Uye uye)
         {
+            SifreKontrol kontrol = new SifreKontrol();
 
             var errors = ModelState.Values.SelectMany(v => v.Errors);
-            var mevcut = db.Uyeler.FirstOrDefault(p => p.Sifre == uye.Sifre && p.KullaniciAdi==uye.KullaniciAdi);
+            var mevcut = db.Uyeler.Where(p => p.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
+            string gelenSifre = uye.Sifre;
+            int sifreKontrol = 0;
+            sifreKontrol=kontrol.SifreKontrolEt(gelenSifre,mevcut.Sifre);
+
             //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
 
-            if (mevcut != null)
+            if (mevcut != null && sifreKontrol==1)
             {
                 //Session.Add("KullaniciAdi",u.isim.ToString());
 
@@ -128,11 +141,7 @@ namespace KutuphaneCoresuz.Controllers
                 {
                     var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
                     var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new KitapYazarAddModel() { KitapAdi = kitapResult.Isim });
-                    model.Add(new KitapYazarAddModel() { Aciklama = kitapResult.Aciklama });
-                    model.Add(new KitapYazarAddModel() { yayinci = kitapResult.Yayinci });
-                    model.Add(new KitapYazarAddModel() { YazarAdi = yazarlar.Isim });
-                    model.Add(new KitapYazarAddModel() { YazarSoyadi = yazarlar.Soyisim });
+                    model.Add(new KitapYazarAddModel() { KitapAdi = kitapResult.Isim , Aciklama = kitapResult.Aciklama, yayinci = kitapResult.Yayinci, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
                 }
                     if(model!=null)
                     {

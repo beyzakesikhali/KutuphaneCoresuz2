@@ -1,7 +1,71 @@
-﻿
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.Data.Uye>
+
+
 @{
-    ViewBag.Title = "IndexAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>IndexAdmin</h2>
+<h2> Sadece Adminin Göreceği Sayfa</h2>
+            <p>
+                @Html.ActionLink("Create New", "CreateUye")
+            </p>
+            <table id="keywords" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th class="lalign">
+                        @Html.DisplayNameFor(model => model.isim)
+                    </th>
+                    <th class="lalign">
+                        @Html.DisplayNameFor(model => model.KullaniciAdi)
+                    </th>
+                    <th class="lalign">
+                        @Html.DisplayNameFor(model => model.Soyisim)
+                    </th>
+                    <th class="lalign">
+                        @Html.DisplayNameFor(model => model.Sifre)
+                    </th>
+                    <th class="lalign">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th class="lalign">
+                        @Html.DisplayNameFor(model => model.Aciklama)
+                    </th>
 
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="lalign">
+                            @Html.DisplayFor(modelItem => item.isim)
+                        </td>
+                        <td class="lalign">
+                            @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                        </td>
+                        <td class="lalign">
+                            @Html.DisplayFor(modelItem => item.Soyisim)
+                        </td>
+                        <td class="lalign">
+                            @Html.DisplayFor(modelItem => item.Sifre)
+                        </td>
+                        <td class="lalign">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td class="lalign">
+                            @Html.DisplayFor(modelItem => item.Aciklama)
+                        </td>
+                        <td class="lalign">
+                            @Html.ActionLink("Edit", "EditUye", new { id = item.ID }) |
+                            @Html.ActionLink("Details", "DetailsUye", new { id = item.ID }) |
+                            @Html.ActionLink("Delete", "DeleteUye", new { id = item.ID })
+                        </td>
+                    </tr>
+                }
+
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/table/JavaScriptTable.js"></script>

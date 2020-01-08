@@ -8,9 +8,9 @@
                 </div>
 
                 @*@if(ViewContext.RouteData.Values["controller"].ToString()=="UyeAnaSayfasi")
-                    {
+        {
 
-                    }*@
+        }*@
 
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
@@ -22,13 +22,14 @@
                         <li class="menu-has-children">
                             @*@Html.ActionLink("Keşfet", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
                         <li class="menu-has-children">
-                            @Html.ActionLink("Keşfet", "Contact", "Home")
+                            @Html.ActionLink("Keşfet", "UyeAnaSayfasi", "Security")
                             <ul>
-                                <li>@Html.ActionLink("Yazar Ekle", "CreateYazar", "Yazar")</li>
-                                <li>@Html.ActionLink("Kitap Ekle", "CreateKitap", "Kitap")</li>
-                                <li>@Html.ActionLink("Dokümanlar", "", "")</li>
-                                <li>@Html.ActionLink("Yazarlar", "DetailsYazar", "Security")</li>
-                                <li>@Html.ActionLink("Kitaplar", "DetailsKitap", "Security")</li>
+                                <li><a href="#"></a></li>
+                                <li><a href=@Url.Action("CreateYazarAction","Yazar")>Yazar Ekle</a></li>
+                                <li><a href="@Url.Action("CreateKitap","Kitap")">Kitap Ekle</a></li>
+                                <li><a href="@Url.Action("CreateUye","Uye")">Yeni Uye</a></li>
+                                <li><a href="@Url.Action("IndexYazar","Yazar")">Tüm Yazarlar</a></li>
+                                <li><a href="@Url.Action("IndexKitap","Kitap")">Tüm Kitaplar</a></li>
                             </ul>
                         </li>
                         <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-facebook-f">   </li>
@@ -41,35 +42,39 @@
 
 
                         @*<li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
-                            <li><a href="#">Drop Down 5</a></li>*@
+                <li><a href="#">Drop Down 4</a></li>
+                <li><a href="#">Drop Down 5</a></li>*@
                     </ul>
 
                 </nav><!-- #nav-menu-container -->
+              
+
+                <div style="padding:0; margin-top:80px; font-family:fantasy; color:#01579B; height:250px; width:250px; position:absolute; left:10px ">
+                    <aside class="col-md-">
+
+                        <hr style="width:200px; position:absolute; left:10px; " />
+                        <a href="#" style="text-decoration:none;">Alıntılar</a>
+                        <br />
+                        
+
+                        <hr style="width:200px; position:absolute; left:10px; " />
+                        <a href="@Url.Action("IndexYazar","Yazar")" style="text-decoration:none;"> Tüm Yazarlar</a>
+                        
+                        <br />
+                        <hr style="width:200px; position:absolute; left:10px; " />
+                        <a href="@Url.Action("IndexKitap","Kitap")" style="text-decoration:none;">Tüm Kitaplar</a>
+                       <br />
+                        <hr style="width:200px; position:absolute; left:10px; " />
+                        <a href="#" style="text-decoration:none;">Hakkımızda   </a>
+                        <br />
+                        <hr style="width:200px; position:absolute; left:10px; " />
+                        <a href="#" style="text-decoration:none;">İletişim</a><br />
 
 
+                    </aside>
+                </div>
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <div class="row-cols-4" style="padding:0; margin:0; font-family:fantasy; color:#01579B; height:250px; width:150px; position:absolute; left:10px ">
-                <aside class="col-md-">
-
-                    <hr style="width:100px; position:absolute; left:10px; " />
-                    <a href="#" style="text-decoration:none;">Alıntılar<br /></a>
-
-                    <hr style="width:100px; position:absolute; left:10px; " />
-                    <a href="#" style="text-decoration:none;">Yazarlar<br /></a>
-
-                    <hr style="width:100px; position:absolute; left:10px; " />
-                    <a href="#" style="text-decoration:none;">Hakkımızda   <br /></a>
-
-                    <hr style="width:100px; position:absolute; left:10px; " />
-                    <a href="#" style="text-decoration:none;">İletişim<br /></a>
-                </aside>
-            </div>
+           
+          
         </header>
 

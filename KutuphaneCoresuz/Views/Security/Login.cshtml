@@ -29,12 +29,12 @@
                     @using (Html.BeginForm("Login", "Security", FormMethod.Post))
                     {
                         <div class="form-group">
-                            @Html.Label("Kullanıcı Adı", "adı", new { @class = "form-control-label" })
+                            @Html.Label("Kullanıcı Adı", "Kullanıcı Adı:", new { @class = "form-control-label" })
 
                             @Html.TextBoxFor(model => model.KullaniciAdi, "", new { placeholder = "Kullanıcı Adınız:", @class = "form-control" })
                         </div>
                         <div>
-                            @Html.Label("Şifre:", "sifre", new { @class = "form-control-label" })
+                            @Html.Label("Şifre:", "Sifreniz:", new { @class = "form-control-label" })
                             @Html.PasswordFor(model => model.Sifre, new { placeholder = "Şifreniz:", @class = "form-control" })
                         </div>
                         <div>

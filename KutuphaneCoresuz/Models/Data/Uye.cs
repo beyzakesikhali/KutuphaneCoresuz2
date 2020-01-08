@@ -23,12 +23,12 @@ namespace KutuphaneCoresuz.Models.Data
     }
     public class UyelerLogin
     {
-        public static List<Uye> UyelerInit()
+        public static List<Uye> AdminInit()
         {
             return new List<Uye>
-                {
-                new Uye { ID = 1, KullaniciAdi = "beyza", Sifre = "pas1" } };
-        }
+            {
+                new Uye { ID = 1, KullaniciAdi = "beyza", Sifre = "Allah Bana Yeter" } };
+            }
     }
 
 }

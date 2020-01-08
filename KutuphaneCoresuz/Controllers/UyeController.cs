@@ -1,11 +1,13 @@
 ﻿using KutuphaneCoresuz.Models.Context;
 using KutuphaneCoresuz.Models.Data;
+using KutuphaneCoresuz.Models.ModelforDB;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace KutuphaneCoresuz.Controllers
@@ -37,8 +39,9 @@ namespace KutuphaneCoresuz.Controllers
             }
 
         }
+       
 
-        // GET: Uyes/Details/5
+                // GET: Uyes/Details/5
         [AllowAnonymous]
         public ActionResult DetailsUye(Uye uye)
         {
@@ -85,13 +88,19 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult CreateUye(Uye uye)
         {
+
             string Kadi = uye.KullaniciAdi;
+            string sifre = uye.Sifre;
             var KAdiResult = db.Uyeler.Where(u=>u.KullaniciAdi==Kadi).FirstOrDefault();
-            if (KAdiResult == null)
+            
+
+            if (KAdiResult == null) 
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 if (ModelState.IsValid)
                 {
+                    string HashDegeri = Crypto.HashPassword(sifre);
+                    uye.Sifre = HashDegeri;
                     db.Uyeler.Add(uye);
                     db.SaveChanges();
                     ViewBag.LoginMesaj = "Başarılı Bir Şekilde Kayıt Oldunuz. Şimdi Giriş Yapınız";
@@ -144,29 +153,83 @@ namespace KutuphaneCoresuz.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult DeleteUye(Uye uye)
+        public ActionResult DeleteUye(KitapUyeViewModel kitapUye)
         {
-            string uyeAdi = "";
-            uyeAdi = HttpContext.Session["kullaniciAdi"].ToString();
 
-            //Yazar yazarSorgu = new Yazar();
-            var UyeIdResult = db.Yazarlar.Where(y => y.Isim == uyeAdi).Single();
-                int id = UyeIdResult.ID;
-                if (id == 0)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Yazar yazar = db.Yazarlar.Find(id);
-                if (yazar == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(yazar);
+            Uye uye = new Uye();
+            Kitap kitap = new Kitap();
+            UyeKitap uyeKitap = new UyeKitap();
+            Yazar yazarlar = new Yazar();
+            if (HttpContext.Session["kullaniciAdi"] == null)
+            {
+                return Redirect("Login");
             }
+            string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
+            List<KitapUyeViewModel> model = new List<KitapUyeViewModel>();
+            var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
+            int uyeID = uyeResult.ID;
+            var kitapIdResult = db.UyeKitap.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
+            if (kitapIdResult.Count() != 0)
+            {
+                foreach (var item in kitapIdResult)
+                {
+                    var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
+                    var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
+                    model.Add(new KitapUyeViewModel() {UyeIsim=uyeResult.isim, KullaniciAdi=AktifUye, UyeSoyisim=uyeResult.Soyisim, UyeEmail=uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapAdi=kitapResult.Isim, yayinci = kitapResult.Yayinci, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim, YazarYorum=yazarResult.Yorum });
+                }
+                if (model != null)
+                {
+                    return View(model);
+                }
+            }
+
+
+            return View();
+
+          
+                
+             
+            }
+        public JsonResult SifreKontrol(KitapUyeViewModel model)
+        {
+            bool basariliMi = true;
+            int code = 0;
+            try
+            {
+                if (ModelState.IsValid)
+                {  
+                    string gelenSifre = model.UyeSifre;
+                    var uyeResult = db.Uyeler.Where(u => u.KullaniciAdi == model.KullaniciAdi).Single();
+                    if(uyeResult!=null && gelenSifre==uyeResult.Sifre)
+                    {
+                                         
+                        code = 1; //DeleteUye
+                        return Json(new { ok = basariliMi, text = code });//Sifre doğru
+                        
+                    }
+                    code = 2;
+                   
+                }
+
+                return Json(new { ok = basariliMi, text = code });//sifre yanlış uyarısı 
+
+            }
+
+
+            catch (Exception)
+            {
+                basariliMi = false;
+                code = 3;
+                return Json(new { ok = basariliMi, text = code });//CreateYazarı tekrar açacak kod
+            }
+
+        }
+
+
 
         [AllowAnonymous]
         [HttpPost, ActionName("DeleteUye")]
-        public ActionResult DeleteUye(int id)
+        public ActionResult DeleteUye(int?id, KitapUyeViewModel model)
         {
 
             if (HttpContext.Session["KullaniciAdi"] == null)

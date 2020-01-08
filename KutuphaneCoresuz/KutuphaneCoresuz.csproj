@@ -542,13 +542,14 @@
     <Compile Include="Cache\CachedModelsrepository.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\KitapController.cs" />
-    <Compile Include="Filters\AutherizeAdmin.cs" />
+    <Compile Include="Helper\AutherizeAdmin.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
     <Compile Include="Controllers\YazarController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\SifreKontrol.cs" />
     <Compile Include="Models\ModelforDB\KitapUyeAddModel.cs" />
     <Compile Include="Models\ModelforDB\KitapUyeViewModel.cs" />
     <Compile Include="Models\ModelforDB\KitapYazarAddModel.cs" />
@@ -2207,7 +2208,6 @@
     <Content Include="Content\sm.css" />
     <Content Include="Content\superfish.js" />
     <Content Include="Content\superfish.min.js" />
-    <Content Include="Content\table\JavaScriptTable.js" />
     <Content Include="Content\table\tableCss.css" />
     <Content Include="Content\waypoints.min.js" />
     <Content Include="favicon.ico" />
@@ -2399,7 +2399,7 @@
     <Content Include="Views\Kitap\DetailsKitap.cshtml" />
     <Content Include="Views\Kitap\EditKitap.cshtml" />
     <Content Include="Views\Kitap\IndexKitap.cshtml" />
-    <Content Include="Views\Yazar\CreateYazar.cshtml" />
+    <Content Include="Views\Yazar\CreateYazarAction.cshtml" />
     <Content Include="Views\Yazar\DeleteYazar.cshtml" />
     <Content Include="Views\Yazar\DetailsYazar.cshtml" />
     <Content Include="Views\Yazar\EditYazarId.cshtml" />
@@ -2420,6 +2420,8 @@
     <Content Include="Views\Security\UyeKitaplarSayfasi.cshtml" />
     <Content Include="Views\Admin\IndexAdmin.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\Profil.cshtml" />
+    <Content Include="Views\Security\AdminAnasayfasi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
