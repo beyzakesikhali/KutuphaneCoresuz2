@@ -8,13 +8,16 @@
 
 @Html.Partial("~/Views/Shared/_Header.cshtml")
 
+@if (Context.Session["KullaniciAdi"] != null)
+{
+    @Html.Partial("~/Views/Shared/Profil.cshtml");
     <div class="" align="center">
         <br />
         <br />
         <h2>Yazarlar</h2>
 
         <p>
-            |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">YENİ BİR YAZAR EKLE</button> |
+            |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazarAction", "Yazar")'">YENİ BİR YAZAR EKLE</button> |
         </p>
         <table class="table" align="center" style="width:auto; height:auto">
             <tr>
@@ -45,13 +48,13 @@
                     </td>
 
                     <td>
-                        |  <button class="btn-outline-warning" onclick="location.href='@Url.Action("EditYazarId","Yazar")'">YAZARI DÜZENLE</button>
+                        |  <button class="btn-outline-warning" onclick="location.href='@Url.Action("EditYazarId", "Yazar")'">YAZARI DÜZENLE</button>
                         |  <button class="btn-outline-danger" btn-sil" data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
-                        |  <button class="btn-outline-dark" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar","Yazar")'">YAZAR DETAY</button>|
+                        |  <button class="btn-outline-dark" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar", "Yazar")'">YAZAR DETAY</button>|
                     </td>
                 </tr>
             }
 
         </table>
     </div>
-  
+}

@@ -1,72 +1,82 @@
-﻿@model IEnumerable<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
+﻿@model List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
+
+
 @{
-    ViewBag.Title = "Index";
-      Layout ="~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "anasayfa";
 
 }
 
+@Html.Partial("~/Views/Shared/_Header.cshtml")
+@if (Context.Session["KullaniciAdi"].ToString() != "")
+{
+    @Html.Partial("~/Views/Shared/Profil.cshtml");
+}
 
-<h2>Index</h2>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div id="header">
-        <div class="container">
 
-            <div id="logo" class="pull-left">
-                <p>
-                    @Html.ActionLink("Yeni Kitap", "CreateKitap")
-                </p>
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.KitapAdi)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.YazarAdi)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.YazarSoyadi)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.yayinci)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Aciklama)
-                        </th>
+<span class="border-dark border-bottom">
+    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
+</span>
+<h3 align="center">Var Olan Kitaplarınız</h3>
 
-                        <th></th>
-                    </tr>
+<table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th> @Html.Label("Kitap Adi:")</th>
+            <th>
+                @Html.Label("Yazar Adi:")
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.KitapAdi)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.YazarAdi)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.YazarSoyadi)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.yayinci)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Aciklama)
-                            </td>
+            </th>
+            <th>
+                @Html.Label("Yazar Soyadi:")
 
-                            <td>
-                                @*@Html.ActionLink("Edit", "EditKitap", new { id = item.kitapID }) |
-                                    @Html.ActionLink("Details", "DetailsKitap", new { id = item.kitapID }) |
-                                    @Html.ActionLink("Delete", "DeleteKitap", new { id = item.kitapID })*@
-                            </td>
-                        </tr>
-                    }
+            </th>
+            <th>
+                @Html.Label("Yayinci:")
+            </th>
+            <th>
+                @Html.Label("Yorum:")
+            </th>
+            <th>
+                İşlemler
+            </th>
 
-                </table>
-            </div>
-        </div>
-    </div>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @item.KitapAdi
+                    </td>
+                    <td>
+                        @item.YazarAdi
+                    </td>
+                    <td>
+                        @item.YazarSoyadi
+                    </td>
+                    <td>
+                        @item.yayinci
+                    </td>
+                    <td>
+                        @item.Aciklama
+                    </td>
+                    <td>
+                       <button class="btn btn-warning" type="submit" onclick="location.href='@Url.Action("EditKitap", "Kitap")'">Düzenle</button> |
+                        <button class="btn btn-secondary" type="submit" onclick="location.href='@Url.Action("DetailsKitap", "")'">Detaylar</button> |
+                        <button class="btn btn-danger" type="submit"onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+   
+    </table>
+  

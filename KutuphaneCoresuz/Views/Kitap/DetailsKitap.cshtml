@@ -1,4 +1,4 @@
-﻿@model KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
 
 @{
     ViewBag.Title = "Details";
@@ -9,47 +9,76 @@
 
 <h2>Details</h2>
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@Html.Partial("~/Views/Shared/_Header.cshtml")
 
-    <div id="header">
-        <div class="container">
 
-            <div id="logo" class="pull-left">
+<table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th> @Html.Label("Kitap Adi:")</th>
+            <th>
+                @Html.Label("Yazar Adi:")
 
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.KitapAdi)
-                    </dt>
+            </th>
+            <th>
+                @Html.Label("Yazar Soyadi:")
 
-                    <dd>
-                        @Html.DisplayFor(model => model.KitapAdi)
-                    </dd>
+            </th>
+            <th>
+                @Html.Label("Yayinci:")
+            </th>
+            <th>
+                @Html.Label("Yorum:")
+            </th>
+            <th>
+                @Html.Label("Kitap Durum")
+            </th>
+            <th>
+                İşlemler
+            </th>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.yayinci)
-                    </dt>
+        </tr>
+    </thead>
+    <tbody>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.yayinci)
-                    </dd>
+        @if (Model != null)
+        {
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Aciklama)
-                    </dt>
+            foreach (var item in Model)
+            {
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Aciklama)
-                    </dd>
+                <tr>
+                    <td>
+                        @item.KitapAdi
+                    </td>
+                    <td>
+                        @item.YazarAdi
+                    </td>
+                    <td>
+                        @item.YazarSoyadi
+                    </td>
+                    <td>
+                        @item.yayinci
+                    </td>
+                    <td>
+                        @item.Aciklama
+                    </td>
+                    <td>
+                        @item.KitapDurum
+                    </td>
+                    <td>
+                    <td>
 
-                   
-                </dl>
-            </div>
-            <p>
-                @*@Html.ActionLink("Edit", "Edit", new { id = Model.kitapID }) |
-                @Html.ActionLink("Back to List", "Index")*@
-            </p>
-        </div>
-    </div>
-}
+                        <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Kitap/DetailsKitap?&id=@item.Id&KitapAdi=@item.KitapAdi&YazarAdi=@item.YazarAdi&YazarSoyadi=@item.YazarSoyadi&yayinci=@item.yayinci&Aciklama=@item.Aciklama&YazarYorum=@item.YazarYorum&KitapDurum=@item.KitapDurum'"> Detaylar</button>
+
+                    </td>
+                    </td>
+
+
+                </tr>
+
+            }
+
+        }
+    </tbody>
+</table>

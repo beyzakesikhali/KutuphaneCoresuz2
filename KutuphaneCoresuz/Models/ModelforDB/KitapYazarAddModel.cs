@@ -21,6 +21,7 @@ namespace KutuphaneCoresuz.Models.ModelforDB
 
         public string Aciklama { get; set; }
         public string YazarYorum { get; set; }
+        public string KitapDurum { get; set; }
         public IEnumerable<SelectListItem> YazarAdlari { get; set; }
         public IEnumerable<SelectListItem> YazarSoyadlari { get; set; }
 

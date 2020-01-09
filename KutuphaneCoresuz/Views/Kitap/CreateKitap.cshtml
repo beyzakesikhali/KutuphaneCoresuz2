@@ -11,6 +11,10 @@
 <br />
 <br />
 
+@if (Context.Session["KullaniciAdi"] != null)
+{
+    @Html.Partial("~/Views/Shared/Profil.cshtml");
+}
 <div class="form-horizontal" align="center">
     <h4>Kitap Ekle</h4>
     <hr />
@@ -31,7 +35,7 @@
             <div class="col-md-10">
 
                 <div class="form-group">
-                    <select class="form-control"  id="ad" style="width:200px; position:absolute; left:660px; bottom:3px" name=@Html.NameFor(m => m.YazarAdi)>
+                    <select class="form-control" id="ad" style="width:200px; position:absolute; left:660px; bottom:3px" name=@Html.NameFor(m => m.YazarAdi)>
                         <option>Yazar Adı Seçiniz</option>
                     </select>
                 </div>
@@ -70,9 +74,9 @@
 
 
     }
-    <div>
-        <button class="btn-outline-warning btn-duzenle" data-id=ID data-isim=KitapAdi data-yazarIsim=YazarAdi data-yazarSoyisim=YazarSoyadi data-yayinci=yayinci data-aciklama=Aciklama>Tüm Kitaplar</button>
-    </div>
+    
+        <button class="btn-outline-warning btn-duzenle" type="submit" onclick='@Url.Action("IndexKitap","Kitap")'>Tüm Kitaplar</button>
+    
     <div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px">
         <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
     </div>
@@ -85,85 +89,80 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
-                @using (Html.BeginForm("CreateYazar", "Yazar", FormMethod.Post, new { id = "tag-form", @class = "tagForm" }))
-                {
-            <div class="modal-body">
+,
+                    <div class="modal-body">
                         <div class="form-group">
-                            @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarAdi)">
+                            <form id="tag-form" class="tagForm" method="post">
+                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarAdi)">
 
-                            </div>
-                        </div>  
-                        <div class="form-group">
-                            @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarSoyadi)">
+                                </div>
 
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarSoyadi)">
 
-                        <div class="form-group">
-                            @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name=@Html.NameFor(m => m.YazarYorum)>
-                            </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name=@Html.NameFor(m => m.YazarYorum)>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                            <button type="submit" class="btn btn-primary btn-yazarekle">Yazar Ekle</button>
-                        </div>
-                }
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
+              </div>
             </div>
+        </div>
     </div>
-</div>
 
 
-@section Scripts
+
+
+    @section Scripts
     {
-    <script type="text/javascript">
+        <script type="text/javascript">
 
         $(document).ready(function()
         {
             GetNames();
-            alert("document getnames()");
 
-            var btn = document.getElementById("btn-yazarekle");
+
+            var btn = document.getElementById("#btn-yazarekle");
             var modal = document.getElementById("#mymodal");
             var ad = document.getElementById("#ad");
-            modal.on('hidden', function ()
-            {
-                GetNames();
-                ad.change(function(){
-                    window.location.reload(true);
-                });
-
-
-   
-            });
-                btn.click(function (e)
+                $("#btn-yazarekle").click(function()
                 {
                     alert("butona tıklandı");
-                     e.preventDefault();
-                     $(function ()
-                     {
-                        $.ajax({
-                            type: "POST",
+
+                         $.ajax({
                             url: '@Url.Action("CreateYazar","Yazar")',
+                            method: "POST",
+                            dataType:"json",
                             data: $('form.tagForm').serialize(),
-                            success: function (sayfa) {
+                             success: function (sayfa) {
                                 
-                                if (text.code == 0) {
-                                   
+                                 alert(sayfa.text);
+                                if (sayfa.text == 0) {
+
                                     window.location.href = '@Url.Action("Login","Security")';
                                 }
-                                else if (text.code == 1)
+                                else if (sayfa.text == 1)
                                 {
-                                    window.location.href = '@Url.Action("CreateKitap","Kitap")';
+                                    $("#mymodal").modal('hide');
+
+                                        GetNames();
+                                    
+                                    
                                 }
-                                        else if (text.code == 2) {
+                                        else if (sayfa.text == 2) {
                                     window.location.href = '@Url.Action("CreateYazar","Yazar")';
                                         }
                             },
@@ -172,28 +171,38 @@
                             }
                         });
                         return false;
-                     });
+
                 });
+
+              modal.on('hidden', function ()
+            {
+                GetNames();
+                ad.change(function(){
+                    window.location.reload(true);
+                });
+
+
+
+            });
         });
         function GetNames() {
-            alert("GEtNames");
+
             $.ajax({
                 url: `/Kitap/AdSoyad?id=0`,
                 method: "post",
                 dataType: "json",
                 success: function (data) {
-                   
+
                     $.each(data.text, function (key, yazarDetaylari) {
                         $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
                         //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
-                      
+
                     });
                 }, complete: function () {
 
                 }
             });
         }
-
                @*btn.click(function showPopup(){
                     alert("butona basıldı");
                     $("myModal").dialog({
@@ -240,7 +249,7 @@
                 });
 
             });*@
-        
+
 
 
            //ad.change(function () {
@@ -250,8 +259,8 @@
            //});
 
 
-        
-       
+
+
 
         @*function GetSurnames(yazarID) {
 
@@ -259,6 +268,7 @@
             $.ajax({
 
                 url: '@Url.Action("AdSoyad","Kitap")',
+                method: "post",
                 method: "post",
                 dataType: "json",
                 data: {id:yazarID, tip:"yazarSoyadGetir"},
@@ -277,5 +287,5 @@
 
 
 
-    </script>
-}
+        </script>
+    }

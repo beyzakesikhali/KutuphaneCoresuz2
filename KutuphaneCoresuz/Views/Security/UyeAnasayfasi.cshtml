@@ -7,41 +7,47 @@
 
 }
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
+@Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+@if (Context.Session["KullaniciAdi"].ToString() != "")
+{
+    @Html.Partial("~/Views/Shared/Profil.cshtml");
+}
 
 
 
 <span class="border-dark border-bottom">
     <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
 </span>
+<h3 align="center">Var Olan Kitaplarınız</h3>
 
-<div id="wrapper">
-    <h3 align="center">Var Olan Kitaplarınız</h3>
-
-    <table id="kitap" align="center" style="width:45%; height:200px">
-
+<table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+    <thead>
         <tr>
-            <td class="lalign">
-                @Html.Label("Kitap Adi:")
-
-            </td>
-            <td class="lalign">
+            <th> @Html.Label("Kitap Adi:")</th>
+            <th>
                 @Html.Label("Yazar Adi:")
 
-            </td>
-            <td class="lalign">
+            </th>
+            <th>
                 @Html.Label("Yazar Soyadi:")
 
-            </td>
-            <td class="lalign">
+            </th>
+            <th>
                 @Html.Label("Yayinci:")
-            </td>
-            <td class="lalign">
+            </th>
+            <th>
                 @Html.Label("Yorum:")
-            </td>
-
-
+            </th>
+            <th>
+                @Html.Label("Kitap Durum")
+            </th>
+            <th>
+                İşlemler
+            </th>
+     
         </tr>
+    </thead>
+    <tbody>
 
         @if (Model != null)
         {
@@ -49,62 +55,50 @@
             foreach (var item in Model)
             {
 
+        <tr>
+            <td>
+                @item.KitapAdi
+            </td>
+            <td>
+                @item.YazarAdi
+            </td>
+            <td>
+                @item.YazarSoyadi
+            </td>
+            <td>
+                @item.yayinci
+            </td>
+            <td>
+                @item.Aciklama
+            </td>
+            <td>
+                @item.KitapDurum
+            </td>
+            <td>
+            <td>
+               
+                <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Kitap/DetailsKitap?&id=@item.Id&KitapAdi=@item.KitapAdi&YazarAdi=@item.YazarAdi&YazarSoyadi=@item.YazarSoyadi&yayinci=@item.yayinci&Aciklama=@item.Aciklama&YazarYorum=@item.YazarYorum&KitapDurum=@item.KitapDurum'"> Detaylar</button>
+          
+            </td>
+            </td>
 
-                <td>
-                    @item.KitapAdi
-                </td>
-                <td>
-                    @item.YazarAdi
-                </td>
-                <td>
-                    @item.YazarSoyadi
-                </td>
-                <td>
-                    @item.yayinci
-                </td>
-                <td>
-                    @item.Aciklama
-                </td>
 
-
+        </tr>
 
             }
 
-            for (int i = 1; i <= Model.Count() / 5; i++)
-            {
-
-                <td>
-                    <button class="btn-outline-warning" type="submit" name="update" data-id=ID>Düzenle</button>
-
-                    <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsKitap", "Kitap")'">Detaylar</button>
-
-                    <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
-
-                </td>
-            }
         }
-
-
-
-
-
-    </table>
-</div>
-<table align="center">
-
-
-    <tr>
-        <td>
-            <button class="btn-outline-success" type="button" name="yeniKitap" onclick="location.href='@Url.Action("CreateKitap","Kitap")'">Yeni Kitap Ekle</button>
-        </td>
-        <td>
-            <button class="btn-outline-success" type="button" name="yeniYazar" onclick="location.href='@Url.Action("CreateYazar","Yazar")'">Yeni Yazar Ekle</button>
-        </td>
-
-
-    </tr>
-
+    </tbody>
 </table>
+
+<br />
+<br />
+<div align="center" style="left:50%">
+    <button class="btn-outline-success" type="button" name="yeniKitap" onclick="location.href='@Url.Action("CreateKitap", "Kitap")'">Yeni Kitap Ekle</button>
+
+    <button class="btn-outline-success" type="button" name="yeniYazar" onclick="location.href='@Url.Action("CreateYazarAction", "Yazar")'">Yeni Yazar Ekle</button>
+</div>
+
 
 
 @section Scripts

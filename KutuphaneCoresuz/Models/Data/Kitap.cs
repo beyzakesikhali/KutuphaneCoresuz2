@@ -19,6 +19,7 @@ namespace KutuphaneCoresuz.Models.Data
         public string Yayinci { get; set; }
         [Display(Name = "Açıklama:")]
         public string Aciklama { get; set; }
+        public int KitapDurum { get; set; }
         ICollection<UyeKitap> UyeKitap { get; set; }
         [ForeignKey("YazarID")]
         public virtual Yazar Yazar { get; set; }

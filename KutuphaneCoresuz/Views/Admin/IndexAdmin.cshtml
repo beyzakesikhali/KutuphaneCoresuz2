@@ -1,7 +1,77 @@
-﻿
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.ModelforDB.KitapUyeViewModel>
+
+
 @{
-    ViewBag.Title = "IndexAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>IndexAdmin</h2>
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Session["KullaniciAdi"] </h4>
+
+<table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th> @Html.Label("Uye Adi:")</th>
+            <th>
+                @Html.Label("Uye Kullanıcı Adı:")
+
+            </th>
+            <th>
+                @Html.Label("Uye Soyisim:")
+            </th>
+            <th>
+                @Html.Label("Email:")
+            </th>
+            <th>
+                @Html.Label("Aciklama")
+            </th>
+            <th>
+                @Html.Label("Uye Tür")
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @item.UyeIsim
+                    </td>
+                    <td>
+                        @item.KullaniciAdi
+                    </td>
+                    <td>
+                        @item.UyeSoyisim
+                    </td>
+                    <td>
+                        @item.UyeEmail
+                    </td>
+                    <td>
+                        @item.Aciklama
+                    </td>
+                    <td>
+                        @item.Role
+                    </td>
+                    <td>
+                        <button class="btn-outline-warning" type="submit" name="update" data-id=ID onclick="location.href='/Uye/UyeDuzenle?id=@item.id'">Uye Düzenle</button>
+                        <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsUye", "Uye")'">Uye Detaylar</button>
+                        <button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteUye", "Uye")'">Uye Sil</button>
+
+
+
+                    </td>
+
+                </tr>
+
+            }
+
+        }
+    </tbody>
+</table>
 

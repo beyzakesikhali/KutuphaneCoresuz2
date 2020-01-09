@@ -14,11 +14,7 @@ namespace KutuphaneCoresuz.Controllers
     public class YazarController : Controller
     {
         private KutuphaneContext db = new KutuphaneContext();
-        // GET: Yazar
-        public ActionResult Index()
-        {
-            return View();
-        }
+               
         [AllowAnonymous]
 
         public ActionResult IndexYazar()
@@ -26,6 +22,52 @@ namespace KutuphaneCoresuz.Controllers
             return View(db.Yazarlar.ToList());
         }
 
+        [AllowAnonymous]
+        public ActionResult CreateYazarAction()
+        {
+            if (HttpContext.Session["KullaniciAdi"] == null)
+            {
+
+                return RedirectToAction("Login", "Security");
+            }
+
+
+            return View();
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult CreateYazarAction(KitapYazarAddModel yazar)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                Yazar yeniYazar = new Yazar();
+                yeniYazar.Isim = yazar.YazarAdi;
+                yeniYazar.Soyisim = yazar.YazarSoyadi;
+                yeniYazar.Yorum = yazar.YazarYorum;
+                db.Yazarlar.Add(yeniYazar);
+                db.SaveChanges();
+                KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
+                List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
+                                            select new SelectListItem
+                                            {
+                                                Text = i.Isim,
+                                                Value = i.ID.ToString()
+
+                                            }).ToList();
+                List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
+                                               select new SelectListItem
+                                               {
+                                                   Text = j.Soyisim,
+                                                   Value = j.ID.ToString()
+                                               }).ToList();
+            }
+
+            return View();
+        }
         // GET: Yazars/Details/5
 
         [AllowAnonymous]
@@ -61,9 +103,10 @@ namespace KutuphaneCoresuz.Controllers
         public JsonResult CreateYazar(KitapYazarAddModel yazar)
         {
             bool basariliMi = true;
-            int code =0;
+            int code = 0;
             try
             {
+                
                 if (ModelState.IsValid)
                 {
                     Yazar yeniYazar = new Yazar();
@@ -93,26 +136,27 @@ namespace KutuphaneCoresuz.Controllers
 
                     //model.Add(new KitapYazarAddModel() { YazarSoyadi = yazar.Soyisim });
 
-                    
+
 
 
                 }
                 code = 1; //CreateKitap
+
                 return Json(new { ok = basariliMi, text = code });//CreateKitap sayfasına yönlendirecek code=1
             }
 
-          
+
             catch (Exception)
             {
                 basariliMi = false;
                 code = 2;
                 return Json(new { ok = basariliMi, text = code });//CreateYazarı tekrar açacak kod
             }
-           
-         }
 
-            
-   
+        }
+
+
+
 
         //  GET: Yazars/Edit/5
         [AllowAnonymous]
@@ -120,7 +164,7 @@ namespace KutuphaneCoresuz.Controllers
         {
             if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return RedirectToAction("Login","Security");
+                return RedirectToAction("Login", "Security");
             }
 
             return View("EditYazarId");
@@ -132,11 +176,11 @@ namespace KutuphaneCoresuz.Controllers
         {
             if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return RedirectToAction("Login","Security");
+                return RedirectToAction("Login", "Security");
             }
             else
             {
-                
+
                 var yazarIdResult = db.Yazarlar.Single(y => y.Isim == model.Isim && y.Soyisim == model.Soyisim);
                 int gelenId = yazarIdResult.ID;
                 // var ad = model.Isim;
@@ -237,5 +281,11 @@ namespace KutuphaneCoresuz.Controllers
             db.SaveChanges();
             return RedirectToAction("IndexYazar");
         }
+
     }
+
+
+
+
+
 }
