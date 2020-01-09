@@ -19,6 +19,7 @@ namespace KutuphaneCoresuz.Models.Data
         public string Sifre { get; set; }
         public string Email { get; set; }
         public string Aciklama { get; set; }
+        public int RoleId { get; set; }
         public virtual ICollection<UyeKitap> UyeKitaplar { get; set; }
     }
     public class UyelerLogin

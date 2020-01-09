@@ -11,16 +11,17 @@ namespace KutuphaneCoresuz.Models.ModelforDB
         public int id { get; set; }
         public string UyeIsim { get; set; } 
         public string KullaniciAdi { get; set; }
-            
+        public string Role { get; set; }
         public string UyeSoyisim { get; set; }
         public string UyeSifre { get; set; }
         public string UyeEmail { get; set; }
         public string Aciklama { get; set; }
-        public string KitapAdi { get; set; }
-        public string yayinci { get; set; }
-        public string YazarAdi { get; set; }
-        public string YazarSoyadi { get; set; }
-        public string YazarYorum { get; set; }
-        
+        public string KitapDurum { get; set; }
+        //public string KitapAdi { get; set; }
+        //public string yayinci { get; set; }
+        //public string YazarAdi { get; set; }
+        //public string YazarSoyadi { get; set; }
+        //public string YazarYorum { get; set; }
+
     }
 }

@@ -17,10 +17,7 @@ namespace KutuphaneCoresuz.Controllers
         private KutuphaneContext db = new KutuphaneContext();
 
         // GET: Uye
-        public ActionResult IndexAdminUye()
-        {
-            return View(db.Uyeler.ToList());
-        }
+      
         [AllowAnonymous]
         public ActionResult IndexUye(Uye uye)
         {
@@ -91,15 +88,33 @@ namespace KutuphaneCoresuz.Controllers
 
             string Kadi = uye.KullaniciAdi;
             string sifre = uye.Sifre;
+            string HashDegeri;
+            int role = 2;
+           
             var KAdiResult = db.Uyeler.Where(u=>u.KullaniciAdi==Kadi).FirstOrDefault();
+            if(Kadi=="Admin")
+            {
+                role = 1;
+                HashDegeri = Crypto.HashPassword(uye.Sifre);
+                    
+                Uye admin = new Uye
+                {
+                    isim=uye.isim,
+                    KullaniciAdi=uye.KullaniciAdi,
+                    Soyisim=uye.Soyisim,
+                    Aciklama=uye.Aciklama,
+                    RoleId =role,
+                    Email=uye.Email,
+                    Sifre=HashDegeri
+                };
+            }
             
-
             if (KAdiResult == null) 
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 if (ModelState.IsValid)
                 {
-                    string HashDegeri = Crypto.HashPassword(sifre);
+                    HashDegeri= Crypto.HashPassword(sifre);
                     uye.Sifre = HashDegeri;
                     db.Uyeler.Add(uye);
                     db.SaveChanges();
@@ -149,47 +164,16 @@ namespace KutuphaneCoresuz.Controllers
                     return RedirectToAction("Login","Security");
             }
             return RedirectToAction("Login", "Security");
-          
         }
+          
 
         [AllowAnonymous]
         public ActionResult DeleteUye(KitapUyeViewModel kitapUye)
         {
 
-            Uye uye = new Uye();
-            Kitap kitap = new Kitap();
-            UyeKitap uyeKitap = new UyeKitap();
-            Yazar yazarlar = new Yazar();
-            if (HttpContext.Session["kullaniciAdi"] == null)
-            {
-                return Redirect("Login");
-            }
-            string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
-            List<KitapUyeViewModel> model = new List<KitapUyeViewModel>();
-            var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
-            int uyeID = uyeResult.ID;
-            var kitapIdResult = db.UyeKitap.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
-            if (kitapIdResult.Count() != 0)
-            {
-                foreach (var item in kitapIdResult)
-                {
-                    var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
-                    var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new KitapUyeViewModel() {UyeIsim=uyeResult.isim, KullaniciAdi=AktifUye, UyeSoyisim=uyeResult.Soyisim, UyeEmail=uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapAdi=kitapResult.Isim, yayinci = kitapResult.Yayinci, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim, YazarYorum=yazarResult.Yorum });
-                }
-                if (model != null)
-                {
-                    return View(model);
-                }
-            }
-
-
             return View();
 
-          
-                
-             
-            }
+        }
         public JsonResult SifreKontrol(KitapUyeViewModel model)
         {
             bool basariliMi = true;

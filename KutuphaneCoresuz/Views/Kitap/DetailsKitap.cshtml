@@ -1,4 +1,4 @@
-﻿@model KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
 
 @{
     ViewBag.Title = "Details";
@@ -11,46 +11,74 @@
 
 @Html.Partial("~/Views/Shared/_Header.cshtml")
 
-@if (Context.Session["KullaniciAdi"] != null)
-{
-    @Html.Partial("~/Views/Shared/Profil.cshtml");
+
+<table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th> @Html.Label("Kitap Adi:")</th>
+            <th>
+                @Html.Label("Yazar Adi:")
+
+            </th>
+            <th>
+                @Html.Label("Yazar Soyadi:")
+
+            </th>
+            <th>
+                @Html.Label("Yayinci:")
+            </th>
+            <th>
+                @Html.Label("Yorum:")
+            </th>
+            <th>
+                @Html.Label("Kitap Durum")
+            </th>
+            <th>
+                İşlemler
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @item.KitapAdi
+                    </td>
+                    <td>
+                        @item.YazarAdi
+                    </td>
+                    <td>
+                        @item.YazarSoyadi
+                    </td>
+                    <td>
+                        @item.yayinci
+                    </td>
+                    <td>
+                        @item.Aciklama
+                    </td>
+                    <td>
+                        @item.KitapDurum
+                    </td>
+                    <td>
+                    <td>
+
+                        <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Kitap/DetailsKitap?&id=@item.Id&KitapAdi=@item.KitapAdi&YazarAdi=@item.YazarAdi&YazarSoyadi=@item.YazarSoyadi&yayinci=@item.yayinci&Aciklama=@item.Aciklama&YazarYorum=@item.YazarYorum&KitapDurum=@item.KitapDurum'"> Detaylar</button>
+
+                    </td>
+                    </td>
 
 
+                </tr>
 
-    <div id="logo" class="pull-left" align="center">
+            }
 
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.KitapAdi)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.KitapAdi)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.yayinci)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.yayinci)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Aciklama)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Aciklama)
-            </dd>
-
-
-        </dl>
-    </div>
-    <p>
-        @*@Html.ActionLink("Edit", "Edit", new { id = Model.kitapID }) |
-            @Html.ActionLink("Back to List", "Index")*@
-    </p>
-
-}
-}
+        }
+    </tbody>
+</table>

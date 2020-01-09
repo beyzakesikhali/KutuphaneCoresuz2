@@ -7,7 +7,7 @@
 
 }
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
+@Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 @if (Context.Session["KullaniciAdi"].ToString() != "")
 {
     @Html.Partial("~/Views/Shared/Profil.cshtml");
@@ -39,9 +39,12 @@
                 @Html.Label("Yorum:")
             </th>
             <th>
+                @Html.Label("Kitap Durum")
+            </th>
+            <th>
                 İşlemler
             </th>
-
+     
         </tr>
     </thead>
     <tbody>
@@ -52,30 +55,35 @@
             foreach (var item in Model)
             {
 
-                <tr>
-                    <td>
-                        @item.KitapAdi
-                    </td>
-                    <td>
-                        @item.YazarAdi
-                    </td>
-                    <td>
-                        @item.YazarSoyadi
-                    </td>
-                    <td>
-                        @item.yayinci
-                    </td>
-                    <td>
-                        @item.Aciklama
-                    </td>
-                    <td>
-                        <button class="btn-outline-warning" type="submit" name="update" data-id=ID onclick="location.href='@Url.Action("EditKitap","Kitap")'">Düzenle</button>
-                        <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsKitap", "Kitap")'">Detaylar</button>
-                        <button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
+        <tr>
+            <td>
+                @item.KitapAdi
+            </td>
+            <td>
+                @item.YazarAdi
+            </td>
+            <td>
+                @item.YazarSoyadi
+            </td>
+            <td>
+                @item.yayinci
+            </td>
+            <td>
+                @item.Aciklama
+            </td>
+            <td>
+                @item.KitapDurum
+            </td>
+            <td>
+            <td>
+               
+                <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Kitap/DetailsKitap?&id=@item.Id&KitapAdi=@item.KitapAdi&YazarAdi=@item.YazarAdi&YazarSoyadi=@item.YazarSoyadi&yayinci=@item.yayinci&Aciklama=@item.Aciklama&YazarYorum=@item.YazarYorum&KitapDurum=@item.KitapDurum'"> Detaylar</button>
+          
+            </td>
+            </td>
 
-                    </td>
 
-                </tr>
+        </tr>
 
             }
 

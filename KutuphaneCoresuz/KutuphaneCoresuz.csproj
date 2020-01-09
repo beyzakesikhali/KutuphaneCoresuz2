@@ -542,7 +542,7 @@
     <Compile Include="Cache\CachedModelsrepository.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\KitapController.cs" />
-    <Compile Include="Helper\AutherizeAdmin.cs" />
+    <Compile Include="Helper\AuthenticationFilter.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
     <Compile Include="Controllers\YazarController.cs" />
@@ -550,7 +550,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\SifreKontrol.cs" />
-    <Compile Include="Models\ModelforDB\KitapUyeAddModel.cs" />
+    <Compile Include="Models\Data\KitapDurum.cs" />
+    <Compile Include="Models\Data\Role.cs" />
     <Compile Include="Models\ModelforDB\KitapUyeViewModel.cs" />
     <Compile Include="Models\ModelforDB\KitapYazarAddModel.cs" />
     <Compile Include="Models\Context\KutuphaneContext.cs" />
@@ -2393,7 +2394,7 @@
     <Content Include="Views\Uye\DeleteUye.cshtml" />
     <Content Include="Views\Uye\DetailsUye.cshtml" />
     <Content Include="Views\Uye\EditUye.cshtml" />
-    <Content Include="Views\Uye\IndexUye.cshtml" />
+    <Content Include="Views\Admin\UyeKitap.cshtml" />
     <Content Include="Views\Kitap\CreateKitap.cshtml" />
     <Content Include="Views\Kitap\DeleteKitap.cshtml" />
     <Content Include="Views\Kitap\DetailsKitap.cshtml" />
@@ -2419,9 +2420,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Security\UyeKitaplarSayfasi.cshtml" />
     <Content Include="Views\Admin\IndexAdmin.cshtml" />
-    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_HeaderUye.cshtml" />
     <Content Include="Views\Shared\Profil.cshtml" />
-    <Content Include="Views\Security\AdminAnasayfasi.cshtml" />
+    <Content Include="Views\Shared\_HeaderAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

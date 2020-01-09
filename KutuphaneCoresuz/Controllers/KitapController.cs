@@ -23,27 +23,27 @@ namespace KutuphaneCoresuz.Controllers
         }
 
         // GET: Kitaps
+     
         [AllowAnonymous]
         public ActionResult IndexKitap()
         {
          
             if (HttpContext.Session["kullaniciAdi"] == null)
             {
-                return Redirect("Login");
+                return RedirectToAction("Login","Security");
             }
             
             List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
             List<Kitap> kitap = new List<Kitap>();
-            var kitaplar = db.Kitaplar.Single();
             kitap = db.Kitaplar.ToList();
-
+           // var kitaplar = db.Kitaplar.First();
+            //var yazarResult = db.Yazarlar.First();
             if (kitap.Count()!= 0)
             {
                 foreach (var item in kitap)
                 {
-                  
-                    var yazarResult = db.Yazarlar.Single();
-                    model.Add(new KitapYazarAddModel() { KitapAdi = kitaplar.Isim, Aciklama = kitaplar.Aciklama, yayinci = kitaplar.Yayinci, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
+                    
+                    model.Add(new KitapYazarAddModel() { KitapAdi=item.Isim, Aciklama = item.Aciklama, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim });
                 }
                 if (model != null)
                 {

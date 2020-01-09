@@ -69,9 +69,9 @@
                         @item.Aciklama
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "EditKitap", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "DetailsKitap", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "DeleteKitap", new { id = item.Id })
+                       <button class="btn btn-warning" type="submit" onclick="location.href='@Url.Action("EditKitap", "Kitap")'">Düzenle</button> |
+                        <button class="btn btn-secondary" type="submit" onclick="location.href='@Url.Action("DetailsKitap", "")'">Detaylar</button> |
+                        <button class="btn btn-danger" type="submit"onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
                     </td>
                 </tr>
             }

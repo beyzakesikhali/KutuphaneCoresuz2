@@ -1,12 +1,14 @@
-﻿using KutuphaneCoresuz.Controllers.OrtakSiniflar;
+﻿
 using KutuphaneCoresuz.Helper;
 using KutuphaneCoresuz.Models.Context;
 using KutuphaneCoresuz.Models.Data;
 using KutuphaneCoresuz.Models.ModelforDB;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -14,6 +16,8 @@ using System.Web.Security;
 
 namespace KutuphaneCoresuz.Controllers
 {
+
+
     public class SecurityController : Controller
     {
         /*
@@ -57,27 +61,30 @@ namespace KutuphaneCoresuz.Controllers
 
     */
 
-         KutuphaneContext db = new KutuphaneContext();
+        KutuphaneContext db = new KutuphaneContext();
         [AllowAnonymous]
+
 
         public ActionResult Login()
         {
-            if (Session["AdminIsLogedIn"] != null)
-            {
-                return RedirectToAction("index", "AdminProfile");
-            }
+            ////string sifre= Crypto.HashPassword(sifre);
+            //Uye admin = new Uye();
+            // var admin = db.Uyeler.Where(u => u.KullaniciAdi == "Admin" && u.Soyisim == "Kesikhalı").FirstOrDefault();
+
+            //db.Uyeler.Add(new Uye
+            //{
+            //    isim = "Beyza",
+            //    KullaniciAdi = "admin",
+            //    Soyisim = "Kesikhalı",
+            //    Sifre = Crypto.HashPassword("123456789"),
+            //    RoleId = 1
+            //});
+
+            //db.Uyeler.Remove(admin);
+            //db.SaveChanges();
 
             return View();
         }
-        [AutorizeAdminAttiribute]
-        public ActionResult AdminAnasayfasi()
-        {
-
-
-            return View();
-
-        }
-
 
 
 
@@ -92,14 +99,26 @@ namespace KutuphaneCoresuz.Controllers
             var mevcut = db.Uyeler.Where(p => p.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
             string gelenSifre = uye.Sifre;
             int sifreKontrol = 0;
-            sifreKontrol=kontrol.SifreKontrolEt(gelenSifre,mevcut.Sifre);
+            int gelenRole = Convert.ToInt32(Role.Admin);
+            if (mevcut == null)
+            {
+                ViewBag.Null("Kayıtlı Değilsiniz");
+                return View();
+            }
+
+
+            sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, mevcut.Sifre);
 
             //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
 
-            if (mevcut != null && sifreKontrol==1)
+            if (mevcut.KullaniciAdi == uye.KullaniciAdi && sifreKontrol == 1)
             {
-                //Session.Add("KullaniciAdi",u.isim.ToString());
-
+                Session.Add("KullaniciAdi",mevcut.isim.ToString());
+               
+                if (mevcut.RoleId == Convert.ToInt32(Role.Admin))
+                {
+                    return RedirectToAction("IndexAdmin", "Admin");
+                }
                 HttpContext.Session["kullaniciAdi"] = uye.KullaniciAdi;
                 return RedirectToAction("UyeAnaSayfasi", "Security");
                 //FormsAuthentication.SetAuthCookie(uye.KullaniciAdi, false);
@@ -114,20 +133,22 @@ namespace KutuphaneCoresuz.Controllers
             return View();
 
         }
-         [AllowAnonymous]
-     
+        [AllowAnonymous]
+
         [OutputCache(CacheProfile = "anaSayfaCache")]
         public ActionResult UyeAnasayfasi()
         {
 
             //SOR SOR SOR
             // Session["kullanciAdi"] = ViewBag.KullaniciAdi;
-           
+
             Uye uye = new Uye();
             Kitap kitap = new Kitap();
             UyeKitap uyeKitap = new UyeKitap();
             Yazar yazarlar = new Yazar();
-            if (HttpContext.Session["kullaniciAdi"]==null)
+            int kitapdurum;
+            string kitapDurum = "";
+            if (HttpContext.Session["kullaniciAdi"] == null)
             {
                 return Redirect("Login");
             }
@@ -136,20 +157,30 @@ namespace KutuphaneCoresuz.Controllers
             var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
             int uyeID = uyeResult.ID;
             var kitapIdResult = db.UyeKitap.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
-            if(kitapIdResult.Count()!=0)
-            {       foreach (var item in kitapIdResult)
+            if (kitapIdResult.Count() != 0)
+            {
+                foreach (var item in kitapIdResult)
                 {
                     var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
-                    var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new KitapYazarAddModel() { KitapAdi = kitapResult.Isim , Aciklama = kitapResult.Aciklama, yayinci = kitapResult.Yayinci, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
-                }
-                    if(model!=null)
+                    kitapdurum = kitapResult.KitapDurum;
+                    if (kitapdurum == 1)
                     {
-                         return View(model);
+
+                        kitapDurum = "Kitap Sizde";
+
                     }
+                    kitapDurum = "Kitap Kutuphanede";
+
+                    var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
+                    model.Add(new KitapYazarAddModel() { Id=kitapResult.ID, KitapAdi = kitapResult.Isim, Aciklama = kitapResult.Aciklama, yayinci = kitapResult.Yayinci, KitapDurum = kitapDurum, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
+                }
+                if (model != null)
+                {
+                    return View(model);
+                }
             }
-          
-           
+
+
             return View();
 
 

@@ -26,6 +26,7 @@
             </div>
             <div class="col-lg-12 login-form">
                 <div class="col-lg-12 login-form">
+
                     @using (Html.BeginForm("Login", "Security", FormMethod.Post))
                     {
                         <div class="form-group">
@@ -47,8 +48,15 @@
                             </div>
                         </div>
                     }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+                    @if (ViewBag.Null != null)
+                    {
+                       <script type="text/javascript">
+                           window.onload = function () {
+                               this.confirm("Böyle bir kullanıcı veritabanında yok, tekrar deneyin..");
+                           }
+                       </script>
+                    }
+
+
+

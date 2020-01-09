@@ -1,71 +1,87 @@
-﻿@model  IEnumerable<KutuphaneCoresuz.Models.Data.Uye>
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.ModelforDB.KitapUyeViewModel>
 
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2> Sadece Adminin Göreceği Sayfa</h2>
-            <p>
-                @Html.ActionLink("Create New", "CreateUye")
-            </p>
-            <table id="keywords" cellspacing="0" cellpadding="0">
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Session["KullaniciAdi"] </h4>
+
+<table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th> @Html.Label("Uye Adi:")</th>
+            <th>
+                @Html.Label("Uye Kullanıcı Adı:")
+
+            </th>
+            <th>
+                @Html.Label("Uye Soyisim:")
+            </th>
+            <th>
+                @Html.Label("Uye Şifre(Şifreli):")
+
+            </th>
+            <th>
+                @Html.Label("Sifre:")
+            </th>
+            <th>
+                @Html.Label("Email:")
+            </th>
+            <th>
+                @Html.Label("Aciklama")
+            </th>
+            <th>
+                @Html.Label("Uye Tür")
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+
                 <tr>
-                    <th class="lalign">
-                        @Html.DisplayNameFor(model => model.isim)
-                    </th>
-                    <th class="lalign">
-                        @Html.DisplayNameFor(model => model.KullaniciAdi)
-                    </th>
-                    <th class="lalign">
-                        @Html.DisplayNameFor(model => model.Soyisim)
-                    </th>
-                    <th class="lalign">
-                        @Html.DisplayNameFor(model => model.Sifre)
-                    </th>
-                    <th class="lalign">
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th class="lalign">
-                        @Html.DisplayNameFor(model => model.Aciklama)
-                    </th>
+                    <td>
+                        @item.UyeIsim
+                    </td>
+                    <td>
+                        @item.KullaniciAdi
+                    </td>
+                    <td>
+                        @item.UyeSoyisim
+                    </td>
+                    <td>
+                        @item.UyeSifre
+                    </td>
+                    <td>
+                        @item.UyeEmail
+                    </td>
+                    <td>
+                        @item.Aciklama
+                    </td>
+                    <td>
+                        @item.Role
+                    </td>
+                    <td>
+                        <button class="btn-outline-warning" type="submit" name="update" data-id=ID onclick="location.href='/Uye/UyeDuzenle?id=@item.id'">Uye Düzenle</button>
+                        <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsUye", "Uye")'">Uye Detaylar</button>
+                        <button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteUye", "Uye")'">Uye Sil</button>
+
+
+
+                    </td>
 
                 </tr>
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="lalign">
-                            @Html.DisplayFor(modelItem => item.isim)
-                        </td>
-                        <td class="lalign">
-                            @Html.DisplayFor(modelItem => item.KullaniciAdi)
-                        </td>
-                        <td class="lalign">
-                            @Html.DisplayFor(modelItem => item.Soyisim)
-                        </td>
-                        <td class="lalign">
-                            @Html.DisplayFor(modelItem => item.Sifre)
-                        </td>
-                        <td class="lalign">
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td class="lalign">
-                            @Html.DisplayFor(modelItem => item.Aciklama)
-                        </td>
-                        <td class="lalign">
-                            @Html.ActionLink("Edit", "EditUye", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "DetailsUye", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "DeleteUye", new { id = item.ID })
-                        </td>
-                    </tr>
-                }
+            }
 
+        }
+    </tbody>
+</table>
 
-            </table>
-
-        </div>
-    </div>
-</div>
-
-<script src="~/Content/table/JavaScriptTable.js"></script>
