@@ -96,7 +96,11 @@
 @section Scripts
 {
     <script type="text/javascript">
+
         $(document).ready(function () {
+
+
+            alert(@ViewBag.Login);
             $(".btn-duzenle").click(function () {
                 var id = $(this).data("id");
                 alert(id);
@@ -121,16 +125,17 @@
                 $.ajax({
                     url: `/Uye/EditUye?id=${id}`,
                     //data: formData,
-                    method: "post",
+                    method: "get",
                     dataType: "json",
                     success: function (data) {
-
+                        window.href="@Url.Action("EditUye","Uye")"
 
                     }, complete: function () {
+                        alert("Olmadı!")
 
                     }
                 });
-                alert("Ajax sonu");
+              //  alert("Ajax sonu");
             })
 
         });

@@ -24,8 +24,9 @@ namespace KutuphaneCoresuz.Controllers
             string role = "";
 
             string AktifUye = "";
+            ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
             //AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
-            if (HttpContext.Session["KullaniciAdi"].ToString() == "")
+            if (HttpContext.Session["KullaniciAdi"]?.ToString() == "")
             {
                 
                 ViewBag.Login="Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";

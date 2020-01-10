@@ -126,8 +126,9 @@ namespace KutuphaneCoresuz.Controllers
             ViewBag.KadiMesaj = "Başka bir kullanıcı adı deneyin!";
             return View(uye);
         }
+        [HttpGet]
         [AllowAnonymous]
-        public ActionResult EditUye()
+        public ActionResult EditUye(int? id)
         {
             if (HttpContext.Session["KullaniciAdi"] == null)
             {
@@ -136,10 +137,10 @@ namespace KutuphaneCoresuz.Controllers
 
             // string role = "";
 
-            string AktifUye = "";
-            AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
+            //string AktifUye = "";
+           // AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             List<Uye> model = new List<Uye>();
-            var uyeResult = db.Uyeler.Where(u => u.isim == AktifUye).FirstOrDefault();
+            var uyeResult = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
             // var uyeler = db.Uyeler.Single();
             // int uyeID = uyeResult.ID;
             // var kitapIdResult = db.UyeKitap.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
@@ -168,61 +169,61 @@ namespace KutuphaneCoresuz.Controllers
             return View();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult EditUye( int? id,List<Uye> uye)
-        {
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public ActionResult EditUye()
+        //{
 
-            string gelenSifre = "";
+        //    string gelenSifre = "";
 
-            string uyeAdi = "";
-            string Dbsifre = "";
-            Uye uye1 = new Uye { };
-            var result = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
-            SifreKontrol sifreKontrolMetod = new SifreKontrol();
-            uyeAdi = HttpContext.Session["KullaniciAdi"].ToString();
-            var MevcutKullanici = db.Uyeler.Where(m => m.isim == uyeAdi).FirstOrDefault();
-            Dbsifre = MevcutKullanici.Sifre;
+        //    string uyeAdi = "";
+        //    string Dbsifre = "";
+        //    //Uye uye1 = new Uye { };
+        //   // var result = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+        //    SifreKontrol sifreKontrolMetod = new SifreKontrol();
+        //    uyeAdi = HttpContext.Session["KullaniciAdi"].ToString();
+        //    var MevcutKullanici = db.Uyeler.Where(m => m.isim == uyeAdi).FirstOrDefault();
+        //    Dbsifre = MevcutKullanici.Sifre;
 
-            //int uyeId = 0;
+        //    //int uyeId = 0;
             
-            if (id == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //Uye uye = db.Uyeler.Find(id);
-            if (result == null)
-            {
-                return HttpNotFound();
-            }
-            //var errors = ModelState.Values.SelectMany(v => v.Errors);
-            //if (ModelState.IsValid)
-            //{
-            if (sifreKontrolMetod.SifreKontrolEt(gelenSifre, Dbsifre) == 1)
-            {
+        //    if (id == 0)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    //Uye uye = db.Uyeler.Find(id);
+        //    if (result == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    //var errors = ModelState.Values.SelectMany(v => v.Errors);
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //if (sifreKontrolMetod.SifreKontrolEt(gelenSifre, Dbsifre) == 1)
+        //    //{
                
-                db.Entry(result).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            else
-            {
-                ViewBag.HataliSifre("Hatalı Şifre!!");
-            }
+        //        db.Entry(result).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //    //}
+        //    //else
+        //    //{
+        //    //    ViewBag.HataliSifre("Hatalı Şifre!!");
+        //    //}
             
-            if (result.RoleId == 1)
-            {
-                return RedirectToAction("IndexAdmin", "Admin");
-            }
+        //    if (result.RoleId == 1)
+        //    {
+        //        return RedirectToAction("IndexAdmin", "Admin");
+        //    }
 
 
-            else
-            {
-                return RedirectToAction("UyeAnaSayfasi", "Security");
-            }
+        //    else
+        //    {
+        //        return RedirectToAction("UyeAnaSayfasi", "Security");
+        //    }
 
-           //}
-           // return RedirectToAction("Login", "Security");
-        }
+        //   //}
+        //   // return RedirectToAction("Login", "Security");
+        //}
 
 
         [AllowAnonymous]
