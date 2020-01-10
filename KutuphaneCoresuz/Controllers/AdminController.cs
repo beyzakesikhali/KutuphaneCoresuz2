@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+    //https://www.codeproject.com/Articles/1110431/Gridview-in-ASP-NET-MVC
 namespace KutuphaneCoresuz.Controllers
 {
    
@@ -15,14 +17,22 @@ namespace KutuphaneCoresuz.Controllers
 
         private KutuphaneContext db = new KutuphaneContext();
         // GET: Admin
+      
         [AllowAnonymous]
         public ActionResult IndexAdmin()
         {
             string role = "";
 
             string AktifUye = "";
-            HttpContext.Session["KullaniciAdi"]=AktifUye;   
-            List<KitapUyeViewModel> model = new List<KitapUyeViewModel>();
+            //AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
+            if (HttpContext.Session["KullaniciAdi"].ToString() == "")
+            {
+                
+                ViewBag.Login="Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
+                return RedirectToAction("Login","Security");
+            }
+            AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
+            List<Uye> model = new List<Uye>();
             var uyeResult = db.Uyeler.ToList();
           // var uyeler = db.Uyeler.Single();
            // int uyeID = uyeResult.ID;
@@ -33,15 +43,16 @@ namespace KutuphaneCoresuz.Controllers
                 {
                    // var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
                    
-                    if (item.RoleId == 1)
-                    {
-                        role = "Admin";
+                    //if (item.RoleId == 1)
+                    //{
+                    //    role = "Admin";
+                    //    model.Add(new Uye() { id=item.ID, UyeIsim = item.isim, KullaniciAdi = item.KullaniciAdi, UyeSoyisim = item.Soyisim, UyeSifre = item.Sifre, UyeEmail = item.Email, Aciklama = item.Aciklama, Role = role });
 
-                    }
-                    role = "Uye";
+                    //}
+                    //role = "Uye";
 
                     //var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new KitapUyeViewModel() { UyeIsim = item.isim, KullaniciAdi = item.KullaniciAdi, UyeSoyisim=item.Soyisim, UyeSifre=item.Sifre,UyeEmail=item.Email, Aciklama=item.Aciklama, Role = role });
+                    model.Add(new Uye() { ID = item.ID, isim = item.isim, KullaniciAdi = item.KullaniciAdi, Soyisim=item.Soyisim, Sifre=item.Sifre, Email=item.Email, Aciklama=item.Aciklama});
                    
                 }
                 if (model != null)
@@ -54,7 +65,7 @@ namespace KutuphaneCoresuz.Controllers
             return View();
         }
       
-
+       
 
         public ActionResult AdminUyeKitap(int id)
         {
@@ -68,11 +79,11 @@ namespace KutuphaneCoresuz.Controllers
             Yazar yazarlar = new Yazar();
             int kitapdurum;
             string kitapDurum = "";
-            if (HttpContext.Session["kullaniciAdi"] == null)
+            if (HttpContext.Session["KullaniciAdi"] == null)
             {
                 return Redirect("Login");
             }
-            string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
+            string AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
             var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
             int uyeID = uyeResult.ID;

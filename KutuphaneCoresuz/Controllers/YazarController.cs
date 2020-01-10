@@ -162,7 +162,7 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult EditYazarId(Yazar yazar)
         {
-            if (HttpContext.Session["kullaniciAdi"] == null)
+            if (HttpContext.Session["KullaniciAdi"] == null)
             {
                 return RedirectToAction("Login", "Security");
             }
@@ -174,7 +174,7 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult EditYazarId(int? id, Yazar model)
         {
-            if (HttpContext.Session["kullaniciAdi"] == null)
+            if (HttpContext.Session["KullaniciAdi"] == null)
             {
                 return RedirectToAction("Login", "Security");
             }

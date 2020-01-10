@@ -1,4 +1,4 @@
-﻿@model  IEnumerable<KutuphaneCoresuz.Models.ModelforDB.KitapUyeViewModel>
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.Data.Uye>
 
 
 @{
@@ -6,7 +6,7 @@
 }
 
 @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
-    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Session["KullaniciAdi"] </h4>
+<h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Session["KullaniciAdi"] </h4>
 
 <table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
     <thead>
@@ -20,13 +20,6 @@
                 @Html.Label("Uye Soyisim:")
             </th>
             <th>
-                @Html.Label("Uye Şifre(Şifreli):")
-
-            </th>
-            <th>
-                @Html.Label("Sifre:")
-            </th>
-            <th>
                 @Html.Label("Email:")
             </th>
             <th>
@@ -34,6 +27,9 @@
             </th>
             <th>
                 @Html.Label("Uye Tür")
+            </th>
+            <th>
+                İşlemler
             </th>
 
         </tr>
@@ -48,30 +44,28 @@
 
                 <tr>
                     <td>
-                        @item.UyeIsim
+                        @item.isim
                     </td>
                     <td>
                         @item.KullaniciAdi
                     </td>
                     <td>
-                        @item.UyeSoyisim
+                        @item.Soyisim
                     </td>
                     <td>
-                        @item.UyeSifre
-                    </td>
-                    <td>
-                        @item.UyeEmail
+                        @item.Email
                     </td>
                     <td>
                         @item.Aciklama
                     </td>
                     <td>
-                        @item.Role
+                        @item.RoleId
                     </td>
                     <td>
-                        <button class="btn-outline-warning" type="submit" name="update" data-id=ID onclick="location.href='/Uye/UyeDuzenle?id=@item.id'">Uye Düzenle</button>
-                        <button class="btn-outline-success" type="button" name="detaylar" onclick="location.href='@Url.Action("DetailsUye", "Uye")'">Uye Detaylar</button>
-                        <button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='@Url.Action("DeleteUye", "Uye")'">Uye Sil</button>
+                        @*<button class="btn-outline-warning" type="submit" name="update" onclick="location.href='/Uye/EditUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId'">Uye Düzenle</button>*@
+                        @*<button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId">Uye Detaylar</button>*@
+                        @*<button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId" ,'">Uye Sil</button>*@
+                        <button class="btn-outline-warning btn-duzenle" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi DÜZENLE</button>
 
 
 
@@ -84,4 +78,91 @@
         }
     </tbody>
 </table>
+@*@section Scripts
+    {   @if (Session["KullaniciAdi"] == "")
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    alert("@ViewBag.Login");
+                 });
+            </script>
 
+        }
+
+    }*@
+
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btn-duzenle").click(function () {
+                var id = $(this).data("id");
+                alert(id);
+                var isim = $(this).data("isim");
+                alert(isim);
+                var soyisim = $(this).data("soyisim");
+                var kullaniciAdi = $(this).data("kadi");
+                var aciklama = $(this).data("aciklama");
+                var roleId = $(this).data("role");
+                //var data ="id: ' + id + ',isim: ' + isim + ' ,soyisim: ' + soyisim + ',kullaniciadi: ' + kullaniciAdi + ',aciklama: ' + aciklama + ',roleid: ' + roleId + '"',
+                //var formData = new FormData();
+
+                //formData.append("id", id);
+                //formData.append("isim", isim);
+                //formData.append("soyisim", soyisim);
+                //formData.append("kullaniciadi", kullaniciAdi);
+                //formData.append("aciklama", aciklama);
+                //formData.append("roleid", roleId);
+                //alert(formdata);
+
+
+                $.ajax({
+                    url: `/Uye/EditUye?id=${id}`,
+                    //data: formData,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+
+
+                    }, complete: function () {
+
+                    }
+                });
+                alert("Ajax sonu");
+            })
+
+        });
+
+        $(document).ready(function () {
+            $(".btn-sil").click(function () {
+                var id = $(this).data("id");
+                alert(id);
+                var isim = $(this).data("isim");
+                alert(isim);
+                var soyisim = $(this).data("soyisim");
+
+                var kullaniciAdi = $(this).data("kadi");
+                var aciklama = $(this).data("aciklama");
+                var roleId = $(this).data("role");
+                $.ajax({
+                    url: `/Uye/DeleteUye?id=${id}&isim=${isim}&soyisim=${soyisim}&kullaniciadi=${kullaniciAdi}&aciklama=${aciklama}&roleid=${roleId}"`,
+                    @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
+                    method: "post",
+                    dataType: "json",
+                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (data) {
+
+                    }, complete: function () {
+
+                    }
+                });
+            })
+
+        });
+
+    </script>
+
+
+}

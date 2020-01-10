@@ -7,11 +7,7 @@
 
 }
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
-@if (Context.Session["KullaniciAdi"].ToString() != "")
-{
-    @Html.Partial("~/Views/Shared/Profil.cshtml");
-}
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
 
 

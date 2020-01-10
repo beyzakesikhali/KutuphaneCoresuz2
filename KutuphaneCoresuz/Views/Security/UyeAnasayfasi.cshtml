@@ -8,11 +8,6 @@
 }
 
 @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
-@if (Context.Session["KullaniciAdi"].ToString() != "")
-{
-    @Html.Partial("~/Views/Shared/Profil.cshtml");
-}
-
 
 
 <span class="border-dark border-bottom">
@@ -80,9 +75,7 @@
                 <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Kitap/DetailsKitap?&id=@item.Id&KitapAdi=@item.KitapAdi&YazarAdi=@item.YazarAdi&YazarSoyadi=@item.YazarSoyadi&yayinci=@item.yayinci&Aciklama=@item.Aciklama&YazarYorum=@item.YazarYorum&KitapDurum=@item.KitapDurum'"> Detaylar</button>
           
             </td>
-            </td>
-
-
+          
         </tr>
 
             }

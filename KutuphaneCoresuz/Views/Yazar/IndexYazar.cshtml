@@ -6,11 +6,8 @@
 }
 
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
-@if (Context.Session["KullaniciAdi"] != null)
-{
-    @Html.Partial("~/Views/Shared/Profil.cshtml");
     <div class="" align="center">
         <br />
         <br />
@@ -54,7 +51,6 @@
                     </td>
                 </tr>
             }
-
         </table>
-    </div>
-}
+        </div>
+    
