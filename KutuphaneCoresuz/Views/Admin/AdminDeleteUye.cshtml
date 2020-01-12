@@ -1,0 +1,54 @@
+﻿
+@model  KutuphaneCoresuz.Models.Data.Uye
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+
+<br />
+<br />
+
+
+<div id="logo" class="pull-left" align="center">
+    <h3>Hesabı silerseniz hesabınızdaki tüm kitaplar da silinir.</h3>
+
+    <dl class="dl-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.isim)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.KullaniciAdi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Soyisim)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Sifre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Aciklama)
+            </dd>
+
+        </dl>
+    </dl>
+    <div class="form-actions no-color">
+        <button class="btn-outline-danger" type="button" name="sil" onclick="location.href='@Url.Action("DeleteUye", "Uye")'"> Sil</button>|
+        <button class="btn-outline-success" type="button" name="yeniKitap" onclick="location.href='@Url.Action("UyeAnaSayfasi", "Security")'">Ana Sayfaya Dön</button>
+    </div>
+
+</div>
+
+

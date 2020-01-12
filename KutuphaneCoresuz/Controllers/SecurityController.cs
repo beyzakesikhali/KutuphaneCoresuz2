@@ -77,7 +77,7 @@ namespace KutuphaneCoresuz.Controllers
             //    RoleId = 1
             //});
 
-          //  db.Uyeler.Remove(admin);
+            //  db.Uyeler.Remove(admin);
             //db.SaveChanges();
 
             return View();
@@ -105,28 +105,37 @@ namespace KutuphaneCoresuz.Controllers
 
 
             sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, mevcut.Sifre);
-
-            //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
-
-            if (mevcut.KullaniciAdi == uye.KullaniciAdi && sifreKontrol == 1)
+            if(sifreKontrol==1)
             {
-                Session.Add("KullaniciAdi",mevcut.isim.ToString());
-               
+                Session.Add("KullaniciAdi", mevcut.isim.ToString());
+
                 if (mevcut.RoleId == Convert.ToInt32(Role.Admin))
                 {
                     return RedirectToAction("IndexAdmin", "Admin");
                 }
                 HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
                 return RedirectToAction("UyeAnaSayfasi", "Security");
-                //FormsAuthentication.SetAuthCookie(uye.KullaniciAdi, false);
-                ////false -> beni hatırla kısmıyla alakalı
-                //return RedirectToAction("UyeAnasayfasi", "Security");
+
             }
             else
             {
                 ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
 
             }
+
+            //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
+
+            //if (mevcut.KullaniciAdi == uye.KullaniciAdi && sifreKontrol == 1)
+            //{
+
+            //FormsAuthentication.SetAuthCookie(uye.KullaniciAdi, false);
+            ////false -> beni hatırla kısmıyla alakalı
+            //return RedirectToAction("UyeAnasayfasi", "Security");
+            //}
+            //  else
+            // {
+            //  
+            //  }
             return View();
 
         }
@@ -145,11 +154,11 @@ namespace KutuphaneCoresuz.Controllers
             Yazar yazarlar = new Yazar();
             int kitapdurum;
             string kitapDurum = "";
-            if (HttpContext.Session["kullaniciAdi"] == null)
+            if (HttpContext.Session["KullaniciAdi"] == null)
             {
                 return Redirect("Login");
             }
-            string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
+            string AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
             var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
             int uyeID = uyeResult.ID;
@@ -169,7 +178,7 @@ namespace KutuphaneCoresuz.Controllers
                     kitapDurum = "Kitap Kutuphanede";
 
                     var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new KitapYazarAddModel() { Id=kitapResult.ID, KitapAdi = kitapResult.Isim, Aciklama = kitapResult.Aciklama, yayinci = kitapResult.Yayinci, KitapDurum = kitapDurum, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
+                    model.Add(new KitapYazarAddModel() { Id = kitapResult.ID, KitapAdi = kitapResult.Isim, Aciklama = kitapResult.Aciklama, yayinci = kitapResult.Yayinci, KitapDurum = kitapDurum, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
                 }
                 if (model != null)
                 {
@@ -209,5 +218,16 @@ namespace KutuphaneCoresuz.Controllers
         //    
         //}
 
+            [AllowAnonymous]
+
+        public ActionResult KitapAra()
+        {
+            string mevcut = HttpContext.Session["KullaniciAdi"].ToString();
+            var result = db.Uyeler.Where(u => u.isim == mevcut).FirstOrDefault();
+           
+                return View(db.Kitaplar.ToList());
+            
+            //return RedirectToAction("Login", "Security");
+        }
     }
 }

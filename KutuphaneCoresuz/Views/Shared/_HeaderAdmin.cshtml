@@ -17,8 +17,7 @@
                 <li>@Html.ActionLink("Anasayfa", "AdminAnasayfasi", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
 
                 <li>@Html.ActionLink("Giriş Sayfası", "Login", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
-                <li>@Html.ActionLink("Üye Ekle", "CreateUye", "Uye", new { area = "" }, new { @class = "navbar-brand" })</li>
-                <li>@Html.ActionLink("Kitap Ekle", "", "", new { area = "" }, new { @class = "navbar-brand" })</li>
+               
                 <li class="menu-has-children">
                     @*@Html.ActionLink("Keşfet", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
                 <li class="menu-has-children">
@@ -26,8 +25,8 @@
                     <ul>
                         <li><a href="#"></a></li>
                         <li><a href=@Url.Action("CreateYazarAction","Yazar")>Yazar Ekle</a></li>
-                        <li><a href="@Url.Action("CreateKitap","Kitap")">Kitap Ekle</a></li>
-                        <li><a href="@Url.Action("CreateUye","Uye")">Uye Ekle</a></li>
+                        <li><a href="@Url.Action("","Kitap")">Kitap Ekle</a></li>
+                        <li><a href="@Url.Action("AddUyeAdmin","Admin")">Uye Ekle</a></li>
                         <li><a href="@Url.Action("IndexYazar","Yazar")">Tüm Yazarlar</a></li>
                         <li><a href="@Url.Action("IndexKitap","Kitap")">Tüm Kitaplar</a></li>
 
@@ -35,14 +34,13 @@
 
                 </li>
                 <li class="menu-has-children">
-                    @Html.ActionLink("Keşfet", "UyeAnaSayfasi", "Security")
+                    @Html.ActionLink("Profil", "UyeAnaSayfasi", "Security")
                     <ul>
                         <li><a href="#"></a></li>
-                        <li><a href=@Url.Action("CreateYazarAction","Yazar")>Yazar Ekle</a></li>
-                        <li><a href="@Url.Action("CreateKitap","Kitap")">Kitap Ekle</a></li>
-                        <li><a href="@Url.Action("CreateUye","Uye")">Yeni Uye</a></li>
-                        <li><a href="@Url.Action("IndexYazar","Yazar")">Tüm Yazarlar</a></li>
-                        <li><a href="@Url.Action("IndexKitap","Kitap")">Tüm Kitaplar</a></li>
+                        <li><a href=@Url.Action("DetailsUye","Uye")>Profil Görüntüle</a></li>
+                        <li><a href="@Url.Action("EditUye","Uye")">Profil Düzenle</a></li>
+                        <li><a href="@Url.Action("DeleteUye","Uye")">Profil Sil</a></li>
+                       
                     </ul>
 
                 </li>
@@ -61,16 +59,7 @@
             </ul>
 
         </nav><!-- #nav-menu-container -->
-
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" style="position:absolute; right:50px; top:100px" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Profil
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#">Dropdown link</a>
-                <a class="dropdown-item" href="#">Dropdown link</a>
-            </div>
-        </div>
+       
 
         <div style="padding:0; margin-top:80px; font-family:fantasy; color:#01579B; height:250px; width:250px; position:absolute; left:10px ">
             <aside class="col-md-">

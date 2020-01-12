@@ -5,10 +5,7 @@
 }
 
 @Html.Partial("~/Views/Shared/_Header.cshtml")
-
-@if (Context.Session["KullaniciAdi"] != null)
-{
-    @Html.Partial("~/Views/Shared/Profil.cshtml");
+,
 
     using (Html.BeginForm("CreateYazarAction", "Yazar", FormMethod.Post))
     {
@@ -52,4 +49,4 @@
         </div>
     }
 
-}
+

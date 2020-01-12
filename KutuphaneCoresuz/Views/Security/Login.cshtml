@@ -48,15 +48,27 @@
                             </div>
                         </div>
                     }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                    @if (ViewBag.Null != null)
-                    {
-                       <script type="text/javascript">
-                           window.onload = function () {
-                               this.confirm("Böyle bir kullanıcı veritabanında yok, tekrar deneyin..");
-                           }
-                       </script>
-                    }
+
+@section Scripts
+    {
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                alert('@ViewBag.Null');
+                alert('@ViewBag.LoginError');
+            });
+
+        </script>
+
+
+
+    }
 
 
 

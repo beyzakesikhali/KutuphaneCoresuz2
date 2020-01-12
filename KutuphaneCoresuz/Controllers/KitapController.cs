@@ -28,7 +28,7 @@ namespace KutuphaneCoresuz.Controllers
         public ActionResult IndexKitap()
         {
          
-            if (HttpContext.Session["kullaniciAdi"] == null)
+            if (HttpContext.Session["KullaniciAdi"] == null)
             {
                 return RedirectToAction("Login","Security");
             }
@@ -213,7 +213,7 @@ namespace KutuphaneCoresuz.Controllers
             
          
             var SeciliKitapAdi = model.KitapAdi;
-            string AktifUye = HttpContext.Session["kullaniciAdi"].ToString();
+            string AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             var AktifUyeResult = db.Uyeler.Where(i => i.KullaniciAdi == AktifUye).Single();
             var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi).FirstOrDefault();
             var YazarResult = db.Yazarlar.Where(i => i.ID == SeciliYazarID).FirstOrDefault();

@@ -577,6 +577,7 @@
     <Content Include="Content\css\animate.min.css" />
     <Content Include="Content\css\popupcss\popup.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\webPage\webgrid.css" />
     <Content Include="Content\easing.js" />
     <Content Include="Content\easing.min.js" />
     <Content Include="Content\fontawesome-free-5.12.0-web\css\all.css" />
@@ -2394,7 +2395,7 @@
     <Content Include="Views\Uye\DeleteUye.cshtml" />
     <Content Include="Views\Uye\DetailsUye.cshtml" />
     <Content Include="Views\Uye\EditUye.cshtml" />
-    <Content Include="Views\Admin\UyeKitap.cshtml" />
+    <Content Include="Views\Admin\AdminUyeKitap.cshtml" />
     <Content Include="Views\Kitap\CreateKitap.cshtml" />
     <Content Include="Views\Kitap\DeleteKitap.cshtml" />
     <Content Include="Views\Kitap\DetailsKitap.cshtml" />
@@ -2422,6 +2423,12 @@
     <Content Include="Views\Admin\IndexAdmin.cshtml" />
     <Content Include="Views\Shared\_HeaderUye.cshtml" />
     <Content Include="Views\Shared\_HeaderAdmin.cshtml" />
+    <Content Include="Views\Security\YazarAra.cshtml" />
+    <Content Include="Views\Security\KitapAra.cshtml" />
+    <Content Include="Views\Admin\AdminEditUyeResult.cshtml" />
+    <Content Include="Views\Uye\PostEditUye.cshtml" />
+    <Content Include="Views\Admin\AddUyeAdmin.cshtml" />
+    <Content Include="Views\Admin\AdminDeleteUye.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

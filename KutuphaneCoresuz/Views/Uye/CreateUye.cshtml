@@ -4,19 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Create";
 }
-@if (Session["KullaniciAdi"] == null)
-{
-    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
-
-}
-else
-{
-    if (Session["KullaniciAdi"].ToString() == "admin")
-    {
-        Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml");
-    }
-}
-
 
 @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 
@@ -135,9 +122,9 @@ else
         document.ready(function () {
 
             $('#btn-kaydet').mousedown(function () {
-                var adi = document.getElementById('kullaniciAdi').value;
-                var sifre = document.getElementById('sifre').value;
-                var tsifre = document.getElementById('sifreTekrar').value;
+                var adi=$('#kullaniciAdi').value;
+                var sifre = $('#sifre').value;
+                var tsifre = $('#sifreTekrar').value;
                 var hata = new Array();
 
                 if (adi == "")
