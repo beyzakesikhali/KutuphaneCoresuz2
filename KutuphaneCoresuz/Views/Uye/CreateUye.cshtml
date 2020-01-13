@@ -4,19 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Create";
 }
-@if (Session["KullaniciAdi"] == null)
-{
-    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
-
-}
-else
-{
-    if (Session["KullaniciAdi"].ToString() == "admin")
-    {
-        Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml");
-    }
-}
-
 
 @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 
@@ -129,7 +116,7 @@ else
 
 
 
-@section Scripts
+@*@section Scripts
         {
     <script type="text/javascript">
         document.ready(function () {
@@ -181,7 +168,7 @@ else
 
     </script>
 
-}
+}*@
 
 
 

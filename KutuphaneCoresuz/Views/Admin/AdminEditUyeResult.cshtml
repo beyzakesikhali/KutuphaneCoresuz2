@@ -1,0 +1,256 @@
+﻿
+@model  List<KutuphaneCoresuz.Models.Data.Uye>
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+
+<div id="logo" class="pull-left" align="center">
+
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <br />
+        <br />
+        <h4>Uye Düzenle</h4>
+        <h4>Admin Şifrenizi Yazmayı Unutmayın</h4>
+        <hr style="width:50%;" align:center />
+        @using (Html.BeginForm("AdminEditUyeEdit", "Admin", FormMethod.Post))
+        //new { Id = item.ID, isim = item.isim, kullaniciadi = item.KullaniciAdi, soyisim = item.Soyisim, email = item.Email, aciklama = item.Aciklama },
+        {
+
+            foreach (var item in Model)
+            {
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="hidden" class="form-control" name="id" value="@item.ID" />
+
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("İsim", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @*@Html.TextBox("Adı:", item.isim, new { id = "isim", htmlAttributes = new { @class = "form-control" } })*@
+                        <input type="text" class="form-control" name="isim" value="@item.isim" />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("KullaniciAdi", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="kullaniciadi" value="@item.KullaniciAdi" />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Soyisim", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="soyisim" value="@item.Soyisim" />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="email" value="@item.Email" />
+
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.Label("Şifre", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.Password("Sifre:", item.Sifre, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="aciklama" value="@item.Aciklama" />
+
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @*<form method="post">*@
+                        @*action="/Admin/AdminEditUyeResult?id=@item.ID&isim=@item.isim&kullaniciadi=@item.KullaniciAdi&soyisim=@item.Soyisim&email=@item.Email&aciklama=@item.Aciklama"*@
+
+                        <button type="submit" value="Kaydet" class="btn btn-danger" id="btn-degistir">Değiştir</button>
+                        
+                        @*onclick="location.href='/Admin/AdminEditUyeEdit?id=@item.ID&isim=@item.isim&kullaniciadi=@item.KullaniciAdi&soyisim=@item.Soyisim&email=@item.Email&aciklama=@item.Aciklama"*@
+                        @*</form>*@
+                    </div>
+                </div>
+            }
+        }
+        @*"location.href='/Admin/AdminEditUyeResult?id=@item.ID&isim=@item.isim&kullaniciadi=@item.KullaniciAdi&soyisim=@item.Soyisim&email=@item.Email&aciklama=@item.Aciklama'"*@
+
+        @*//modal*@
+        @* !!!! buraya modal koyacaksın!!!!!*@
+
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Rol Değiştir</button>
+        </div>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+
+                            <form id="tag-form" class="tagForm" method="post">
+                                @foreach (var item in Model)
+                                {
+                                    @Html.Label("Kullanıcı Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="@Html.Name(item.isim)">
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Şifre:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="@Html.Name(item.Sifre)">
+
+                                        </div>
+                                    </div>
+                                }
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                            <button type="button" class="btn btn-primary" id="btn-editrole">Yazar Ekle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexAdmin", "Admin")'">AnaSayfaya Dön</button>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            @*$("#btn-editrole").click(function () {
+                    "aciklama":  $(this).data("aciklama"), "roleid":  $(this).data("roleid") } ),
+                   //data: { "id": id, "isim": isim, "kullaniciadi": kullaniciadi, "soyisim": soyisim, "aciklama": aciklama, "roleid": roleid },                alert("butona tıklandı");
+                    $.ajax({
+                            url: '@Url.Action("AdminKontrol","Uye")',
+                            method: "POST",
+                            dataType:"json",
+                            data: $('form.tagForm').serialize(),
+                        success: function (sayfa) {
+                            if (sayfa.text == 1) {
+
+                                $(location).attr('href', '@Url.Action("RolEdit","Uye")');
+
+                            }
+                            else {
+                                alert("Yanlış Kullanıcı Adı ve Şifre");
+                            }
+
+                        },
+                        error: function () {
+                            alert("Hata");
+                        }*@
+
+            //modal kodları
+            //
+            //
+
+            var modal = document.getElementById("#mymodal");
+            var ad = document.getElementById("#ad");
+            $("#btn-yazarekle").click(function () {
+                alert("butona tıklandı");
+
+                $.ajax({
+                    url: '@Url.Action("RoleEdit","Uye")',
+                    method: "POST",
+                    dataType: "json",
+                    data: $('form.tagForm').serialize(),
+                    success: function (sayfa) {
+
+                        alert(sayfa.text);
+                        if (sayfa.text == 0) {
+
+                            window.location.href = '@Url.Action("Login","Security")';
+                        }
+                        else if (sayfa.text == 1) {
+                            $("#mymodal").modal('hide');
+
+                            GetNames();
+
+
+                        }
+                        else if (sayfa.text == 2) {
+                            window.location.href = '@Url.Action("CreateYazar","Yazar")';
+                        }
+                    },
+                    error: function () {
+                        alert('Error');
+                    }
+                });
+                return false;
+
+            });
+
+
+            modal.on('hidden', function () {
+                GetNames();
+                ad.change(function () {
+                    window.location.reload(true);
+                });
+
+
+
+            });
+
+        //    $("#btn-degistir").click(function navigate(target) {
+        //        //Grab your values
+        //        var id = documet.getElementById('id').value;
+        //        var isim = document.getElementById('isim').value;
+        //        var kullaniciadi = document.getElementById('kullaniciadi').value;
+        //        var soyisim = document.getElementById('soyisim').value;
+        //        var email = document.getElementById('email').value;
+        //         var aciklama = document.getElementById('aciklama').value;
+
+        //        // $.data(target, { id : $("#id").val(), isim: $("#isim").val(), kullaniciadi: $("#kullaniciadi").val(), soyisim:$("#soyisim").val(), email:$("#email").val(), aciklama:$("#aciklama").val(), });
+        //        //Perform your navigation
+        //        window.location.href = target+'?id='+id+'&isim='+isim+'&kullaniciadi'+kullaniciadi+'&soyisim'+soyisim+'&email'+email+'&aciklama'+aciklama;
+        //    });
+        //});
+
+
+    </script>
+
+}
+

@@ -5,8 +5,15 @@
     ViewBag.Title = "Create";
 
 }
+@if (Context.Session["KullaniciAdi"].ToString() == "Beyza")
+{
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+}
+else
+{
+    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+}
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
 <br />
 <br />
 <br />
@@ -37,7 +44,7 @@
                 </div>
             </div>
         </div>
-              <div class="form-group">
+        <div class="form-group">
             @Html.Label("Yayıncı", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="text" class="form-control" name="@Html.NameFor(m => m.yayinci)">
@@ -61,9 +68,9 @@
 
 
     }
-    
-        <button class="btn-outline-warning btn-duzenle" type="submit" onclick='@Url.Action("IndexKitap","Kitap")'>Tüm Kitaplar</button>
-    
+
+    <button class="btn-outline-warning btn-duzenle" type="submit" onclick='@Url.Action("IndexKitap","Kitap")'>Tüm Kitaplar</button>
+
     <div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px">
         <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
     </div>
@@ -76,46 +83,47 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-,
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <form id="tag-form" class="tagForm" method="post">
-                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                ,
+                <div class="modal-body">
+                    <div class="form-group">
+                        <form id="tag-form" class="tagForm" method="post">
+                            @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarAdi)">
+
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarAdi)">
+                                    <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarSoyadi)">
 
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarSoyadi)">
-
-                                    </div>
+                            <div class="form-group">
+                                @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name=@Html.NameFor(m => m.YazarYorum)>
                                 </div>
-
-                                <div class="form-group">
-                                    @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" name=@Html.NameFor(m => m.YazarYorum)>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
                         <button type="button" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
-              </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        </div>
 
 
 
 
-    @section Scripts
+        @section Scripts
     {
-        <script type="text/javascript">
+            <script type="text/javascript">
 
         $(document).ready(function()
         {
@@ -135,7 +143,7 @@
                             dataType:"json",
                             data: $('form.tagForm').serialize(),
                              success: function (sayfa) {
-                                
+
                                  alert(sayfa.text);
                                 if (sayfa.text == 0) {
 
@@ -146,8 +154,8 @@
                                     $("#mymodal").modal('hide');
 
                                         GetNames();
-                                    
-                                    
+
+
                                 }
                                         else if (sayfa.text == 2) {
                                     window.location.href = '@Url.Action("CreateYazar","Yazar")';
@@ -274,5 +282,5 @@
 
 
 
-        </script>
-    }
+            </script>
+        }

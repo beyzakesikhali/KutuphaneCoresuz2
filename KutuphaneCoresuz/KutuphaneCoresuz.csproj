@@ -2395,7 +2395,7 @@
     <Content Include="Views\Uye\DeleteUye.cshtml" />
     <Content Include="Views\Uye\DetailsUye.cshtml" />
     <Content Include="Views\Uye\EditUye.cshtml" />
-    <Content Include="Views\Admin\UyeKitap.cshtml" />
+    <Content Include="Views\Admin\AdminAddUyeKitap.cshtml" />
     <Content Include="Views\Kitap\CreateKitap.cshtml" />
     <Content Include="Views\Kitap\DeleteKitap.cshtml" />
     <Content Include="Views\Kitap\DetailsKitap.cshtml" />
@@ -2422,10 +2422,15 @@
     <Content Include="Views\Security\UyeKitaplarSayfasi.cshtml" />
     <Content Include="Views\Admin\IndexAdmin.cshtml" />
     <Content Include="Views\Shared\_HeaderUye.cshtml" />
-    <Content Include="Views\Shared\Profil.cshtml" />
     <Content Include="Views\Shared\_HeaderAdmin.cshtml" />
     <Content Include="Views\Security\YazarAra.cshtml" />
     <Content Include="Views\Security\KitapAra.cshtml" />
+    <Content Include="Views\Admin\AdminEditUyeResult.cshtml" />
+    <Content Include="Views\Uye\PostEditUye.cshtml" />
+    <Content Include="Views\Admin\AddUyeAdmin.cshtml" />
+    <Content Include="Views\Admin\AdminDeleteUyeResult.cshtml" />
+    <Content Include="Views\Admin\AddKitap.cshtml" />
+    <Content Include="Views\Admin\AddYazar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

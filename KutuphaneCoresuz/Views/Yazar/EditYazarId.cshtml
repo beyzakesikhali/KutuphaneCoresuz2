@@ -1,11 +1,11 @@
-﻿@model KutuphaneCoresuz.Models.Data.Yazar
+﻿@model List<KutuphaneCoresuz.Models.Data.Yazar>
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
 
 
@@ -74,7 +74,7 @@
                 }
 
                 <div>
-                    | <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexYazar", "Yazar")'">Profil Detay</button> |
+                    | <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar", "Yazar")'">Profil Detay</button> |
 
                 </div>
             </div>

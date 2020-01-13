@@ -19,7 +19,7 @@
         <h4>Uye Düzenle</h4>
         <h4>Şifrenizi Yazmayı Unutmayın</h4>
         <hr />
-        @using (Html.BeginForm("EditUye", "Uye", FormMethod.Post))
+        @using (Html.BeginForm("PostEditUye", "Uye", FormMethod.Post))
         {
             foreach (var item in Model)
             {
@@ -158,7 +158,7 @@
         $(document).ready(function () {
 
             $("#btn-editrole").click(function () {
- "aciklama":  $(this).data("aciklama"), "roleid":  $(this).data("roleid") } ),
+ //"aciklama":  $(this).data("aciklama"), "roleid":  $(this).data("roleid") } ),
                    //data: { "id": id, "isim": isim, "kullaniciadi": kullaniciadi, "soyisim": soyisim, "aciklama": aciklama, "roleid": roleid },                alert("butona tıklandı");
                     $.ajax({
                             url: '@Url.Action("AdminKontrol","Uye")',

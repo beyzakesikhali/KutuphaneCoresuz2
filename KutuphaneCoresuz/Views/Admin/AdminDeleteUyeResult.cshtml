@@ -1,0 +1,126 @@
+﻿
+@model  List<KutuphaneCoresuz.Models.Data.Uye>
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+
+<br />
+<br />
+
+@using (Html.BeginForm("AdminDeleteUyeResult", "Admin", FormMethod.Post))
+{
+<div id="logo" class="pull-left" align="center">
+    <h3>Hesabı silerseniz hesapdaki tüm kitaplar da silinir.</h3>
+
+    <table class="table" align="center" style="width:65%; height:200px" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th> @Html.Label("Uye Adi:")</th>
+                <th>
+                    @Html.Label("Uye Kullanıcı Adı:")
+
+                </th>
+                <th>
+                    @Html.Label("Uye Soyisim:")
+                </th>
+                <th>
+                    @Html.Label("Email:")
+                </th>
+                <th>
+                    @Html.Label("Aciklama")
+                </th>
+                <th>
+                    @Html.Label("Uye Tür")
+                </th>
+                <th colspan="2">
+                    İşlemler
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @if (Model != null)
+            {
+
+                foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @item.isim
+                        </td>
+                        <td>
+                            @item.KullaniciAdi
+                        </td>
+                        <td>
+                            @item.Soyisim
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+                        <td>
+                            @item.Aciklama
+                        </td>
+                        <td>
+                            <input type="hidden" name="id" value="@item.ID" />
+                        </td>
+
+
+                        @if (item.RoleId == 0)
+                        {
+                            <td>Uye</td>
+
+                        }
+                        else
+                        {
+                            <td> Admin</td>
+
+                        }
+
+
+                        <td colspan="2">
+
+
+                            @*<button class="btn-outline-warning" type="submit" name="update" onclick="location.href='/Uye/EditUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId'">Uye Düzenle</button>*@
+                            @*<button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId">Uye Detaylar</button>*@
+                            @*<button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId" ,'">Uye Sil</button>*@
+                            <button class="btn-outline-warning btn-duzenle" onclick="location.href=`/Admin/AdminEditUyeResult?id=@item.ID`">Uyeyi DÜZENLE</button>
+                        </td>
+                        @*<td colspan="2">
+                        <button class="btn-outline-warning btn-sil" data-id=@item.ID data-model=@Model data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi Sil</button>
+                    </td>
+                    <td colspan="2">
+                        <button class="btn-outline-warning btn-kitapekle" data-id=@item.ID data-model=@Model data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeye Kitap Ekle</button>
+                    </td>*@
+                        <td>
+                            <button class="btn-outline-warning btn-duzenle" onclick="location.href=`/Admin/AdminDeleteUyeResult?id=@item.ID`">Uyeyi DÜZENLE</button>
+                        </td>
+
+                    </tr>
+
+                }
+
+            }
+        <div class="form-actions no-color">
+            <button class="btn-outline-danger" type="submit" name="sil"> Sil</button>|
+            @*onclick="location.href='@Url.Action("AdminDeleteUyeResult", "Admin")'"*@
+            <button class="btn-outline-success" type="button" name="yeniKitap" onclick="location.href='@Url.Action("IndexAdmin", "Admin")'">Ana Sayfaya Dön</button>
+        </div>
+        </tbody>
+    </table>
+   
+</div>
+    }
+
+
+

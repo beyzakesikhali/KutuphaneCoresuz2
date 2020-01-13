@@ -1,0 +1,176 @@
+﻿@model KutuphaneCoresuz.Models.Data.Uye
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create";
+}
+
+        @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml");
+
+
+@*<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div id="header">
+
+        <div class="container">
+            <div id="logo" class="pull-left">
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    <h4>Uye</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+<br />
+<br />
+<br />
+
+
+<div align="center">
+
+
+    @using (Html.BeginForm("AddUyeAdmin", "Admin", FormMethod.Post))
+    {
+
+        <div class="form-group">
+            @Html.Label("İsminiz", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isim, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.isim, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Kullanıcı Adınız:", htmlAttributes: new { id = "kullaniciAdi", @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KullaniciAdi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.KullaniciAdi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Soyisminiz:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Soyisim, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Soyisim, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Sifreniz", htmlAttributes: new { @class = " control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Sifre, new { htmlAttributes = new { id = "KullaniciGirisSifre", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="gelenSonuc" style="display:none;">
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Sifreniz (Tekrar)", htmlAttributes: new { @class = " control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Sifre, new { htmlAttributes = new { id = "sifreTekrar", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Emailiniz", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Açıklama:", htmlAttributes: new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydol" class="btn btn-warning" id="btn-kaydet" />
+
+                <form action="Login">
+                    <button class="btn btn-warning " type="button">Giriş Yap</button>
+                </form>
+            </div>
+
+        </div>
+
+    }
+
+
+
+</div>
+
+
+@*</div>
+        </div>
+    </div>
+    </div>*@
+
+
+
+@section Scripts
+        {
+    <script type="text/javascript">
+        document.ready(function () {
+
+            $('#btn-kaydet').mousedown(function () {
+                var adi=$('#kullaniciAdi').value;
+                var sifre = $('#sifre').value;
+                var tsifre = $('#sifreTekrar').value;
+                var hata = new Array();
+
+                if (adi == "")
+                    hata.push('Lütfen adı boş geçmeyiniz');
+                else if (adi.length < 4)
+                    hata.push('Lütfen adı alanını 3 karakterden büyük giriniz');
+
+                if (sifre == '')
+                    hata.push('Şifre alanını boş geçmeyiniz');
+                else {
+                    if (sifre != tsifre)
+                        hata.push('Şifreler aynı olmalıdır.');
+
+                    else if (sifre.length < 8)
+                        hata.push('Şifre 8 karekter veya daha büyük olmalıdır.');
+
+                    else if (sifre.search(/[a-z]/) < 0)
+                        hata.push("Şifre en az bir Küçük harf içermelidir.");
+
+                    else if (sifre.search(/[A-Z]/) < 0)
+                        hata.push("Şifre en az bir Büyük harf içermelidir.");
+
+                    else if (sifre.search(/[0-9]/) < 0)
+                        hata.push("Şifre en az bir rakam içermelidir.");
+
+                    else if (sembolvar == false)
+                        hata.push("Şifre en az bir sembol içermelidir.");
+
+
+                }
+
+                if (hata.length > 0) {
+                    alert(hata.join("\n"));
+                    return false;
+                }
+                else alert('Tamam şifre uygun'); //buraya return true diyebiliriz
+            });
+        }
+
+
+
+    </script>
+
+}
+
+
+
+

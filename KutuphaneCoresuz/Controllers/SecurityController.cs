@@ -105,27 +105,36 @@ namespace KutuphaneCoresuz.Controllers
 
 
             sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, mevcut.Sifre);
+            if(sifreKontrol==1)
+            {
+                Session.Add("KullaniciAdi", mevcut.isim.ToString());
+
+                if (mevcut.RoleId == Convert.ToInt32(Role.Admin))
+                {
+                    return RedirectToAction("IndexAdmin", "Admin");
+                }
+                HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
+                return RedirectToAction("UyeAnaSayfasi", "Security");
+
+            }
+            else
+            {
+                ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
+
+            }
 
             //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
 
             //if (mevcut.KullaniciAdi == uye.KullaniciAdi && sifreKontrol == 1)
             //{
-            Session.Add("KullaniciAdi", mevcut.isim.ToString());
 
-            if (mevcut.RoleId == Convert.ToInt32(Role.Admin))
-            {
-                return RedirectToAction("IndexAdmin", "Admin");
-            }
-            HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
-            return RedirectToAction("UyeAnaSayfasi", "Security");
             //FormsAuthentication.SetAuthCookie(uye.KullaniciAdi, false);
             ////false -> beni hatırla kısmıyla alakalı
             //return RedirectToAction("UyeAnasayfasi", "Security");
             //}
             //  else
             // {
-            //  ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
-
+            //  
             //  }
             return View();
 

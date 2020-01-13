@@ -157,22 +157,66 @@ namespace KutuphaneCoresuz.Controllers
 
 
 
-
-        //  GET: Yazars/Edit/5
+        //*************EDİT YAZAR **********
+        [HttpPost]
         [AllowAnonymous]
-        public ActionResult EditYazarId(Yazar yazar)
+
+
+        public JsonResult EditYazarJson(int? id, string isim)
         {
-            if (HttpContext.Session["KullaniciAdi"] == null)
+
+            bool basarliMi = true;
+            string sonuc = "EditUye";
+            List<Yazar> model = new List<Yazar>();
+            try
             {
-                return RedirectToAction("Login", "Security");
+                if (HttpContext.Session["KullaniciAdi"] == null)
+
+                {
+                    sonuc = "Login";
+                    return Json(new { ok = basarliMi, text = sonuc });
+                }
+                //sonuc = "EditUye";
+                var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+
+                if (yazarResult != null)
+                {
+                    sonuc = "editYazar";
+                    model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Yorum = yazarResult.Yorum});
+                    //return View(model);
+
+                    return Json(new { ok = basarliMi, text = sonuc });
+
+                }
+                sonuc = "hata";
+                return Json(new { ok = basarliMi, text = sonuc });
+
+            }
+            catch (Exception)
+            {
+                basarliMi = false;
+                sonuc = "Başarısız İşlem";
+                return Json(new { ok = basarliMi, text = sonuc });
+                throw;
             }
 
-            return View("EditYazarId");
+
+        }
+
+        [AllowAnonymous]
+        public ActionResult EditYazarId(int? id)
+        {
+            List<Yazar> model = new List<Yazar>();
+            // string gelneisim = isim;
+            var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+            model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Yorum = yazarResult.Yorum});
+            return View(model);
+          
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult EditYazarId(int? id, Yazar model)
+        public ActionResult EditYazarId(int? id, string isim, string soyisim, string yorum)
         {
             if (HttpContext.Session["KullaniciAdi"] == null)
             {
@@ -180,12 +224,13 @@ namespace KutuphaneCoresuz.Controllers
             }
             else
             {
+                //var yazarIdResult = db.Yazarlar.Where(y => y.ID == id).FirstOrDefault();
 
-                var yazarIdResult = db.Yazarlar.Single(y => y.Isim == model.Isim && y.Soyisim == model.Soyisim);
-                int gelenId = yazarIdResult.ID;
+              //  var yazarIdResult = db.Yazarlar.Single(y => y.Isim == model.Isim && y.Soyisim == model.Soyisim);
+                //int gelenId = yazarIdResult.ID;
                 // var ad = model.Isim;
-                id = gelenId;
-                if (gelenId == 0)
+               // id = gelenId;
+                if (id == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -196,7 +241,10 @@ namespace KutuphaneCoresuz.Controllers
                 }
                 else
                 {
-
+                    yazar.Isim = isim;
+                    yazar.Soyisim = soyisim;
+                    yazar.Yorum = yorum;
+                   
                     db.Entry(yazar).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("IndexYazar");
@@ -249,38 +297,117 @@ namespace KutuphaneCoresuz.Controllers
         //}
 
 
+        //delete delete delete delete YAZAR****** DELETE YAZAR*****
+
+
+        [HttpPost]
+        [AllowAnonymous]
+
+        public JsonResult DeleteYazarJson(int? id, string isim)
+        {
+
+            bool basarliMi = true;
+            string sonuc = "deleteyazar";
+            List<Yazar> model = new List<Yazar>();
+            try
+            {
+                if (HttpContext.Session["KullaniciAdi"] == null)
+
+                {
+                    sonuc = "Login";
+                    return Json(new { ok = basarliMi, text = sonuc });
+                }
+                //sonuc = "EditUye";
+                var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+
+                if (yazarResult != null)
+                {
+                    sonuc = "deleteyazar";
+                    model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Soyisim = yazarResult.Soyisim, Yorum = yazarResult.Yorum});
+                    //return View(model);
+
+                    return Json(new { ok = basarliMi, text = sonuc });
+
+                }
+                sonuc = "hata";
+                return Json(new { ok = basarliMi, text = sonuc });
+
+            }
+            catch (Exception)
+            {
+                basarliMi = false;
+                sonuc = "Başarısız İşlem";
+                return Json(new { ok = basarliMi, text = sonuc });
+                throw;
+            }
+
+
+        }
 
         [AllowAnonymous]
 
         // GET: Yazars/Delete/5
-        public ActionResult DeleteYazar(Yazar model)
+        public ActionResult DeleteYazar(int? id)
         {
-            //Yazar yazarSorgu = new Yazar();
-            var yazarIdResult = db.Yazarlar.Where(y => y.Isim == model.Isim).Single();
-            int id = yazarIdResult.ID;
-            if (id == 0)
+            List<Yazar> model = new List<Yazar>();
+            string mevcutKullanici = "";
+            mevcutKullanici = HttpContext.Session["KullaniciAdi"].ToString();
+            if (mevcutKullanici == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                RedirectToAction("Login", "Security");
             }
-            Yazar yazar = db.Yazarlar.Find(id);
-            if (yazar == null)
-            {
-                return HttpNotFound();
-            }
-            return View(yazar);
+            var YazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+
+            model.Add(new Yazar() { ID = YazarResult.ID, Isim = YazarResult.Isim, Soyisim = YazarResult.Soyisim,Yorum= YazarResult.Yorum});
+            return View(model);
+           
         }
 
-        // POST: Yazars/Delete/5
-        [HttpPost, ActionName("DeleteYazar")]
-        [ValidateAntiForgeryToken]
+        [HttpPost]
         [AllowAnonymous]
-        public ActionResult DeleteConfirmedYazar(int id)
+        public ActionResult DeleteYazar(int? id, string isim)
         {
-            Yazar yazar = db.Yazarlar.Find(id);
-            db.Yazarlar.Remove(yazar);
-            db.SaveChanges();
-            return RedirectToAction("IndexYazar");
+            if (HttpContext.Session["KullaniciAdi"] == null)
+            {
+                return RedirectToAction("Login", "Security");
+            }
+            else
+            {
+                
+                //var deleteUye = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+                //int uyeId = 0;
+                //  id = uyeIdResult.ID;
+                if (id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                else
+                {
+                    Yazar yazar = db.Yazarlar.Find(id);
+                    db.Yazarlar.Remove(yazar);
+                    db.SaveChanges();
+                    return RedirectToAction("IndexYazar","Yazar");
+                }
+            }
+
         }
+
+
+
+        //delete delete delete delete YAZAR****** DELETE YAZAR SONUUUU*****
+
+        //// POST: Yazars/Delete/5
+        //[HttpPost, ActionName("DeleteYazar")]
+        //[ValidateAntiForgeryToken]
+        //[AllowAnonymous]
+        //public ActionResult DeleteConfirmedYazar(int id)
+        //{
+        //    Yazar yazar = db.Yazarlar.Find(id);
+        //    db.Yazarlar.Remove(yazar);
+        //    db.SaveChanges();
+        //    return RedirectToAction("IndexYazar");
+        //}
 
     }
 
