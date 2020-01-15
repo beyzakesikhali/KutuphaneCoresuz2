@@ -2210,6 +2210,7 @@
     <Content Include="Content\sm.css" />
     <Content Include="Content\superfish.js" />
     <Content Include="Content\superfish.min.js" />
+    <Content Include="Content\table\minik.css" />
     <Content Include="Content\table\tableCss.css" />
     <Content Include="Content\waypoints.min.js" />
     <Content Include="favicon.ico" />
@@ -2430,7 +2431,8 @@
     <Content Include="Views\Admin\AddUyeAdmin.cshtml" />
     <Content Include="Views\Admin\AdminDeleteUyeResult.cshtml" />
     <Content Include="Views\Admin\AddKitap.cshtml" />
-    <Content Include="Views\Admin\AddYazar.cshtml" />
+    <Content Include="Views\Admin\UyeDetay.cshtml" />
+    <Content Include="Views\Shared\_GridKitapPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

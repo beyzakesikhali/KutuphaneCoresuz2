@@ -1,119 +1,123 @@
-﻿    @model  IEnumerable<KutuphaneCoresuz.Models.Data.Uye>
+﻿@model  IEnumerable<KutuphaneCoresuz.Models.Data.Uye>
 
 
-    @{
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
-    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Session["KullaniciAdi"] </h4>
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
-    <table class="table" align="center" style="width:65%; height:200px" cellspacing="0" cellpadding="0">
-        <thead>
-            <tr>
-                <th> @Html.Label("Uye Adi:")</th>
-                <th>
-                    @Html.Label("Uye Kullanıcı Adı:")
 
-                </th>
-                <th>
-                    @Html.Label("Uye Soyisim:")
-                </th>
-                <th>
-                    @Html.Label("Email:")
-                </th>
-                <th>
-                    @Html.Label("Aciklama")
-                </th>
-                <th>
-                    @Html.Label("Uye Tür")
-                </th>
-                <th colspan="6">
-                    İşlemler
-                </th>
+<br />
+<br />
+<table class="table-responsive" align="center" style="margin-left:250px;  width:65%; height:75%" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th> @Html.Label("Uye Adi:")</th>
+            <th>
+                @Html.Label("Uye Kullanıcı Adı:")
 
-            </tr>
-        </thead>
-        <tbody>
-           
+            </th>
+            <th>
+                @Html.Label("Uye Soyisim:")
+            </th>
+            <th>
+                @Html.Label("Email:")
+            </th>
+            <th>
+                @Html.Label("Aciklama")
+            </th>
+            <th>
+                @Html.Label("Uye Tür")
+            </th>
+            <th colspan="7">
+                İşlemler
+            </th>
 
-                @if (Model != null)
-                {
+        </tr>
+    </thead>
+    <tbody>
 
-                    foreach (var item in Model)
+
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @item.isim
+                    </td>
+                    <td>
+                        @item.KullaniciAdi
+                    </td>
+                    <td>
+                        @item.Soyisim
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.Aciklama
+                    </td>
+
+
+                    @if (item.RoleId == 0)
                     {
+                        <td>Uye</td>
 
-                        <tr>
-                            <td>
-                                @item.isim
-                            </td>
-                            <td>
-                                @item.KullaniciAdi
-                            </td>
-                            <td>
-                                @item.Soyisim
-                            </td>
-                            <td>
-                                @item.Email
-                            </td>
-                            <td>
-                                @item.Aciklama
-                            </td>
-
-
-                            @if (item.RoleId == 0)
-                            {
-                                <td>Uye</td>
-
-                            }
-                            else
-                            {
-                                <td> Admin</td>
-
-                            }
-
-
-                            <td colspan="2">
-
-
-                                @*<button class="btn-outline-warning" type="submit" name="update" onclick="location.href='/Uye/EditUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId'">Uye Düzenle</button>*@
-                                @*<button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId">Uye Detaylar</button>*@
-                                @*<button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId" ,'">Uye Sil</button>*@
-                                <button class="btn-outline-warning btn-duzenle" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi DÜZENLE</button>
-                            </td>
-                            <td colspan="2">
-                                <button class="btn-outline-warning btn-sil" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi Sil</button>
-                            </td>
-                            <td colspan="2">
-                                <button class="btn-outline-warning btn-kitapekle" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId onclick="location.href=`/Admin/AdminEditUyeResult?id=@item.ID`">Uyeye Kitap Ekle</button>
-                            </td>
-
-
-                        </tr>
+                    }
+                    else
+                    {
+                        <td> Admin</td>
 
                     }
 
-                }
-        </tbody>
-    </table>
-    @*@section Scripts
-        {   @if (Session["KullaniciAdi"] == "")
-            {
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        alert("@ViewBag.Login");
-                     });
-                </script>
+
+                    <td colspan="2">
+
+
+                        @*<button class="btn-outline-warning" type="submit" name="update" onclick="location.href='/Uye/EditUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId'">Uye Düzenle</button>*@
+                        @*<button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId">Uye Detaylar</button>*@
+                        @*<button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId" ,'">Uye Sil</button>*@
+                        <button class="btn-outline-warning btn-duzenle" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi DÜZENLE</button>
+                    </td>
+                    <td>
+                        <button class="btn-outline-warning btn-sil" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi Sil</button>
+                    </td>
+                    <td colspan="2">
+                        <button class="btn-outline-warning btn-kitapekle" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId onclick="location.href=`/Admin/AdminAddUyeKitap?id=@item.ID`">Uyeye Kitap Ekle</button>
+                    </td>
+                    <td colspan="2">
+                        <button class="btn-outline-warning btn-detay" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uye Detay</button>
+                    </td>
+
+                </tr>
 
             }
 
-        }*@
+        }
+    </tbody>
+</table>
+@*@section Scripts
+    {   @if (Session["KullaniciAdi"] == "")
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    alert("@ViewBag.Login");
+                 });
+            </script>
+
+        }
+
+    }*@
 
 
 
-    @section Scripts
+@section Scripts
     {
-        <script type="text/javascript">
+    <script type="text/javascript">
 
             $(document).ready(function () {
 
@@ -136,7 +140,7 @@
                     //alert(id);
                     var model = $(this).data("model");
                     //alert(isim);
-                    
+
                     //var data ="id: ' + id + ',isim: ' + isim + ' ,soyisim: ' + soyisim + ',kullaniciadi: ' + kullaniciAdi + ',aciklama: ' + aciklama + ',roleid: ' + roleId + '"',
                     //var formData = new FormData();
 
@@ -178,10 +182,10 @@
                     //  alert("Ajax sonu");
                 });
                 // btnsil kodları //
-                // // // 
+                // // //
                 //
 
-      
+
                 $(".btn-sil").click(function () {
                     var id = $(this).data("id");
                     alert(id);
@@ -224,15 +228,57 @@
                     });
                 });//btn-sil click
 
+                
+
+                $(".btn-detay").click(function () {
+                    var id = $(this).data("id");
+                    alert(id);
+                    //var isim = $(this).data("isim");
+                    //alert(isim);
+                    //var soyisim = $(this).data("soyisim");
+
+                    //var kullaniciAdi = $(this).data("kadi");
+                    //var aciklama = $(this).data("aciklama");
+                    //var roleId = $(this).data("role");
+                    $.ajax({
+                        //  url: `/Uye/DeleteUye?id=${id}&isim=${isim}&soyisim=${soyisim}&kullaniciadi=${kullaniciAdi}&aciklama=${aciklama}&roleid=${roleId}"`,
+                        @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
+                        url: `/Admin/UyeDetails?id=${id}`,
+                        method: "post",
+                        dataType: "json",
+                        // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                        success: function (data) {
+                             alert(data.text);
+                            if (data.text == "login") {
+                                window.location.href = '@Url.Action("Login","Security")';
+
+                            }
+                            else if (data.text == "DeleteUye") {
+
+                                window.location.href = `/Admin/UyeDetay?id=${id}`;
+                            }
+                            else {
+                                alert("hata");
+                            }
+
+                            alert("gitmelisin")
+                            //}, complete: function () {
+                            //    alert("Olmadı!")
+
+
+                        }, complete: function () {
+
+                        }
+                    });
+                });//btn-sil click
 
 
 
 
-          
 
             });//document.ready
 
-        </script>
+    </script>
 
 
-    }
+}

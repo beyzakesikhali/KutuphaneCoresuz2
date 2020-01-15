@@ -2,10 +2,9 @@
 <header id="header">
     <div class="container">
 
-        <div id="logo" class="pull-left">
-            <!-- Uncomment below if you prefer to use a text logo -->
-            <!--<h1><a href="#hero">Regna</a></h1>-->
-        </div>
+        <div id="logo" class="pull-left" style="position:absolute; top:5px; left:10px;">
+            <h2 style="color:#10707f; " > Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h2>
+        </div> 
 
         @*@if(ViewContext.RouteData.Values["controller"].ToString()=="UyeAnaSayfasi")
         {
@@ -14,7 +13,7 @@
 
         <nav id="nav-menu-container">
             <ul class="nav-menu">
-                <li>@Html.ActionLink("Anasayfa", "AdminAnasayfasi", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
+                <li>@Html.ActionLink("Anasayfa", "AdminAnasayfasi", "Admin", new { area = "" }, new { @class = "navbar-brand" })</li>
 
                 <li>@Html.ActionLink("Giriş Sayfası", "Login", "Security", new { area = "" }, new { @class = "navbar-brand" })</li>
 
@@ -24,7 +23,7 @@
                     @Html.ActionLink("Ekle", "", "")
                     <ul>
                         <li><a href="#"></a></li>
-                        <li><a href=@Url.Action("CreateYazar","Yazar")>Sisteme Yazar Ekle</a></li>
+                        <li><a href=@Url.Action("CreateYazarAction","Yazar")>Sisteme Yazar Ekle</a></li>
                         <li><a href="@Url.Action("CreateKitap","Kitap")">Sisteme Kitap Ekle</a></li>
                         <li><a href="@Url.Action("AddUyeAdmin","Admin")"> Sisteme Uye Ekle</a></li>
                         <li><a href="@Url.Action("IndexYazar","Yazar")">Tüm Yazarlar</a></li>
@@ -35,8 +34,8 @@
                     @Html.ActionLink("Sil", "", "")
                     <ul>
                         <li><a href="#"></a></li>
-                        <li><a href=@Url.Action("AdminDeleteYazar","Yazar")> Sistemden Yazar Sil</a></li>
-                        <li><a href="@Url.Action("AdminDeleteKitap","Kitap")">Sistemden Kitap Sil</a></li>
+                        <li><a href=@Url.Action("IndexYazar","Yazar")> Sistemden Yazar Sil</a></li>
+                        <li><a href="@Url.Action("IndexKitap","Kitap")">Sistemden Kitap Sil</a></li>
                         <li><a href="@Url.Action("AdminDeleteUyeResult","Admin")">Sistemden Uye Sil</a></li>
                         <li><a href="@Url.Action("IndexYazar","Yazar")">Tüm Yazarlar</a></li>
                         <li><a href="@Url.Action("IndexKitap","Kitap")">Tüm Kitaplar</a></li>
@@ -55,7 +54,9 @@
                     </ul>
 
                 </li>
-                <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-facebook-f">   </li>
+                <li style="        width: 30px;
+        height: 30px;
+        padding: 1px" class="icon-thumbnail fab fa-facebook-f">   </li>
                 <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-twitter">   </li>
                 <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-google">    </li>
                 <li style="width:30px; height:30px; padding:1px" class="icon-thumbnail fab fa-linkedin">    </li>
@@ -73,25 +74,28 @@
        
 
         <div style="padding:0; margin-top:80px; font-family:fantasy; color:#01579B; height:250px; width:250px; position:absolute; left:10px ">
-            <aside class="col-md-">
+            <aside>
+                <hr style="width:200px; position:absolute; left:10px; " />
+                <div class="col-1" style="width:200px;">
+                    <button class="btn btn-outline-info" style="width :inherit;" type="button" onclick="location.href='@Url.Action("IndexAdmin","Admin")'">Anasayfa</button>
+                    <hr style="width:200px; position:absolute; left:10px; " />
+                </div>
 
+                <div class="col-1" style="width:200px;">
+                    <button class="btn btn-info" style="width:inherit;" type="button" onclick="location.href='@Url.Action("IndexKitap","Kitap")'">Tüm kitaplar</button>
+                </div>
                 <hr style="width:200px; position:absolute; left:10px; " />
-                <a href="#" style="text-decoration:none;">Alıntılar</a>
-                <br />
+                <div class="col-1" style="width:200px;">
+                    <button class="btn btn-outline-info" style="width:inherit;" type="button" onclick="location.href='@Url.Action("IndexYazar","Yazar")'">Tüm Yazarlar</button>
+                </div>
                 <hr style="width:200px; position:absolute; left:10px; " />
-                <a href="@Url.Action("IndexYazar","Yazar")" style="text-decoration:none;"> Tüm Yazarlar</a>
-                <br />
+                <div class="col-1" style="width:200px;">
+                    <button class="btn btn-info" style="width:inherit;" type="button" onclick="location.href='@Url.Action("IndexYazar","Yazar")'">Tüm Yazarlar</button>
+                </div>
                 <hr style="width:200px; position:absolute; left:10px; " />
-                <a href="@Url.Action("IndexKitap","Kitap")" style="text-decoration:none;">Tüm Kitaplar</a>
-                <br />
-                <hr style="width:200px; position:absolute; left:10px; " />
-                <a href="@Url.Action("IndexAdmin","Admin")" style="text-decoration:none;">Tüm Üyeler</a>
-                <br />
-                <hr style="width:200px; position:absolute; left:10px; " />
-                <a href="#" style="text-decoration:none;">Hakkımızda   </a>
-                <br />
-                <hr style="width:200px; position:absolute; left:10px; " />
-                <a href="#" style="text-decoration:none;">İletişim</a><br />
+                <div class="col-1" style="width:200px;">
+                    <button class="btn btn-outline-info" style="width:inherit;" type="button" onclick="location.href='@Url.Action("KitapAra","Security")'">Kitap-Yazar Ara</button>
+                </div>
 
 
             </aside>

@@ -15,15 +15,15 @@
     <h4>Kitap Ekle</h4>
     <hr />
 
-    @using (Html.BeginForm("AdminAddUyeKitap","Admin",new { id=Model.id}, FormMethod.Post))
+    @using (Html.BeginForm("AdminAddUyeKitap", "Admin", new { id = Model.id }, FormMethod.Post))
     {
-        //new {id=Model.id} 
-            @Html.AntiForgeryToken()
-            @*<div class="form-group">
-            <div class="col-md-10">
-                <input type="hidden" class="form-control" name=@Html.NameFor(m => m.id)>
-            </div>
-        </div>*@
+        //new {id=Model.id}
+        @Html.AntiForgeryToken()
+        @*<div class="form-group">
+                <div class="col-md-10">
+                    <input type="hidden" class="form-control" name=@Html.NameFor(m => m.id)>
+                </div>
+            </div>*@
         <div class="form-group">
             @Html.Label("      ", new { @class = "control-label col-md-3" })
             <div class="col-md-10">
@@ -65,6 +65,16 @@
             @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="text" class="form-control" name=@Html.NameFor(m => m.Aciklama)>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Kitap Durum", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" id="ad" style="width:200px; position:absolute; left:660px; bottom:3px" name=@Html.NameFor(m => m.KitapDurum)>
+                    <option>Kutuphanede</option>
+                    <option>Uyede</option>
+                </select>
             </div>
         </div>
 

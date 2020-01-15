@@ -6,8 +6,15 @@
     ViewBag.Title = "anasayfa";
 
 }
+@if (Context.Session["KullaniciAdi"].ToString().Equals("Beyza")==true)
+{
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
-@Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+}
+else
+{
+    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+}
 
 
 
@@ -34,7 +41,7 @@
             <th>
                 @Html.Label("Yorum:")
             </th>
-            <th>
+            <th colspan="2">
                 İşlemler
             </th>
 
@@ -64,15 +71,101 @@
                     <td>
                         @item.Aciklama
                     </td>
-                    <td>
-                       <button class="btn btn-warning" type="submit" onclick="location.href='@Url.Action("EditKitap", "Kitap")'">Düzenle</button> |
-                        <button class="btn btn-secondary" type="submit" onclick="location.href='@Url.Action("DetailsKitap", "")'">Detaylar</button> |
-                        <button class="btn btn-danger" type="submit"onclick="location.href='@Url.Action("DeleteKitap", "Kitap")'">Sil</button>
+                    <td colspan="2">
+                        |  <button class="btn-outline-warning btn-kitapduzenle" data-id=@item.Id data-kitapadi=@item.KitapAdi data-yazaradi=@item.YazarAdi data-yazarsoyadi=@item.YazarSoyadi  data-yayinci="@item.yayinci" data-aciklama="@item.Aciklama"  data-yazaryorum="@item.YazarYorum" >Kitap DÜZENLE</button>|
+                        @*onclick="location.href='/Yazar/EditYazarId?id=@item.ID&isim=@item.Isim&soyisim=@item.Soyisim&yorum=@item.Yorum'"*@
+                        @*onclick="location.href='/Yazar/DeleteYazar?id=@item.ID'"*@
+                        |  <button class="btn-outline-danger btn-kitapsil" data-id=@item.Id data-kitapadi=@item.KitapAdi data-yazaradi=@item.YazarAdi data-yazarsoyadi=@item.YazarSoyadi  data-yayinci="@item.yayinci" data-aciklama="@item.Aciklama"  data-yazaryorum="@item.YazarYorum">Kitap SİL</button>
+                        |  <button class="btn-outline-dark" data-id=@item.Id data-kitapadi=@item.KitapAdi data-yazaradi=@item.YazarAdi data-yazarsoyadi=@item.YazarSoyadi  data-yayinci="@item.yayinci" data-aciklama="@item.Aciklama" data-yazaryorum="@item.YazarYorum">Kitap DETAY</button>|
                     </td>
                 </tr>
             }
         }
-        </tbody>
-   
-    </table>
-  
+    </tbody>
+
+</table>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            alert("js");
+            //btnSil kodları
+            //
+            //     //
+            $(".btn-kitapsil").click(function () {
+                alert("butona basıldı");
+                var id = $(this).data("id");
+                alert(id);
+                $.ajax({
+                    url: `/Kitap/DeleteKitapJson?id=${id}`,
+                    //data: formData,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        alert(data.text);
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "deleteKitap") {
+
+                            window.location.href = `/Kitap/DeleteKitap?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                        alert("gitmelisin")
+
+                    }//success sonu
+                });//  alert("Ajax sonu");
+
+            });//btn.click sonu
+
+            alert("nevar");
+            $(".btn-kitapduzenle").click(function () {
+                alert("butona basıldı");
+                var id = $(this).data("id");
+                var kitapadi = $(this).data("kitapadi");
+                var yazaradi = $(this).data("yazaradi");
+                var yazarsoyadi = $(this).data("yazarsoyadi");
+                var yayinci = $(this).data("yayinci");
+                var aciklama = $(this).data("aciklama");
+                var yazaryorum = $(this).data("yazaryorum");
+
+                alert(id);
+                $.ajax({
+                    url: `/Kitap/EditKitapJson?id=${id}`,
+                    //data: formData,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        alert(data.text);
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "editKitap") {
+
+                            window.location.href = `/Kitap/EditKitap?id=${id}`;
+                            //&kitapisim=${kitapadi}&yazarisim=${yazaradi}&yazarsoyisim=${yazarsoyadi}&yayinci=${yayinci}&aciklama=${aciklama}&yazaryorum=${yazaryorum}
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                        alert("gitmelisin")
+
+                    }//success sonu
+                });//  alert("Ajax sonu");
+
+            });//btn.click sonu
+
+        });
+    </script>
+
+}
+

@@ -1,50 +1,68 @@
-﻿@model IEnumerable<KutuphaneCoresuz.Models.Data.Kitap>
+﻿@model List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
 @{
-    ViewBag.Title = "KitapAra";
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+
+@if (Context.Session["KullaniciAdi"].ToString() == "Beyza")
+{
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+}
+else
+{
+    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+}
 
 <h2>KitapAra</h2>
+<table class="table-responsive">
+    <tr>
+        <td>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-outline-secondary">Action</button>
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Yazar Ara</a>
+                        <a class="dropdown-item" href="#">Kitap Ara</a>
+                        
+                        <div role="separator" class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </div>
+                <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="divPartialView">
+                @Html.Partial("~/Views/Shared/_GridKitapPartialView.cshtml", Model)
+            </div>
+        </td>
+    </tr>
+</table>
 
-@{
-    WebGrid webgrid = new WebGrid(source: Model, canPage: true, canSort: true, selectionFieldName: "selectedRow", fieldNamePrefix: "gridItem");
-
-}
-<br />
-<br />
-<br />
-<br />
-@using (Html.BeginForm("Arama", "Kitap", FormMethod.Post, new { @class = "form-inline md-form form-sm mt-0" }))
+@section Scripts
 {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function Search() {
+                var searchVal = $("#kitapSearch").val();
+                $.ajax({
+                    type: "post", // POST call
+                    url: '/Security/Search', // call search action method of Home controller
+                    data: {
+                        searchString: searchVal
+                    }, // pass the parameter to action method. Here searchString is parameter of Action method from controller.
+                    dataType: 'html', // return html to render
+                    success: function (data) {
+                        $('#divPartialView').html(data); // Render filter result to div where partial view is there. We can render div and partial view should be inside div.
+                    }
+                });
+            }
+        });
 
-    <i class="fas fa-search" aria-hidden="true" style="position:absolute; right:5px; top:50px;"> Arama Yap</i>
-    <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-           aria-label="Search"  style="position:absolute; right:5px; top:50px;">
-    <button class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit"  style="position:absolute; right:5px; top:70px;">Search</button>
-
+    </script>
 }
-<br />
-<br />
-
-
-@webgrid.GetHtml(
-
-        tableStyle: "webgrid",
-               
-                headerStyle: "webgrid-header",
-                footerStyle: "webgrid-footer",
-                selectedRowStyle: "webgrid-selected-row",
-            rowStyle: "webgrid-row-style",
-        
-    htmlAttributes: new { @id = "webgrid" },
-    columns: webgrid.Columns(
-        //webgrid.Column("ID","Id"),
-        webgrid.Column("isim", "isim"),
-         webgrid.Column("Yayinci", "Yayinci"),
-         webgrid.Column("Aciklama", "Aciklama"),
-         webgrid.Column("KitapDurum", "KitapDurum")
-
-        )
-
-    )

@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
-,
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+<br />
+<br />
+<br />s
 
-    using (Html.BeginForm("CreateYazarAction", "Yazar", FormMethod.Post))
+    @using (Html.BeginForm("CreateYazarAction", "Yazar", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
@@ -38,10 +40,10 @@
                     @Html.ValidationMessageFor(model => model.Yorum, "", new { @class = "text-danger" })
                 </div>
             </div>
-            }
+            
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button class="btn-outline-success" type="submit" name="DetailsUye" onclick="location.href='@Url.Action("UyeAnasayfasi", "Security")'">YAZAR EKLE</button>
+                    <button class="btn-outline-success" type="submit" name="DetailsUye" >YAZAR EKLE</button>
                     <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexYazar", "Yazar")'">YAZARLARI GÖR</button>
                 </div>
 

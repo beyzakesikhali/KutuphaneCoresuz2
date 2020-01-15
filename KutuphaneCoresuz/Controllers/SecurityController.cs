@@ -218,16 +218,99 @@ namespace KutuphaneCoresuz.Controllers
         //    
         //}
 
+
+
+
+        //public List<KitapYazarAddModel> modeleEkle()
+        //{
+        //    List<Kitap> kitaplar = new List<Kitap>();
+        //    string kitapDurum = "Uyede"; 
+        //    List<KitapYazarAddModel> liste = new List<KitapYazarAddModel>();
+        //    // kitaplar = db.Kitaplar.ToList();
+        //    for (int i = 0; i < db.Yazarlar.ToList().Count; i++)
+        //    {
+        //        var yazarlar = db.Yazarlar.FirstOrDefault();
+        //        yazarlar.Kitaplar = kitaplar;
+              
+        //        foreach (var item in kitaplar)
+        //        {
+        //            //1 se kitap uyede değilse kütüphanede
+        //            if (item.KitapDurum == 2)
+        //            {
+
+        //                liste.Add(new KitapYazarAddModel() { KitapAdi = item.Isim, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, yayinci = item.Yayinci, Aciklama = item.Aciklama, YazarYorum = item.Yazar.Yorum, KitapDurum = kitapDurum });
+
+        //            }
+        //            kitapDurum = "Kutuphanede";
+        //            liste.Add(new KitapYazarAddModel() { KitapAdi = item.Isim, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, yayinci = item.Yayinci, Aciklama = item.Aciklama, YazarYorum = item.Yazar.Yorum, KitapDurum = kitapDurum });
+
+        //        }
+               
+        //    }
+        //   return liste;
+        //}
+
+
             [AllowAnonymous]
 
         public ActionResult KitapAra()
         {
+            var kitaplar = db.Kitaplar.ToList();
+            var yazarlar = db.Yazarlar.ToList();
+            string kitapDurum = "";
             string mevcut = HttpContext.Session["KullaniciAdi"].ToString();
             var result = db.Uyeler.Where(u => u.isim == mevcut).FirstOrDefault();
+            if (mevcut != null)
+            {
+                List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
+
+                foreach (var kitap in kitaplar)
+                {
+                    if (kitap.KitapDurum == 1)
+                    {
+                        kitapDurum = "Kutuphanede";
+                        model.Add(new KitapYazarAddModel { Id = kitap.ID, KitapAdi = kitap.Isim, YazarAdi = kitap.Yazar.Isim, YazarSoyadi = kitap.Yazar.Soyisim, Aciklama = kitap.Aciklama, yayinci = kitap.Yayinci, KitapDurum = kitapDurum, });
+                    }
+
+                
+                kitapDurum = "Uyede";
+                model.Add(new KitapYazarAddModel { Id = kitap.ID, KitapAdi = kitap.Isim, YazarAdi = kitap.Yazar.Isim, YazarSoyadi = kitap.Yazar.Soyisim, Aciklama = kitap.Aciklama, yayinci = kitap.Yayinci, KitapDurum = kitapDurum, });
+
+            }
+               
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Security");
+            }
            
-                return View(db.Kitaplar.ToList());
+        }
+
+        //KitapAra ajax
+        [HttpPost]
+        public PartialViewResult Search(string searchString,KitapYazarAddModel model)
+        {
+
+            List<KitapYazarAddModel> modelListe = new List<KitapYazarAddModel>();
+            //modelListe = modeleEkle();
             
-            //return RedirectToAction("Login", "Security");
+            if (Request.IsAjaxRequest())
+            {
+                if (!string.IsNullOrEmpty(searchString) && modelListe != null && modelListe.Count > 0)
+                {
+                    var searchedlist = (from list in modelListe where list.KitapAdi.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 || list.Aciklama.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 || list.YazarAdi.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 select list).ToList();
+                    return PartialView("_GridPartialView", searchedlist);
+                }
+                else
+                {
+                    return PartialView("_GridPartialView", modelListe);
+                }
+            }
+            else
+            {
+                return PartialView("_GridPartialView", modelListe);
+            }
         }
     }
 }

@@ -1,0 +1,66 @@
+﻿@model List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
+@{
+    ViewBag.Title = "_GridKitapPartialView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@{
+    WebGrid webgrid = new WebGrid(source: Model, canPage: true, canSort: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "grid", fieldNamePrefix: "gridItem");
+    webgrid.Pager(WebGridPagerModes.NextPrevious);
+
+}
+<br />
+<br />
+<br />
+<br />
+@*@using (Html.BeginForm("Arama", "Kitap", FormMethod.Post, new { @class = "form-inline md-form form-sm mt-0" }))
+{*@
+
+    @*<i class="fas fa-search" aria-hidden="true" style="position:absolute; right:5px; top:50px;"> Arama Yap</i>
+        <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+               aria-label="Search"  style="position:absolute; right:5px; top:50px;">
+        <button class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit"  style="position:absolute; right:5px; top:70px;">Search</button>*@
+    @*<div style="position:absolute; right:5px; top:50px;">
+        <form class="example" action="" style="margin:auto;max-width:300px ">
+            <input type="text" placeholder="Search.." name="search2" id="txtSearch">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+    </div>*@
+
+
+@* } *@
+<br />
+<br />
+
+
+
+
+<div id="grid">
+    @webgrid.GetHtml(
+
+            tableStyle: "webgrid",
+                   mode: WebGridPagerModes.All,
+                    headerStyle: "webgrid-header",
+                    footerStyle: "webgrid-footer",
+                    selectedRowStyle: "webgrid-selected-row",
+                rowStyle: "webgrid-row-style",
+
+        htmlAttributes: new { @id = "webgrid" },
+        columns: webgrid.Columns(
+            webgrid.Column("ID","Id"),
+            webgrid.Column("KitapAdi", "Kitap Adi"),
+             webgrid.Column("YazarAdi", "Yazar Adi"),
+              webgrid.Column("Yazar Soyadi", "Yazar Soyadi"),
+             webgrid.Column("Yayinci", "Yayinci"),
+             webgrid.Column("Aciklama", "Aciklama"),
+             webgrid.Column("Yazar Yorum", "Yazar Yorum"),
+             webgrid.Column("Kitap Durum", "Kitap Durum")
+
+            )
+
+        )
+
+@*</div>*@

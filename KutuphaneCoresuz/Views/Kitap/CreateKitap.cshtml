@@ -8,6 +8,7 @@
 @if (Context.Session["KullaniciAdi"].ToString() == "Beyza")
 {
     @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 }
 else
 {
@@ -17,7 +18,7 @@ else
 <br />
 <br />
 <br />
-
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
 <div class="form-horizontal" align="center">
     <h4>Kitap Ekle</h4>
     <hr />
@@ -70,8 +71,7 @@ else
     }
 
     <button class="btn-outline-warning btn-duzenle" type="submit" onclick='@Url.Action("IndexKitap","Kitap")'>Tüm Kitaplar</button>
-
-    <div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px">
+    <div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px;">
         <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
     </div>
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -83,20 +83,21 @@ else
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                ,
                 <div class="modal-body">
                     <div class="form-group">
                         <form id="tag-form" class="tagForm" method="post">
-                            @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarAdi)">
+                            <div class="form-group">
+                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="yazaradi">
 
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="@Html.NameFor(m => m.YazarSoyadi)">
+                                    <input type="text" class="form-control" name="yazarsoyadi">
 
                                 </div>
                             </div>
@@ -104,19 +105,21 @@ else
                             <div class="form-group">
                                 @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name=@Html.NameFor(m => m.YazarYorum)>
+                                    <input type="text" class="form-control" name="yazaryorum">
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                        <button type="button" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
-                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
                 </div>
             </div>
         </div>
-        </div>
+    </div>
+</div>
 
 
 
@@ -158,7 +161,7 @@ else
 
                                 }
                                         else if (sayfa.text == 2) {
-                                    window.location.href = '@Url.Action("CreateYazar","Yazar")';
+                                    window.location.href = '@Url.Action("CreateYazarAction","Yazar")';
                                         }
                             },
                             error: function() {

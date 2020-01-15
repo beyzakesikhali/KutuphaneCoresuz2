@@ -21,49 +21,110 @@ namespace KutuphaneCoresuz.Controllers
         {
             return View(db.Yazarlar.ToList());
         }
+        //yazarad soyad getirecek
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult AdSoyad(int? id, string tip = "yazarAdGetir")
+        {
+            List<Yazar> yazarlarListesi = new List<Yazar>();
+            yazarlarListesi = db.Yazarlar.ToList();
+            List<SelectListItem> sonuc = new List<SelectListItem>();
+            bool basariliMi = true;
+            //string yazarlar = "";
+            try
+            {
+                switch (tip)
+                {
+                    case "yazarAdGetir":
+                        foreach (var ad in yazarlarListesi)
+                        {
+
+                            sonuc.Add(new SelectListItem
+                            {
+                                Text = ad.Isim + " " + ad.Soyisim,
+                                Value = ad.ID.ToString()
+                            });
+
+                        }
+
+                        break;
+                    //case "yazarSoyadGetir":
+
+                    //    foreach (var soyad in db.Yazarlar.Where(y => y.ID ==id).ToList())
+
+                    //    {
+                    //        if (id != null)
+                    //        {
+                    //            sonuc.Add(new SelectListItem
+                    //            {
+                    //                Text = soyad.Soyisim,
+                    //                Value = soyad.ID.ToString()
+                    //            });
+                    //        }
+
+
+                    //    }
+                    //break;
+                    default:
+                        break;
+                }
+
+            }
+
+            catch (Exception)
+            {
+                basariliMi = false;
+                sonuc = new List<SelectListItem>();
+                sonuc.Add(new SelectListItem
+                {
+                    Text = "Bir hata oluştu!",
+                    Value = "default"
+                });
+
+            }
+
+            return Json(new { ok = basariliMi, text = sonuc });
+        }
+
 
         [AllowAnonymous]
         public ActionResult CreateYazarAction()
         {
-            if (HttpContext.Session["KullaniciAdi"] == null)
+            if (HttpContext.Session["KullaniciAdi"].Equals("Beyza") == false)
             {
-
                 return RedirectToAction("Login", "Security");
             }
-
-
             return View();
-
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult CreateYazarAction(KitapYazarAddModel yazar)
+        public ActionResult CreateYazarAction(string yazaradi,string yazarsoyadi, string yazaryorum)
         {
 
 
             if (ModelState.IsValid)
             {
                 Yazar yeniYazar = new Yazar();
-                yeniYazar.Isim = yazar.YazarAdi;
-                yeniYazar.Soyisim = yazar.YazarSoyadi;
-                yeniYazar.Yorum = yazar.YazarYorum;
+                yeniYazar.Isim = yazaradi;
+                yeniYazar.Soyisim = yazarsoyadi;
+                yeniYazar.Yorum = yazaryorum; 
                 db.Yazarlar.Add(yeniYazar);
                 db.SaveChanges();
-                KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
-                List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
-                                            select new SelectListItem
-                                            {
-                                                Text = i.Isim,
-                                                Value = i.ID.ToString()
+                //    KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
+                //    List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
+                //                                select new SelectListItem
+                //                                {
+                //                                    Text = i.Isim,
+                //                                    Value = i.ID.ToString()
 
-                                            }).ToList();
-                List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
-                                               select new SelectListItem
-                                               {
-                                                   Text = j.Soyisim,
-                                                   Value = j.ID.ToString()
-                                               }).ToList();
+                //                                }).ToList();
+                //    List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
+                //                                   select new SelectListItem
+                //                                   {
+                //                                       Text = j.Soyisim,
+                //                                       Value = j.ID.ToString()
+                //                                   }).ToList();
             }
 
             return View();
@@ -349,18 +410,18 @@ namespace KutuphaneCoresuz.Controllers
         // GET: Yazars/Delete/5
         public ActionResult DeleteYazar(int? id)
         {
-            List<Yazar> model = new List<Yazar>();
+            Yazar model = new Yazar();
             string mevcutKullanici = "";
             mevcutKullanici = HttpContext.Session["KullaniciAdi"].ToString();
             if (mevcutKullanici == null)
             {
                 RedirectToAction("Login", "Security");
             }
-            var YazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
-
-            model.Add(new Yazar() { ID = YazarResult.ID, Isim = YazarResult.Isim, Soyisim = YazarResult.Soyisim,Yorum= YazarResult.Yorum});
+            //var YazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+            model = db.Yazarlar.Find(id);
+            //model.Add(new Yazar() { ID = YazarResult.ID, Isim = YazarResult.Isim, Soyisim = YazarResult.Soyisim,Yorum= YazarResult.Yorum});
             return View(model);
-           
+
         }
 
         [HttpPost]

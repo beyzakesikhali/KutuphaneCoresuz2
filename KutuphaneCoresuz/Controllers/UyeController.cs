@@ -40,15 +40,15 @@ namespace KutuphaneCoresuz.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult DetailsUye(Uye uye)
+        public ActionResult DetailsUye()
         {
-
+            Uye uye = new Uye();
             if (HttpContext.Session["KullaniciAdi"] != null)
             {
 
-                HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
+                uye.isim = HttpContext.Session["KullaniciAdi"].ToString();
 
-                var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
+                var uyeIdResult = db.Uyeler.Where(u => u.isim == uye.isim).FirstOrDefault();
                 int uyeId = 0;
                 uyeId = uyeIdResult.ID;
                 if (uyeId == 0)
@@ -60,7 +60,7 @@ namespace KutuphaneCoresuz.Controllers
                 {
                     return HttpNotFound();
                 }
-                return View(uye);
+                return View(uyeIdResult);
             }
             else
             {
@@ -194,9 +194,7 @@ namespace KutuphaneCoresuz.Controllers
                     db.Entry(EditUye).State = EntityState.Modified;
                     db.SaveChanges();
                     return View();
-
-
-
+                    
                 }
                 ViewBag.DbHata = "Db de Hata var";
                 return View(ViewBag.DbHata);
