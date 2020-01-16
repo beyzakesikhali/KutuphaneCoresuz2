@@ -131,7 +131,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                    <button type="button" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
+                    <button type="submit" class="btn btn-primary"  id="btn-yazarekle" >Yazar Ekle</button>
                 </div>
             </div>
         </div>
@@ -140,17 +140,14 @@
 
 @section Scripts
     {
-    <script type="text/javascript">
+    
+
+          <script type="text/javascript">
 
         $(document).ready(function()
         {
-            var uyeAd = document.getElementById("#uyeAd");
             GetNames();
-            GetUyeNames();
 
-            uyeAd.change(function () {
-                window.location.reload(true);
-            });
 
             var btn = document.getElementById("#btn-yazarekle");
             var modal = document.getElementById("#mymodal");
@@ -180,7 +177,7 @@
 
                                 }
                                         else if (sayfa.text == 2) {
-                                    window.location.href = '@Url.Action("CreateYazar","Yazar")';
+                                    window.location.href = '@Url.Action("CreateYazarAction","Yazar")';
                                         }
                             },
                             error: function() {
@@ -188,38 +185,38 @@
                             }
                         });
                         return false;
+
                 });
 
-                modal.on('hidden', function ()
-               {
-                    GetNames();
-                    ad.change(function(){
+              modal.on('hidden', function ()
+            {
+                GetNames();
+                ad.change(function(){
                     window.location.reload(true);
-                    });
-
-               });
-        });
-
- function GetNames()
-                {
-
-                $.ajax({
-                    url: `/Admin/AdSoyad?id=0`,
-                    method: "post",
-                    dataType: "json",
-                    success: function (data)
-                    {
-                        $.each(data.text, function (key, yazarDetaylari) {
-                            $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
-                            //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
-                        });
-                    },
-                    complete: function () {
-
-                    }
                 });
-            }
 
+
+
+            });
+        });
+        function GetNames() {
+
+            $.ajax({
+                url: `/Kitap/AdSoyad?id=0`,
+                method: "post",
+                dataType: "json",
+                success: function (data) {
+
+                    $.each(data.text, function (key, yazarDetaylari) {
+                        $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                        //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+
+                    });
+                }, complete: function () {
+
+                }
+            });
+        }
  function GetUyeNames()
 {
         $.ajax({

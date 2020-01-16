@@ -42,8 +42,11 @@ namespace KutuphaneCoresuz.Controllers
             {
                 foreach (var item in kitap)
                 {
+                    if(item.aktiflik==1)
+                    {
+                        model.Add(new KitapYazarAddModel() { Id = item.ID, KitapAdi = item.Isim, Aciklama = item.Aciklama, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim });
+                    }
                     
-                    model.Add(new KitapYazarAddModel() {Id=item.ID, KitapAdi=item.Isim, Aciklama = item.Aciklama, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim });
                 }
                 if (model != null)
                 {
@@ -85,14 +88,19 @@ namespace KutuphaneCoresuz.Controllers
                 switch (tip)
                 {
                     case "yazarAdGetir":
+                        
                         foreach (var ad in yazarlarListesi)
                         {
-                           
-                            sonuc.Add(new SelectListItem
+                            if(ad.aktiflik==1)
                             {
-                                Text = ad.Isim +" " +ad.Soyisim,
-                                Value = ad.ID.ToString()
-                            });
+                             sonuc.Add(new SelectListItem
+                                         {
+                                            Text = ad.Isim +" " +ad.Soyisim,
+                                            Value = ad.ID.ToString()
+                                          });                                                             
+
+                            }                           
+                           
 
                         }
                        
@@ -214,6 +222,7 @@ namespace KutuphaneCoresuz.Controllers
                             yeniKitap.Aciklama = model.Aciklama;
                             yeniKitap.YazarID = SeciliYazarID;
                             yeniKitap.Yazar = YazarResult;
+                            yeniKitap.aktiflik = 1;
                             //sadece kitap ekleyecek
                             //Fk ve ilişili tablolara ekleme işlemi yapılmayacak aktifUye eğer adminse
                             db.Kitaplar.Add(yeniKitap);
@@ -234,6 +243,32 @@ namespace KutuphaneCoresuz.Controllers
                     }
 
 
+                }//kitap önceden eklenmis ama aktifliği değişirilmiş yani silinmişse
+                else if (KitapVarmi.aktiflik == 0)
+                {
+                    if (SeciliYazarID != 0)//yazar seçmediniz hatası için
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            //önce kitap tablosu
+                            KitapVarmi.Isim = model.KitapAdi;
+                            KitapVarmi.Yayinci = model.yayinci;
+                            KitapVarmi.Aciklama = model.Aciklama;
+                            KitapVarmi.YazarID = SeciliYazarID;
+                            KitapVarmi.Yazar = YazarResult;
+                            KitapVarmi.aktiflik = 1;
+                            //sadece kitap ekleyecek
+                            //Fk ve ilişili tablolara ekleme işlemi yapılmayacak aktifUye eğer adminse
+                            db.Kitaplar.Add(KitapVarmi);
+                            db.SaveChanges();
+
+                        }
+                        else
+                        {
+                            ViewBag.DbHata = "Database da hata var";
+                            return View(ViewBag.DbHata);
+                        }
+                    }
                 }
                 else
                 {
@@ -456,12 +491,18 @@ namespace KutuphaneCoresuz.Controllers
             {
                 return HttpNotFound();
             }
-          
-            yazarAdi = kitaplar.Yazar.Isim;
-            yazarSoyadi = kitaplar.Yazar.Soyisim;
-            yazarYorum = kitaplar.Yazar.Yorum;
-            model.Add(new KitapYazarAddModel { Id = kitaplar.ID, KitapAdi = kitaplar.Isim, YazarAdi = yazarAdi, YazarSoyadi = yazarSoyadi, yayinci = kitaplar.Yayinci, YazarYorum = yazarYorum });
+            else if(kitaplar.aktiflik==1)
+            {
+                yazarAdi = kitaplar.Yazar.Isim;
+                yazarSoyadi = kitaplar.Yazar.Soyisim;
+                yazarYorum = kitaplar.Yazar.Yorum;
+                model.Add(new KitapYazarAddModel { Id = kitaplar.ID, KitapAdi = kitaplar.Isim, YazarAdi = yazarAdi, YazarSoyadi = yazarSoyadi, yayinci = kitaplar.Yayinci, YazarYorum = yazarYorum });
+                return View(model);
+            }
             return View(model);
+
+          
+           
         }
 
         //// POST: Kitaps/Delete/5
@@ -499,8 +540,12 @@ namespace KutuphaneCoresuz.Controllers
 
                 else
                 {
+
                     Kitap deletekitap = db.Kitaplar.Find(id);
-                    db.Kitaplar.Remove(deletekitap);
+                    deletekitap.aktiflik = 0;
+
+                    db.Entry(deletekitap).State = EntityState.Modified;
+
                     db.SaveChanges();
                     return RedirectToAction("IndexKitap", "Kitap");
                 }

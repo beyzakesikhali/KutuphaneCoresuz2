@@ -19,7 +19,17 @@ namespace KutuphaneCoresuz.Controllers
 
         public ActionResult IndexYazar()
         {
-            return View(db.Yazarlar.ToList());
+            List<Yazar> yazarlar = new List<Yazar>();
+            yazarlar = db.Yazarlar.ToList();
+            foreach (var item in yazarlar)
+            {
+                if(item.aktiflik==1)
+                {
+                    return View(yazarlar);
+                }
+            }
+ 
+            return View();
         }
         //yazarad soyad getirecek
         [HttpPost]
@@ -38,12 +48,15 @@ namespace KutuphaneCoresuz.Controllers
                     case "yazarAdGetir":
                         foreach (var ad in yazarlarListesi)
                         {
-
-                            sonuc.Add(new SelectListItem
+                            if(ad.aktiflik==1)
                             {
-                                Text = ad.Isim + " " + ad.Soyisim,
-                                Value = ad.ID.ToString()
-                            });
+                                sonuc.Add(new SelectListItem
+                                {
+                                    Text = ad.Isim + " " + ad.Soyisim,
+                                    Value = ad.ID.ToString()
+                                });
+                            }
+                            
 
                         }
 
@@ -101,31 +114,48 @@ namespace KutuphaneCoresuz.Controllers
         [HttpPost]
         public ActionResult CreateYazarAction(string yazaradi,string yazarsoyadi, string yazaryorum)
         {
-
-
-            if (ModelState.IsValid)
+            var yazarVarMi = db.Yazarlar.Where(y => y.Isim == yazaradi && y.Soyisim == yazarsoyadi && y.Yorum == yazaryorum).FirstOrDefault();
+            if(yazarVarMi==null)
             {
-                Yazar yeniYazar = new Yazar();
-                yeniYazar.Isim = yazaradi;
-                yeniYazar.Soyisim = yazarsoyadi;
-                yeniYazar.Yorum = yazaryorum; 
-                db.Yazarlar.Add(yeniYazar);
-                db.SaveChanges();
-                //    KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
-                //    List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
-                //                                select new SelectListItem
-                //                                {
-                //                                    Text = i.Isim,
-                //                                    Value = i.ID.ToString()
+                if (ModelState.IsValid)
+                {
+                    Yazar yeniYazar = new Yazar();
+                    yeniYazar.Isim = yazaradi;
+                    yeniYazar.Soyisim = yazarsoyadi;
+                    yeniYazar.Yorum = yazaryorum;
+                    yeniYazar.aktiflik = 1;
+                    
+                    db.Yazarlar.Add(yeniYazar);
+                    db.SaveChanges();
+                    //    KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
+                    //    List<SelectListItem> adi = (from i in db.Yazarlar.ToList()
+                    //                                select new SelectListItem
+                    //                                {
+                    //                                    Text = i.Isim,
+                    //                                    Value = i.ID.ToString()
 
-                //                                }).ToList();
-                //    List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
-                //                                   select new SelectListItem
-                //                                   {
-                //                                       Text = j.Soyisim,
-                //                                       Value = j.ID.ToString()
-                //                                   }).ToList();
+                    //                                }).ToList();
+                    //    List<SelectListItem> soyadi = (from j in db.Yazarlar.ToList()
+                    //                                   select new SelectListItem
+                    //                                   {
+                    //                                       Text = j.Soyisim,
+                    //                                       Value = j.ID.ToString()
+                    //                                   }).ToList();
+                }
             }
+            else
+            {
+                yazarVarMi.aktiflik = 1;
+                yazarVarMi.Isim = yazaradi;
+                yazarVarMi.Soyisim = yazarsoyadi;
+                yazarVarMi.Yorum = yazaryorum;
+                db.Entry(yazarVarMi).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+
+            }
+           
 
             return View();
         }
@@ -174,6 +204,7 @@ namespace KutuphaneCoresuz.Controllers
                     yeniYazar.Isim = yazar.YazarAdi;
                     yeniYazar.Soyisim = yazar.YazarSoyadi;
                     yeniYazar.Yorum = yazar.YazarYorum;
+                    yeniYazar.aktiflik = 1;
                     db.Yazarlar.Add(yeniYazar);
                     db.SaveChanges();
                     KitapYazarAddModel kitapYazarModel = new KitapYazarAddModel();
@@ -270,9 +301,14 @@ namespace KutuphaneCoresuz.Controllers
             List<Yazar> model = new List<Yazar>();
             // string gelneisim = isim;
             var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
-            model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Yorum = yazarResult.Yorum});
-            return View(model);
-          
+            if(yazarResult.aktiflik==1)
+            {
+                model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Yorum = yazarResult.Yorum });
+                return View(model);
+
+            }
+            return View("HATA");
+
         }
 
         [HttpPost]
@@ -419,8 +455,12 @@ namespace KutuphaneCoresuz.Controllers
             }
             //var YazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
             model = db.Yazarlar.Find(id);
+            if(model.aktiflik==1)
+            {
+                return View(model);
+            }
             //model.Add(new Yazar() { ID = YazarResult.ID, Isim = YazarResult.Isim, Soyisim = YazarResult.Soyisim,Yorum= YazarResult.Yorum});
-            return View(model);
+            return View("HATA");
 
         }
 
@@ -446,7 +486,8 @@ namespace KutuphaneCoresuz.Controllers
                 else
                 {
                     Yazar yazar = db.Yazarlar.Find(id);
-                    db.Yazarlar.Remove(yazar);
+                    yazar.aktiflik = 1;
+                    db.Entry(yazar).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("IndexYazar","Yazar");
                 }

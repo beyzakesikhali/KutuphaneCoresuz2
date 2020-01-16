@@ -46,6 +46,12 @@ namespace KutuphaneCoresuz.Controllers
             {
                 foreach (var item in uyeResult)
                 {
+                    if (item.aktiflik == 1)
+                    {
+                        model.Add(new Uye() { ID = item.ID, isim = item.isim, KullaniciAdi = item.KullaniciAdi, Soyisim = item.Soyisim, Sifre = item.Sifre, Email = item.Email, Aciklama = item.Aciklama });
+
+                    }
+
                     // var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
 
                     //if (item.RoleId == 1)
@@ -57,7 +63,6 @@ namespace KutuphaneCoresuz.Controllers
                     //role = "Uye";
 
                     //var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new Uye() { ID = item.ID, isim = item.isim, KullaniciAdi = item.KullaniciAdi, Soyisim = item.Soyisim, Sifre = item.Sifre, Email = item.Email, Aciklama = item.Aciklama });
 
                 }
                 if (model != null)
@@ -94,6 +99,11 @@ namespace KutuphaneCoresuz.Controllers
             {
                 foreach (var item in uyeResult)
                 {
+                    if (item.aktiflik == 1)
+                    {
+                        model.Add(new Uye() { ID = item.ID, isim = item.isim, KullaniciAdi = item.KullaniciAdi, Soyisim = item.Soyisim, Sifre = item.Sifre, Email = item.Email, Aciklama = item.Aciklama });
+
+                    }
                     // var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
 
                     //if (item.RoleId == 1)
@@ -105,7 +115,6 @@ namespace KutuphaneCoresuz.Controllers
                     //role = "Uye";
 
                     //var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new Uye() { ID = item.ID, isim = item.isim, KullaniciAdi = item.KullaniciAdi, Soyisim = item.Soyisim, Sifre = item.Sifre, Email = item.Email, Aciklama = item.Aciklama });
 
                 }
                 if (model != null)
@@ -141,7 +150,7 @@ namespace KutuphaneCoresuz.Controllers
 
             var KAdiResult = db.Uyeler.Where(u => u.KullaniciAdi == Kadi).FirstOrDefault();
 
-            if (KAdiResult == null)
+            if (KAdiResult == null)//uye asla kayıtlı değilse
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 if (ModelState.IsValid)
@@ -154,6 +163,18 @@ namespace KutuphaneCoresuz.Controllers
                     return RedirectToAction("IndexAdmin", "Admin");
 
                 }
+
+            }
+            else if (KAdiResult != null && KAdiResult.aktiflik == 0)
+            {
+                KAdiResult.aktiflik = 1;
+                KAdiResult.isim = uye.isim;
+                KAdiResult.KullaniciAdi = uye.Soyisim;
+                KAdiResult.Soyisim = uye.Soyisim;
+                KAdiResult.Aciklama = uye.Aciklama;
+                KAdiResult.Email = uye.Email;
+                KAdiResult.Sifre = Crypto.HashPassword(uye.Sifre);
+
 
             }
             ViewBag.KadiMesaj = "Bu üye zaten var!";
@@ -211,16 +232,20 @@ namespace KutuphaneCoresuz.Controllers
         {
             List<Uye> model = new List<Uye>();
             // string gelneisim = isim;
-            
-            var uyeResult = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
-            if(uyeResult.RoleId==0)
-            {
-               
-            model.Add(new Uye() { ID = uyeResult.ID, isim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Soyisim = uyeResult.Soyisim, Email = uyeResult.Email, Sifre = "", Aciklama = uyeResult.Aciklama , RoleId=0});
 
+            var uyeResult = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+            if (uyeResult.aktiflik == 1)
+            {
+                if (uyeResult.RoleId == 0)
+                {
+
+                    model.Add(new Uye() { ID = uyeResult.ID, isim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Soyisim = uyeResult.Soyisim, Email = uyeResult.Email, Sifre = "", Aciklama = uyeResult.Aciklama, RoleId = 0 });
+
+                }
             }
             else
             {
+
                 model.Add(new Uye() { ID = uyeResult.ID, isim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Soyisim = uyeResult.Soyisim, Email = uyeResult.Email, Sifre = "", Aciklama = uyeResult.Aciklama, RoleId = 1 });
 
             }
@@ -325,8 +350,8 @@ namespace KutuphaneCoresuz.Controllers
             }
             string AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
-            var uyeResult = db.Uyeler.Where(x => x.KullaniciAdi == AktifUye).FirstOrDefault();
-            int uyeID = uyeResult.ID;
+
+            int uyeID = id;
             var kitapIdResult = db.UyeKitap.Where(a => a.UyeID == uyeID).Select(a => a.KitapID).ToList();
             if (kitapIdResult.Count() != 0)
             {
@@ -391,7 +416,7 @@ namespace KutuphaneCoresuz.Controllers
                     yeniKitap.Aciklama = model.Aciklama;
                     yeniKitap.YazarID = SeciliYazarID;
                     yeniKitap.Yazar = YazarResult;
-                    if(model.KitapDurum=="Kutuphanede")
+                    if (model.KitapDurum == "Kutuphanede")
                     {
                         yeniKitap.KitapDurum = 1;
 
@@ -415,7 +440,7 @@ namespace KutuphaneCoresuz.Controllers
                     kitapYazarAddModel.YazarYorum = yeniKitap.Yazar.Yorum;
                     //yazarinKitaplari.Kitaplar.Add(new Kitap { ID = yeniKitap.ID, YazarID = YazarResult.ID, Isim = yeniKitap.Isim, Yazar = yeniKitap.Yazar, Yayinci = yeniKitap.Yayinci, Aciklama = yeniKitap.Aciklama, KitapDurum = yeniKitap.KitapDurum });
 
-                    
+
 
 
                 }
@@ -728,7 +753,7 @@ namespace KutuphaneCoresuz.Controllers
                     return View(ViewBag("Yazar Seçmediniz!"));
                 }
             }
-         
+
             else
             {
                 yeniUyeKitap.UyeID = AktifUyeResult.ID;
@@ -739,7 +764,7 @@ namespace KutuphaneCoresuz.Controllers
 
                 db.UyeKitap.Add(yeniUyeKitap);
                 db.SaveChanges();
-                
+
             }
             return View();
 
@@ -747,9 +772,145 @@ namespace KutuphaneCoresuz.Controllers
 
 
         //add Kitap sonu
-         
+
+
+
+
+
+        //*/*******UYE DETAY ****////
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public JsonResult UyeDetails(int? id)
+        {
+
+            bool basarliMi = true;
+            string sonuc = "UyeDetay";
+            List<Uye> model = new List<Uye>();
+            try
+            {
+                if (HttpContext.Session["KullaniciAdi"] == null)
+
+                {
+                    sonuc = "Login";
+                    return Json(new { ok = basarliMi, text = sonuc });
+                }
+                //sonuc = "EditUye";
+                var uyeResult = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+
+                if (uyeResult != null)
+                {
+                    sonuc = "UyeDetay";
+                    model.Add(new Uye() { ID = uyeResult.ID, isim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Soyisim = uyeResult.Soyisim, Email = uyeResult.Email, Sifre = "", Aciklama = uyeResult.Aciklama });
+                    //return View(model);
+
+                    return Json(new { ok = basarliMi, text = sonuc });
+
+                }
+                sonuc = "hata";
+                return Json(new { ok = basarliMi, text = sonuc });
+
+            }
+            catch (Exception)
+            {
+                basarliMi = false;
+                sonuc = "Başarısız İşlem";
+                return Json(new { ok = basarliMi, text = sonuc });
+                throw;
+            }
+
+
+        }
+       
+        [AllowAnonymous]
+        public ActionResult UyeDetailsResult(int? id)
+        {
+            List<KitapUyeViewModel> model = new List<KitapUyeViewModel>();
+            string mevcutKullanici = "";
+            string kitapdurum = "";
+            string yazarYok = "Kitap Olmadığı İçin Yazar Yok";
+            string kitapyok = "Kayıtlı Kitabınız Yok";
+            HttpContext.Session["KullaniciAdi"] = mevcutKullanici;
+            if (mevcutKullanici?.ToString() == null)
+            {
+                RedirectToAction("Login", "Security");
+            }
+            var uyeResult = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+            //uyeye ait kitap idlerinin listesi
+            var kitapIdResult = db.UyeKitap.Where(k => k.UyeID == id).ToList();
+
+            List<Kitap> uyeninkitaplari = new List<Kitap>();
+           if(uyeResult.UyeKitaplar.Count==0)
+            {
+                model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapyok, KitapAdi = kitapyok, yayinci = kitapyok, YazarAdi = yazarYok, YazarSoyadi = yazarYok, YazarYorum = yazarYok });
+              
+            }
+           else
+            {
+                for (int i = 0; i < kitapIdResult.Count; i++)
+                {
+                    uyeninkitaplari = db.Kitaplar.Where(k => k.ID == kitapIdResult[i].KitapID).ToList();
+
+                }
+
+                foreach (var item in uyeninkitaplari)
+                {
+                    if (item.KitapDurum == 1)
+                    {
+                        kitapdurum = "Kütüphanede";
+                        model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Role = "Uye", UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapdurum, KitapAdi = item.Isim, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, YazarYorum = item.Yazar.Yorum }); ;
+
+                    }
+                    kitapdurum = "Üyede";
+                    model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Role = "Uye", UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapdurum, KitapAdi = item.Isim, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, YazarYorum = item.Yazar.Yorum });
+
+
+                }
+            }
+
+           
+            return View(model);
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public ActionResult UyeDetailsResult(int? id, string isim)
+        //{
+        //    if (HttpContext.Session["KullaniciAdi"] == null)
+        //    {
+        //        return RedirectToAction("Login", "Security");
+        //    }
+        //    else
+        //    {
+        //        Uye uye = new Uye();
+        //        HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
+
+        //        var deleteUye = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+        //        //int uyeId = 0;
+        //        //  id = uyeIdResult.ID;
+        //        if (id == 0)
+        //        {
+        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        }
+
+        //        else
+        //        {
+        //            db.Uyeler.Remove(deleteUye);
+        //            db.SaveChanges();
+        //            return RedirectToAction("IndexAdmin", "Admin");
+        //        }
+        //    }
+
+        //}
+
+
+
 
     }
+
+
+
 
 
 

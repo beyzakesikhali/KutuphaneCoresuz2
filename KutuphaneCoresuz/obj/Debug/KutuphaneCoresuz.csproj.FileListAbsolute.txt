@@ -1578,7 +1578,7 @@ C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\ru\Microsoft.Data.SqlClient.resources.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\zh-Hans\Microsoft.Data.SqlClient.resources.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\bin\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csproj.CopyComplete
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.pdb
-C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache

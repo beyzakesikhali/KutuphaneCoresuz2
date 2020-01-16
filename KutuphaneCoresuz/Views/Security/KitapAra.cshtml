@@ -1,6 +1,6 @@
-﻿@model List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
+﻿@model  List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
 @{
-    
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,56 +13,87 @@ else
     @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 }
 
-<h2>KitapAra</h2>
-<table class="table-responsive">
+@*<table class="table-responsive table-hover" >
     <tr>
-        <td>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <button type="button" class="btn btn-outline-secondary">Action</button>
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Yazar Ara</a>
-                        <a class="dropdown-item" href="#">Kitap Ara</a>
-                        
-                        <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
-                </div>
-                <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+        <td>*@
+<div style="position:absolute; left:500px; top:100px;">
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button type="button" class="btn btn-outline-secondary btn-ara">Ara</button>
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <div role="separator" class="dropdown-divider"></div>
+                <button class="dropdown-item btn-kitapara" type="submit">Kitaba Göre Ara</button>
+                <div role="separator" class="dropdown-divider"></div>
+                <button class="dropdown-item btn-yazarara" href="#">Yazara Göre Ara</button>
             </div>
-        </td>
+        </div>
+        <input type="text" class="form-control" id="kitapSearch" style="width:500px;" placeholder="Aramak istediğiniz kelimeyi yazınız.">
+    </div>
+</div>
+
+
+@*</td>
     </tr>
     <tr>
         <td>
-            <div id="divPartialView">
-                @Html.Partial("~/Views/Shared/_GridKitapPartialView.cshtml", Model)
-            </div>
+
         </td>
     </tr>
-</table>
+    <tr>*@
+<br />
+<br />
+<br />
+<br />
+
+
+<div id="divPartialView">
+    @Html.Partial("~/Views/Shared/_GridKitapPartialView.cshtml", Model)
+
+</div>
+
+@*</tr>
+    </table>*@
 
 @section Scripts
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            function Search() {
-                var searchVal = $("#kitapSearch").val();
+            var searchVal = $("#kitapSearch");
+            $(".btn-ara").click(function () {
+              
+                    alert("butona basıldı");
+                //Console.Log(searchVal.val());
+                alert(searchVal.val());
                 $.ajax({
                     type: "post", // POST call
-                    url: '/Security/Search', // call search action method of Home controller
-                    data: {
-                        searchString: searchVal
-                    }, // pass the parameter to action method. Here searchString is parameter of Action method from controller.
-                    dataType: 'html', // return html to render
-                    success: function (data) {
-                        $('#divPartialView').html(data); // Render filter result to div where partial view is there. We can render div and partial view should be inside div.
-                    }
-                });
-            }
-        });
+                    url: `/Security/YazarSearch`, // call search action method of Home controller
+                    data: { searchString: searchVal.val() },
+                        // pass the parameter to action method. Here searchString is parameter of Action method from controller.
+                        dataType: 'html', // return html to render
+                        success: function (data) {
+                            $('#divPartialView').html(jsReturnArgs.ViewString);
+                            alert("data: " + data);
+                            alert(data);
 
+                            // Render filter result to div where partial view is there. We can render div and partial view should be inside div.
+                        },
+                        error: function () {
+                            alert("Hatalı dönüş");
+                        }
+                    });//ajax sonu
+
+                });
+
+
+            });//buton sonu
+               
     </script>
+
 }
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>

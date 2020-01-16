@@ -16,7 +16,8 @@ namespace KutuphaneCoresuz.Models.Data
         public string Isim { get; set; }
         public string Soyisim { get; set; }
         public string Yorum { get; set; }
-       
+        public int aktiflik { get; set; }
+
         public ICollection<Kitap> Kitaplar { get; set; }
        
 

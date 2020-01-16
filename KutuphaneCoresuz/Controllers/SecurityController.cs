@@ -64,22 +64,23 @@ namespace KutuphaneCoresuz.Controllers
 
         public ActionResult Login()
         {
-            //string sifre= Crypto.HashPassword(sifre);
-            //Uye admin = new Uye();
-            // var admin = db.Uyeler.Where(u => u.KullaniciAdi == "admin" && u.Soyisim == "kesikhalı").FirstOrDefault();
+            //string sifre = "123456";
+            //string sifrele = Crypto.HashPassword(sifre);
+            ////Uye admin = new Uye();
+            //var admin = db.Uyeler.Where(u => u.KullaniciAdi == "admin" && u.Soyisim == "kesikhalı").FirstOrDefault();
 
             //db.Uyeler.Add(new Uye
             //{
-            //    isim = "beyza",
+            //    isim = "Beyza",
             //    KullaniciAdi = "admin",
-            //    Soyisim = "kesikhalı",
+            //    Soyisim = "Kesikhalı",
             //    Sifre = Crypto.HashPassword("123456789"),
             //    RoleId = 1
             //});
 
-            //  db.Uyeler.Remove(admin);
+            //db.Uyeler.Remove(admin);
             //db.SaveChanges();
-
+            //aktiflikDuzenle();
             return View();
         }
 
@@ -103,25 +104,32 @@ namespace KutuphaneCoresuz.Controllers
                 return View();
             }
 
-
-            sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, mevcut.Sifre);
-            if(sifreKontrol==1)
-            {
-                Session.Add("KullaniciAdi", mevcut.isim.ToString());
-
-                if (mevcut.RoleId == Convert.ToInt32(Role.Admin))
-                {
-                    return RedirectToAction("IndexAdmin", "Admin");
-                }
-                HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
-                return RedirectToAction("UyeAnaSayfasi", "Security");
-
-            }
             else
             {
-                ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
+                if(mevcut.aktiflik==1)
+                {
+                    sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, mevcut.Sifre);
+                    if (sifreKontrol == 1)
+                    {
+                        Session.Add("KullaniciAdi", mevcut.isim.ToString());
 
+                        if (mevcut.RoleId == Convert.ToInt32(Role.Admin))
+                        {
+                            return RedirectToAction("IndexAdmin", "Admin");
+                        }
+                        HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
+                        return RedirectToAction("UyeAnaSayfasi", "Security");
+
+                    }
+                    else
+                    {
+                        ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
+
+                    }
+                }
             }
+ 
+           
 
             //  IEnumerable<Uye> sonuc = db.Uyeler.Where(x => x.KullaniciAdi == uye.KullaniciAdi && x.Sifre == uye.Sifre);
 
@@ -169,16 +177,22 @@ namespace KutuphaneCoresuz.Controllers
                 {
                     var kitapResult = db.Kitaplar.Where(z => z.ID == item).Single();
                     kitapdurum = kitapResult.KitapDurum;
-                    if (kitapdurum == 1)
+                    //burası eklendi aktiflik 1 mi
+                    if(kitapResult.aktiflik==1)
                     {
+                        if (kitapdurum == 1)
+                        {
 
-                        kitapDurum = "Kitap Sizde";
+                            kitapDurum = "Kitap Sizde";
+
+                        }
+                        kitapDurum = "Kitap Kutuphanede";
+
+                        var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
+                        model.Add(new KitapYazarAddModel() { Id = kitapResult.ID, KitapAdi = kitapResult.Isim, Aciklama = kitapResult.Aciklama, yayinci = kitapResult.Yayinci, KitapDurum = kitapDurum, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
 
                     }
-                    kitapDurum = "Kitap Kutuphanede";
-
-                    var yazarResult = db.Yazarlar.Where(y => y.ID == kitapResult.YazarID).FirstOrDefault();
-                    model.Add(new KitapYazarAddModel() { Id = kitapResult.ID, KitapAdi = kitapResult.Isim, Aciklama = kitapResult.Aciklama, yayinci = kitapResult.Yayinci, KitapDurum = kitapDurum, YazarAdi = yazarResult.Isim, YazarSoyadi = yazarResult.Soyisim });
+                    
                 }
                 if (model != null)
                 {
@@ -207,51 +221,77 @@ namespace KutuphaneCoresuz.Controllers
             return RedirectToAction("Login", "Security");
 
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //    
-        //}
+        public void aktiflikDuzenle()
+        {
+            List<Yazar> yazarlar = db.Yazarlar.ToList();
+            List<Kitap> kitaplar = db.Kitaplar.ToList();
+            List<Uye> uyeler = db.Uyeler.ToList();
 
 
+            for (int i = 0; i < kitaplar.Count; i++)
+            {
+                if(kitaplar[i].aktiflik==0)
+                {
+                    kitaplar[i].aktiflik = 1;
+                    db.Entry(kitaplar[i]).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+            }
+
+            for (int y = 0; y < yazarlar.Count; y++)
+            {
+                if (yazarlar[y].aktiflik == 0 || yazarlar[y].Isim!=null)
+                {
+                    yazarlar[y].aktiflik = 1;
+                    db.Entry(yazarlar[y]).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                db.Yazarlar.Remove(yazarlar[y]);
+                db.SaveChanges();
 
 
-        //public List<KitapYazarAddModel> modeleEkle()
-        //{
-        //    List<Kitap> kitaplar = new List<Kitap>();
-        //    string kitapDurum = "Uyede"; 
-        //    List<KitapYazarAddModel> liste = new List<KitapYazarAddModel>();
-        //    // kitaplar = db.Kitaplar.ToList();
-        //    for (int i = 0; i < db.Yazarlar.ToList().Count; i++)
-        //    {
-        //        var yazarlar = db.Yazarlar.FirstOrDefault();
-        //        yazarlar.Kitaplar = kitaplar;
+            }
+            for (int u = 0; u < uyeler.Count; u++)
+            {
+                if (uyeler[u].aktiflik == 0)
+                {
+                    uyeler[u].aktiflik = 1;
+                    db.Entry(uyeler[u]).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+            }
+        }
+
+        public List<KitapYazarAddModel> ModeleEkle()
+        {
+            List<Kitap> kitaplar = db.Kitaplar.ToList();
+            List<Yazar> yazarlar = db.Yazarlar.ToList();
+            string kitapDurum = "Uyede";
+            List<KitapYazarAddModel> liste = new List<KitapYazarAddModel>();
+            // kitaplar = db.Kitaplar.ToList();
+            for (int k = 0; k < kitaplar.Count; k++)
+            {
+                    if (kitaplar[k].KitapDurum == 1 && kitaplar[k].aktiflik==1)
+                    {
+                        kitapDurum = "Kutuphanede";
+                        liste.Add(new KitapYazarAddModel { Id = kitaplar[k].ID, KitapAdi = kitaplar[k].Isim, YazarAdi = kitaplar[k].Yazar.Isim, YazarSoyadi = kitaplar[k].Yazar.Soyisim, Aciklama = kitaplar[k].Aciklama, yayinci = kitaplar[k].Yayinci, KitapDurum = kitapDurum, });
+                    }
+
+
+                    kitapDurum = "Uyede";
+                    liste.Add(new KitapYazarAddModel { Id = kitaplar[k].ID, KitapAdi = kitaplar[k].Isim, YazarAdi = kitaplar[k].Yazar.Isim, YazarSoyadi = kitaplar[k].Yazar.Soyisim, Aciklama = kitaplar[k].Aciklama, yayinci = kitaplar[k].Yayinci, KitapDurum = kitapDurum, });
+
+                
+
+            }
               
-        //        foreach (var item in kitaplar)
-        //        {
-        //            //1 se kitap uyede değilse kütüphanede
-        //            if (item.KitapDurum == 2)
-        //            {
-
-        //                liste.Add(new KitapYazarAddModel() { KitapAdi = item.Isim, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, yayinci = item.Yayinci, Aciklama = item.Aciklama, YazarYorum = item.Yazar.Yorum, KitapDurum = kitapDurum });
-
-        //            }
-        //            kitapDurum = "Kutuphanede";
-        //            liste.Add(new KitapYazarAddModel() { KitapAdi = item.Isim, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, yayinci = item.Yayinci, Aciklama = item.Aciklama, YazarYorum = item.Yazar.Yorum, KitapDurum = kitapDurum });
-
-        //        }
-               
-        //    }
-        //   return liste;
-        //}
+            return liste;
+        }
 
 
-            [AllowAnonymous]
+        [AllowAnonymous]
 
         public ActionResult KitapAra()
         {
@@ -266,51 +306,58 @@ namespace KutuphaneCoresuz.Controllers
 
                 foreach (var kitap in kitaplar)
                 {
-                    if (kitap.KitapDurum == 1)
+                    if (kitap.KitapDurum == 1 && kitap.aktiflik==1)
                     {
                         kitapDurum = "Kutuphanede";
                         model.Add(new KitapYazarAddModel { Id = kitap.ID, KitapAdi = kitap.Isim, YazarAdi = kitap.Yazar.Isim, YazarSoyadi = kitap.Yazar.Soyisim, Aciklama = kitap.Aciklama, yayinci = kitap.Yayinci, KitapDurum = kitapDurum, });
                     }
 
-                
-                kitapDurum = "Uyede";
-                model.Add(new KitapYazarAddModel { Id = kitap.ID, KitapAdi = kitap.Isim, YazarAdi = kitap.Yazar.Isim, YazarSoyadi = kitap.Yazar.Soyisim, Aciklama = kitap.Aciklama, yayinci = kitap.Yayinci, KitapDurum = kitapDurum, });
 
-            }
-               
+                    kitapDurum = "Uyede";
+                    model.Add(new KitapYazarAddModel { Id = kitap.ID, KitapAdi = kitap.Isim, YazarAdi = kitap.Yazar.Isim, YazarSoyadi = kitap.Yazar.Soyisim, Aciklama = kitap.Aciklama, yayinci = kitap.Yayinci, KitapDurum = kitapDurum, });
+
+                }
+
                 return View(model);
             }
             else
             {
                 return RedirectToAction("Login", "Security");
             }
-           
+            //return View();
+
         }
 
         //KitapAra ajax
         [HttpPost]
-        public PartialViewResult Search(string searchString,KitapYazarAddModel model)
+        [AllowAnonymous]
+        public PartialViewResult YazarSearch(string searchString)
         {
-
+            //string isim = "beyza";
             List<KitapYazarAddModel> modelListe = new List<KitapYazarAddModel>();
-            //modelListe = modeleEkle();
-            
+            modelListe = ModeleEkle();
+            //modelListe içinde veritabanındaki tüm yazarlar ve onalra ait tüm kitaplar var.
+
             if (Request.IsAjaxRequest())
             {
-                if (!string.IsNullOrEmpty(searchString) && modelListe != null && modelListe.Count > 0)
+                if (!string.IsNullOrEmpty(searchString))
                 {
-                    var searchedlist = (from list in modelListe where list.KitapAdi.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 || list.Aciklama.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 || list.YazarAdi.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 select list).ToList();
-                    return PartialView("_GridPartialView", searchedlist);
+                    //var searchedlist = (from list in modelListe where list.KitapAdi.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 || list.Aciklama.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 || list.YazarAdi.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 select list).ToList();
+
+                    var searchedlist = (from list in modelListe where  list.YazarAdi.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0  || list.YazarSoyadi.IndexOf(searchString,StringComparison.OrdinalIgnoreCase)>=0 select list).ToList();
+                    return PartialView("_GridKitapPartialView", searchedlist);
                 }
                 else
                 {
-                    return PartialView("_GridPartialView", modelListe);
+                    return PartialView("_GridKitapPartialView", modelListe);
                 }
             }
             else
             {
-                return PartialView("_GridPartialView", modelListe);
+                return PartialView("_GridKitapPartialView", modelListe);
             }
         }
+
+
     }
 }

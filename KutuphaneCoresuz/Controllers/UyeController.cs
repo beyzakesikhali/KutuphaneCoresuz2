@@ -32,7 +32,7 @@ namespace KutuphaneCoresuz.Controllers
             else
             {
                 List<Uye> kullaniciResult = new List<Uye>();
-                kullaniciResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi).ToList();
+                kullaniciResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi && u.aktiflik == 1).ToList();
                 return View(kullaniciResult);
 
             }
@@ -47,20 +47,25 @@ namespace KutuphaneCoresuz.Controllers
             {
 
                 uye.isim = HttpContext.Session["KullaniciAdi"].ToString();
+                if(uye.isim!="Beyza")
+                {
+                    var uyeIdResult = db.Uyeler.Where(u => u.isim == uye.isim && u.aktiflik == 1).FirstOrDefault();
+                    int uyeId = 0;
+                    uyeId = uyeIdResult.ID;
+                    if (uyeId == 0)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    //Uye uye = db.Uyeler.Find(id);
+                    if (uye == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(uyeIdResult);
+                }
 
-                var uyeIdResult = db.Uyeler.Where(u => u.isim == uye.isim).FirstOrDefault();
-                int uyeId = 0;
-                uyeId = uyeIdResult.ID;
-                if (uyeId == 0)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                //Uye uye = db.Uyeler.Find(id);
-                if (uye == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(uyeIdResult);
+                return View();
+             
             }
             else
             {
@@ -98,8 +103,11 @@ namespace KutuphaneCoresuz.Controllers
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 if (ModelState.IsValid)
                 {
+
                     HashDegeri = Crypto.HashPassword(sifre);
                     uye.Sifre = HashDegeri;
+                    uye.aktiflik = 1;
+                    uye.RoleId = role;
                     db.Uyeler.Add(uye);
                     db.SaveChanges();
                     ViewBag.LoginMesaj = "Başarılı Bir Şekilde Kayıt Oldunuz. Şimdi Giriş Yapınız";
@@ -108,6 +116,21 @@ namespace KutuphaneCoresuz.Controllers
                 }
 
             }
+            else {//kullanici daha önceden varsa
+                if (KAdiResult.aktiflik == 0)
+                {
+                    KAdiResult.aktiflik = 1;
+                    KAdiResult.isim = uye.isim;
+                    KAdiResult.Soyisim = uye.Soyisim;
+                    KAdiResult.Sifre = Crypto.HashPassword(uye.Sifre);
+                    KAdiResult.RoleId = 2;
+                    KAdiResult.Aciklama = uye.Aciklama;
+                    KAdiResult.Email = uye.Email;
+                    db.Entry(KAdiResult).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+
             ViewBag.KadiMesaj = "Başka bir kullanıcı adı deneyin!";
             return View(uye);
         }
@@ -128,7 +151,7 @@ namespace KutuphaneCoresuz.Controllers
                     return Json(new { ok = basarliMi, text = sonuc });
                 }
                 //sonuc = "EditUye";
-                var uyeResult = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+                var uyeResult = db.Uyeler.Where(u => u.ID == id && u.aktiflik == 1).FirstOrDefault();
 
                 if (uyeResult != null)
                 {
@@ -194,7 +217,7 @@ namespace KutuphaneCoresuz.Controllers
                     db.Entry(EditUye).State = EntityState.Modified;
                     db.SaveChanges();
                     return View();
-                    
+
                 }
                 ViewBag.DbHata = "Db de Hata var";
                 return View(ViewBag.DbHata);
@@ -205,13 +228,16 @@ namespace KutuphaneCoresuz.Controllers
 
 
         [AllowAnonymous]
-        public ActionResult DeleteUye(Uye kitapUye)
+        public ActionResult DeleteUye()
         {
             string uyeAdi = "";
             uyeAdi = HttpContext.Session["KullaniciAdi"].ToString();
+            //kullanıcı isimleri benzersiz
+            var uye = db.Uyeler.Where(u => u.KullaniciAdi == uyeAdi).FirstOrDefault();
             if (uyeAdi != null)
             {
-                return View();
+                //TempData.Add("eminisin", "Hesabınızı Silmek İstediğinizden Emin Misiz?");
+                return View(uye);
             }
 
 
@@ -219,114 +245,130 @@ namespace KutuphaneCoresuz.Controllers
 
         }
 
+        //*******DELETE UYE yani kendi hesabnı silecekse ******/////s
+        //Uye hesabını silecekse buraya gelecek......
         [AllowAnonymous]
-        [HttpPost, ActionName("DeleteUye")]
-        public ActionResult DeleteUye(int? id, Uye model)
+        [HttpPost]
+        public ActionResult DeleteUye(int? id, string isim, string KullaniciAdi, string soyisim)
         {
-
-            if (HttpContext.Session["KullaniciAdi"] == null)
+            string Mevcutisim = HttpContext.Session["KullaniciAdi"].ToString();
+            if (Mevcutisim == null)
             {
                 return RedirectToAction("Login", "Security");
             }
-            else
-            {
-                Uye uye = new Uye();
-                HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
+           Uye uye = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+           // var KitapDurumu = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.Kitap.KitapDurum);
 
-                var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
-                //int uyeId = 0;
-                id = uyeIdResult.ID;
-                if (id == 0)
+            if (uye.isim != null)
+            {
+                if (uye.ID != 0)
+                {
+                    if (Convert.ToInt32(id) != 1)
+                    {
+                        uye.aktiflik = 0;
+                        
+                        db.Entry(uye).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Login","Security");
+                    }
+
+                }
+                else
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
                 }
 
-                else
-                {
-                    db.Uyeler.Remove(uye);
-                    db.SaveChanges();
-                    return RedirectToAction("UyeAnayfasi", "Security");
-                }
             }
+            TempData.Add("UyeSilindi", "<b> Hesabınız Silindi</b>");
+
+            return RedirectToAction("Login", "Security");
+
+            //var uyeIdResult = db.Uyeler.Where(u => u.KullaniciAdi == uye.KullaniciAdi && u.aktiflik==1).FirstOrDefault();
+            //int uyeId = 0; return RedirectToAction("UyeAnayfasi", "Security");
+            //db.Uyeler.Remove(uye);
+            //db.SaveChanges();
+            //yerine aktifliğini 0 yaparız.
         }
+    
 
 
 
-        public JsonResult SifreKontrol(KitapUyeViewModel model)
+    public JsonResult SifreKontrol(KitapUyeViewModel model)
+    {
+        bool basariliMi = true;
+        int code = 0;
+        try
         {
-            bool basariliMi = true;
-            int code = 0;
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                string gelenSifre = model.UyeSifre;
+                var uyeResult = db.Uyeler.Where(u => u.KullaniciAdi == model.KullaniciAdi).Single();
+                if (uyeResult != null && gelenSifre == uyeResult.Sifre)
                 {
-                    string gelenSifre = model.UyeSifre;
-                    var uyeResult = db.Uyeler.Where(u => u.KullaniciAdi == model.KullaniciAdi).Single();
-                    if (uyeResult != null && gelenSifre == uyeResult.Sifre)
-                    {
 
-                        code = 1; //DeleteUye
-                        return Json(new { ok = basariliMi, text = code });//Sifre doğru
-
-                    }
-                    code = 2;
+                    code = 1; //DeleteUye
+                    return Json(new { ok = basariliMi, text = code });//Sifre doğru
 
                 }
-
-                return Json(new { ok = basariliMi, text = code });//sifre yanlış uyarısı 
-
-            }
-
-
-            catch (Exception)
-            {
-                basariliMi = false;
-                code = 3;
-                return Json(new { ok = basariliMi, text = code });//CreateYazarı tekrar açacak kod
-            }
-
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public JsonResult AdminKontrol(Uye admin)
-        {
-            bool basariliMi = true;
-            int code = 0;
-            string gelenSifre = "";
-            string gelenKullaniciAdi = "";
-            // gelenKullaniciAdi = HttpContext.Session["KullaniciAdi"].ToString();
-            gelenKullaniciAdi = admin.KullaniciAdi;
-            int sifreKontrol = 0;
-            var result = db.Uyeler.Where(u => u.KullaniciAdi == gelenKullaniciAdi).FirstOrDefault();
-
-            SifreKontrol kontrol = new SifreKontrol();
-            sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, result.Sifre);
-            try
-            {
-                if (result != null && sifreKontrol == 1)
-                {
-                    code = 1;//rol değiştirilecek
-
-                    return Json(new { ok = basariliMi, text = code });
-
-                }
-                else
-                {
-                    code = 2; //hata mesajı
-                    return Json(new { ok = basariliMi, text = code });
-                }
-            }
-
-
-            catch (Exception)
-            {
-                basariliMi = false;
                 code = 2;
-                return Json(new { ok = basariliMi, text = code });//CreateYazarı tekrar açacak kod
+
             }
 
+            return Json(new { ok = basariliMi, text = code });//sifre yanlış uyarısı 
+
+        }
+
+
+        catch (Exception)
+        {
+            basariliMi = false;
+            code = 3;
+            return Json(new { ok = basariliMi, text = code });//CreateYazarı tekrar açacak kod
         }
 
     }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public JsonResult AdminKontrol(Uye admin)
+    {
+        bool basariliMi = true;
+        int code = 0;
+        string gelenSifre = "";
+        string gelenKullaniciAdi = "";
+        // gelenKullaniciAdi = HttpContext.Session["KullaniciAdi"].ToString();
+        gelenKullaniciAdi = admin.KullaniciAdi;
+        int sifreKontrol = 0;
+        var result = db.Uyeler.Where(u => u.KullaniciAdi == gelenKullaniciAdi).FirstOrDefault();
+
+        SifreKontrol kontrol = new SifreKontrol();
+        sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, result.Sifre);
+        try
+        {
+            if (result != null && sifreKontrol == 1)
+            {
+                code = 1;//rol değiştirilecek
+
+                return Json(new { ok = basariliMi, text = code });
+
+            }
+            else
+            {
+                code = 2; //hata mesajı
+                return Json(new { ok = basariliMi, text = code });
+            }
+        }
+
+
+        catch (Exception)
+        {
+            basariliMi = false;
+            code = 2;
+            return Json(new { ok = basariliMi, text = code });//CreateYazarı tekrar açacak kod
+        }
+
+    }
+
+}
 }
