@@ -36,10 +36,7 @@
             <th>
                 @Html.Label("Kitap Durum")
             </th>
-            <th>
-                İşlemler
-            </th>
-     
+           
         </tr>
     </thead>
     <tbody>
@@ -66,15 +63,10 @@
             <td>
                 @item.Aciklama
             </td>
-            <td>s
+            <td>
                 @item.KitapDurum
             </td>
-            <td>
-            <td>
-               
-                <button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Kitap/DetailsKitap?&id=@item.Id&KitapAdi=@item.KitapAdi&YazarAdi=@item.YazarAdi&YazarSoyadi=@item.YazarSoyadi&yayinci=@item.yayinci&Aciklama=@item.Aciklama&YazarYorum=@item.YazarYorum&KitapDurum=@item.KitapDurum'"> Detaylar</button>
-          
-            </td>
+         
           
         </tr>
 
@@ -98,7 +90,7 @@
                 var id = $(this).data("id");
                 //alert(id);
                 var isim = $(this).data("isim");
-                alert(isim);
+               // alert(isim);
                 var soyisim = $(this).data("soisim");
 
                 var yorum = $(this).data("yorum");

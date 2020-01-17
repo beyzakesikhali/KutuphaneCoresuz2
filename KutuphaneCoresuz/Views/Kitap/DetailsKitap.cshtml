@@ -1,4 +1,4 @@
-﻿@model  KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
+﻿@model  List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
 
 @{
     ViewBag.Title = "Details";
@@ -18,161 +18,164 @@
 @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 
 <div>
+    @foreach (var item in Model)
+    {
+        <div class="">
+            <table class="table" style="width:20%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
 
-    <div class="">
-        <table class="table" style="width:20%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
-
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Kitap İsmi:")
-                    </p>
-
-
-
-
-                </td>
-
-            <tr>
-                <td>
-
-                    @Html.DisplayFor(m => m.KitapAdi)
-
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-                    <p>
-
-                        @Html.Label("Kitap Yazari:")
-                    </p>
-
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-
-                    @Html.DisplayFor(m => m.YazarAdi)
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Yazar Soyadi:")
-                    </p>
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Kitap İsmi:")
+                        </p>
 
 
 
-                </td>
-            </tr>
-            <tr>
-                <td>
 
-                    @Html.DisplayFor(m => m.YazarSoyadi)
+                    </td>
 
+                <tr>
+                    <td>
 
-                </td>
+                        @Html.Display(item.KitapAdi)
 
 
-            </tr>
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Yayıncı :")
-                    </p>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+
+                            @Html.Label("Kitap Yazari:")
+                        </p>
 
 
-                </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
 
-            </tr>
-            <tr>
-                <td>
+                        @Html.Display(item.YazarAdi)
 
-                    @Html.DisplayFor(m => m.yayinci)
-
-                </td>
-
-            </tr>
-
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Aciklama:")
-                    </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Yazar Soyadi:")
+                        </p>
 
 
 
-                </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
 
-            </tr>
-            <tr>
-                <td>
-
-                    @Html.DisplayFor(m => m.Aciklama)
-
-                </td>
-
-            </tr>
-
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Yazar Yorum:")
-                    </p>
+                        @Html.Display(item.YazarSoyadi)
 
 
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-
-                    @Html.DisplayFor(m => m.YazarYorum)
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Kitap Durumu:")
-                    </p>
+                    </td>
 
 
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-
-                    @if (Model.KitapDurum == "Kutuphanede")
-                    {
-                        @Html.Display("Kutuphanede");
-                    }
-                    else
-                    {
-                        @Html.Display("Uyede")
-                    }
-
-                </td>
-            </tr>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Yayıncı :")
+                        </p>
 
 
-        </table>
+                    </td>
 
-    </div>
-</div>
-<p>
-    
-  
-    
+                </tr>
+                <tr>
+                    <td>
+
+                        @Html.Display(item.yayinci)
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Aciklama:")
+                        </p>
+
+
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+
+                        @Html.Display(item.Aciklama)
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Yazar Yorum:")
+                        </p>
+
+
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+
+                        @Html.Display(item.YazarYorum)
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Kitap Durumu:")
+                        </p>
+
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        @if (item.KitapDurum == "Kutuphanede")
+                        {
+                            @Html.Display("Kutuphanede");
+                        }
+                        else
+                        {
+                            @Html.Display("Uyede")
+                        }
+
+                    </td>
+                </tr>
+
+
+            </table>
+
+        </div>
+   
+    <p>
+
+
+
         <button class="btn btn-info" type="button" onclick="@Url.Action("UyeAnaSayfasi", "Security")"> Anasayfaya Dön</button>
-    
 
 
-</p>
+
+    </p>
+}
+

@@ -145,7 +145,7 @@
 
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="2" align="center">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 @*<form method="post">*@
@@ -173,14 +173,14 @@
         @*//modal*@
         @* !!!! buraya modal koyacaksın!!!!!*@
 
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-2 col-md-10" style="position:absolute; top:570px; left:200px;">
             <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Rol Değiştir</button>
         </div>
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Profili Doğrula</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -201,7 +201,7 @@
                                     <div class="form-group">
                                         @Html.Label("Şifre:", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="@Html.Name(item.Sifre)">
+                                            <input type="password" class="form-control" name="@Html.Name(item.Sifre)">
 
                                         </div>
                                     </div>
@@ -211,7 +211,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                            <button type="button" class="btn btn-primary" id="btn-editrole">Doğrula</button>
+                            <button type="button" class="btn btn-primary btn-dogrula" id="btn-editrole">Doğrula</button>
                         </div>
                     </div>
                 </div>
@@ -220,8 +220,10 @@
     </div>
 
 
-
-    <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexAdmin", "Admin")'">AnaSayfaya Dön</button>
+    <div style="position:absolute; top:650px; left:25%; width:500px; height:25px;">
+        <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexAdmin", "Admin")'">AnaSayfaya Dön</button>
+    </div>
+   
 </div>
 
 
@@ -260,17 +262,17 @@
 
             var modal = document.getElementById("#mymodal");
             var ad = document.getElementById("#ad");
-            $("#btn-yazarekle").click(function () {
-                alert("butona tıklandı");
+            $(".btn-dogrula").click(function () {
+               // alert("butona tıklandı");
 
                 $.ajax({
-                    url: '@Url.Action("RoleEdit","Uye")',
+                    url: '@Url.Action("RoleEdit","Admin")',
                     method: "POST",
                     dataType: "json",
                     data: $('form.tagForm').serialize(),
                     success: function (sayfa) {
 
-                        alert(sayfa.text);
+                       // alert(sayfa.text);
                         if (sayfa.text == 0) {
 
                             window.location.href = '@Url.Action("Login","Security")';

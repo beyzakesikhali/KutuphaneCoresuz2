@@ -95,6 +95,10 @@ namespace KutuphaneCoresuz.Controllers
 
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             var mevcut = db.Uyeler.Where(p => p.KullaniciAdi == uye.KullaniciAdi).FirstOrDefault();
+            //mevcut.aktiflik = 1;
+            //db.Entry(mevcut).State = EntityState.Modified;
+            //db.SaveChanges();
+            
             string gelenSifre = uye.Sifre;
             int sifreKontrol = 0;
             int gelenRole = Convert.ToInt32(Role.Admin);
@@ -111,7 +115,7 @@ namespace KutuphaneCoresuz.Controllers
                     sifreKontrol = kontrol.SifreKontrolEt(gelenSifre, mevcut.Sifre);
                     if (sifreKontrol == 1)
                     {
-                        Session.Add("KullaniciAdi", mevcut.isim.ToString());
+                        Session.Add("KullaniciAdi", mevcut.KullaniciAdi.ToString());
 
                         if (mevcut.RoleId == Convert.ToInt32(Role.Admin))
                         {

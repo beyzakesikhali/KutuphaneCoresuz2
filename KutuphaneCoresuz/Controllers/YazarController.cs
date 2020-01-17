@@ -21,15 +21,17 @@ namespace KutuphaneCoresuz.Controllers
         {
             List<Yazar> yazarlar = new List<Yazar>();
             yazarlar = db.Yazarlar.ToList();
+            List<Yazar> gosterilecekler = new List<Yazar>();
             foreach (var item in yazarlar)
             {
                 if(item.aktiflik==1)
                 {
-                    return View(yazarlar);
+                    gosterilecekler.Add(new Yazar { ID = item.ID, aktiflik = 1, Isim = item.Isim, Soyisim = item.Soyisim, Yorum = item.Yorum });
+                    
                 }
             }
  
-            return View();
+            return View(gosterilecekler);
         }
         //yazarad soyad getirecek
         [HttpPost]
@@ -103,7 +105,7 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult CreateYazarAction()
         {
-            if (HttpContext.Session["KullaniciAdi"].Equals("Beyza") == false)
+            if (HttpContext.Session["KullaniciAdi"].Equals("admin") == false)
             {
                 return RedirectToAction("Login", "Security");
             }
@@ -303,7 +305,7 @@ namespace KutuphaneCoresuz.Controllers
             var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
             if(yazarResult.aktiflik==1)
             {
-                model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Yorum = yazarResult.Yorum });
+                model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Soyisim=yazarResult.Soyisim, Yorum = yazarResult.Yorum });
                 return View(model);
 
             }
@@ -455,6 +457,7 @@ namespace KutuphaneCoresuz.Controllers
             }
             //var YazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
             model = db.Yazarlar.Find(id);
+           
             if(model.aktiflik==1)
             {
                 return View(model);
@@ -486,10 +489,25 @@ namespace KutuphaneCoresuz.Controllers
                 else
                 {
                     Yazar yazar = db.Yazarlar.Find(id);
-                    yazar.aktiflik = 1;
-                    db.Entry(yazar).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("IndexYazar","Yazar");
+                    List<Kitap> kitap = db.Kitaplar.Where(k => k.YazarID == Convert.ToInt32(id)).ToList();
+                    foreach (var item in kitap)
+                    {
+                        if(item.KitapDurum==1)
+                        {
+                            yazar.aktiflik = 1;
+                            db.Entry(yazar).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("IndexYazar", "Yazar");
+                        }
+                        else
+                        {
+                            return View("Hata Yazarın herhangi bir kitabı üyede");
+                        }
+
+                    }
+                    return View();
+                   
+                  
                 }
             }
 

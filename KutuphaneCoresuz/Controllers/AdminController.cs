@@ -28,12 +28,12 @@ namespace KutuphaneCoresuz.Controllers
             string role = "";
 
             string AktifUye = "";
-            ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
+           // ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
             //AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             if (HttpContext.Session["KullaniciAdi"] == null)
             {
 
-                ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
+                //ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
                 return RedirectToAction("Login", "Security");
             }
             AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
@@ -81,12 +81,12 @@ namespace KutuphaneCoresuz.Controllers
             string role = "";
 
             string AktifUye = "";
-            ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
+           // ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
             //AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             if (HttpContext.Session["KullaniciAdi"] == null)
             {
 
-                ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
+                //ViewBag.Login = "Nparsınız ya Allasen Giriş yapmadan Uye silmeye kalkıyosunuz!";
                 return RedirectToAction("Login", "Security");
             }
             AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
@@ -157,9 +157,10 @@ namespace KutuphaneCoresuz.Controllers
                 {
                     HashDegeri = Crypto.HashPassword(sifre);
                     uye.Sifre = HashDegeri;
+                    uye.aktiflik = 1;
                     db.Uyeler.Add(uye);
                     db.SaveChanges();
-                    ViewBag.LoginMesaj = "Başarılı Bir Şekilde Kayıt Oldunuz. Şimdi Giriş Yapınız";
+                    ViewBag.UyeKaydedildi= "Başarılı Bir Şekilde Kayıt Oldunuz. Şimdi Giriş Yapınız";
                     return RedirectToAction("IndexAdmin", "Admin");
 
                 }
@@ -174,6 +175,9 @@ namespace KutuphaneCoresuz.Controllers
                 KAdiResult.Aciklama = uye.Aciklama;
                 KAdiResult.Email = uye.Email;
                 KAdiResult.Sifre = Crypto.HashPassword(uye.Sifre);
+                db.Entry(KAdiResult).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("IndexAdmin","Admin");
 
 
             }
@@ -323,6 +327,10 @@ namespace KutuphaneCoresuz.Controllers
         }
 
 
+        //RoleEdit
+
+
+
         //****** UYE EDit SOnu
         //****** UYE EDit SOnu
 
@@ -406,7 +414,7 @@ namespace KutuphaneCoresuz.Controllers
             var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi).FirstOrDefault();
             var YazarResult = db.Yazarlar.Where(i => i.ID == SeciliYazarID).FirstOrDefault();
             Yazar yazarinKitaplari = new Yazar();
-            if (KitapVarmi == null)
+            if (KitapVarmi == null)//kitap ilk defa eklenecekse
             {
                 if (ModelState.IsValid)
                 {
@@ -414,6 +422,7 @@ namespace KutuphaneCoresuz.Controllers
                     yeniKitap.Isim = model.KitapAdi;
                     yeniKitap.Yayinci = model.yayinci;
                     yeniKitap.Aciklama = model.Aciklama;
+                    yeniKitap.aktiflik = 1;
                     yeniKitap.YazarID = SeciliYazarID;
                     yeniKitap.Yazar = YazarResult;
                     if (model.KitapDurum == "Kutuphanede")
@@ -449,6 +458,7 @@ namespace KutuphaneCoresuz.Controllers
             {
                 //kitap zaten varsa Fk yı ekle direk
                 //Kitapvarmi üzerinden eklenmeli
+
                 yeniUyeKitap.UyeID = id;
                 yeniUyeKitap.KitapID = KitapVarmi.ID;
                 yeniUyeKitap.Kitap = KitapVarmi;
@@ -496,7 +506,7 @@ namespace KutuphaneCoresuz.Controllers
 
             }
 
-            UyeyeKitapEkle(model.id, model);
+            //UyeyeKitapEkle(model.id, model);
             return View(model);
 
         }
@@ -564,7 +574,7 @@ namespace KutuphaneCoresuz.Controllers
                 switch (tip)
                 {
                     case "uye":
-                        foreach (var ad in uyelerListesi)
+                        foreach ( var ad in uyelerListesi)
                         {
 
                             sonuc.Add(new SelectListItem
@@ -654,7 +664,7 @@ namespace KutuphaneCoresuz.Controllers
         {
             List<Uye> model = new List<Uye>();
             string mevcutKullanici = "";
-            HttpContext.Session["KullaniciAdi"] = mevcutKullanici;
+            mevcutKullanici= HttpContext.Session["KullaniciAdi"].ToString();
             if (mevcutKullanici?.ToString() == null)
             {
                 RedirectToAction("Login", "Security");
@@ -676,10 +686,10 @@ namespace KutuphaneCoresuz.Controllers
             }
             else
             {
-                Uye uye = new Uye();
+                Uye uye = db.Uyeler.Find(id);
                 HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
 
-                var deleteUye = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
+                //var deleteUye = db.Uyeler.Where(u => u.ID == id).FirstOrDefault();
                 //int uyeId = 0;
                 //  id = uyeIdResult.ID;
                 if (id == 0)
@@ -688,15 +698,72 @@ namespace KutuphaneCoresuz.Controllers
                 }
 
                 else
+                
                 {
-                    db.Uyeler.Remove(deleteUye);
+                    var UyeninkitaplariIDs = db.UyeKitap.Where(u => u.UyeID == id).Select(u=>u.KitapID).ToList();
+                   if(UyeninkitaplariIDs!=null)
+                    {
+                        foreach (var item in UyeninkitaplariIDs)
+                        {
+                            var kitaplar = db.Kitaplar.Where(k => k.ID == item).FirstOrDefault();
+                            if (kitaplar.KitapDurum == 2)
+                            {
+                                return View("Uyeye Ait Kitap var Silemezsiniz!");
+                            }
+                            else
+                            {
+                                uye.aktiflik = 0;
+                                db.Entry(uye).State = EntityState.Modified;
+                                db.SaveChanges();
+
+                                //db.Uyeler.Remove(deleteUye);
+                                //db.SaveChanges();
+                                return RedirectToAction("IndexAdmin", "Admin");
+                            }
+                        }
+                    }
+
+                    uye.aktiflik = 0;
+                    db.Entry(uye).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    //db.Uyeler.Remove(deleteUye);
+                    //db.SaveChanges();
                     return RedirectToAction("IndexAdmin", "Admin");
+
+
                 }
             }
 
         }
+        /*
+         * 
+         * 
+         * 
+         * 
+            if (uye.isim != null)
+            {
+                if (uye.ID != 0)
+                {
+                    if (Convert.ToInt32(id) != 1)
+                    {
+                        uye.aktiflik = 0;
+                        
+                        db.Entry(uye).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Login","Security");
+                    }
 
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                }
+
+
+
+         * */
 
         //addKitap addKitap AddKitap,,
         [OutputCache(CacheProfile = "anaSayfaCache")]
@@ -774,9 +841,6 @@ namespace KutuphaneCoresuz.Controllers
         //add Kitap sonu
 
 
-
-
-
         //*/*******UYE DETAY ****////
 
 
@@ -822,7 +886,7 @@ namespace KutuphaneCoresuz.Controllers
 
 
         }
-       
+
         [AllowAnonymous]
         public ActionResult UyeDetailsResult(int? id)
         {
@@ -841,18 +905,15 @@ namespace KutuphaneCoresuz.Controllers
             var kitapIdResult = db.UyeKitap.Where(k => k.UyeID == id).ToList();
 
             List<Kitap> uyeninkitaplari = new List<Kitap>();
-           if(uyeResult.UyeKitaplar.Count==0)
+            if (uyeResult.UyeKitaplar.Count == 0)
             {
                 model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapyok, KitapAdi = kitapyok, yayinci = kitapyok, YazarAdi = yazarYok, YazarSoyadi = yazarYok, YazarYorum = yazarYok });
-              
-            }
-           else
-            {
-                for (int i = 0; i < kitapIdResult.Count; i++)
-                {
-                    uyeninkitaplari = db.Kitaplar.Where(k => k.ID == kitapIdResult[i].KitapID).ToList();
 
-                }
+            }
+            else
+            {
+                var ids = kitapIdResult.Select(q => q.KitapID).ToList();
+                uyeninkitaplari = db.Kitaplar.Where(k => ids.Contains(k.ID)).ToList();
 
                 foreach (var item in uyeninkitaplari)
                 {
@@ -869,7 +930,7 @@ namespace KutuphaneCoresuz.Controllers
                 }
             }
 
-           
+
             return View(model);
         }
 
@@ -903,15 +964,329 @@ namespace KutuphaneCoresuz.Controllers
         //    }
 
         //}
+        [AllowAnonymous]
+        [HttpPost]
+        public JsonResult RoleEdit(string kullaniciadi, string sifre, string role)
+        {
+            bool basariliMi = true;
+            int code = 1;//Sifre kontrolü doğru role değiştirebilir.
+            string gelensifre = "";
+            string gelenKullaniciAdi = "";
+            string dbSifre = "";
+            
 
+
+            if (ModelState.IsValid)
+            {
+                //foreach (var item in Uye)
+                //{
+                //    sifre = item.Sifre;
+                //    KullaniciAdi = item.KullaniciAdi;
+                //}
+                gelensifre =sifre;
+                gelenKullaniciAdi = kullaniciadi;
+
+                SifreKontrol sifreKontrol = new SifreKontrol();
+                var adminMi = db.Uyeler.Where(u => u.KullaniciAdi == "admin").FirstOrDefault();
+                if (adminMi != null)
+                {
+                    dbSifre = adminMi.Sifre;
+
+                    if (sifreKontrol.SifreKontrolEt(gelensifre, dbSifre) == 1)
+                    {
+                        return Json(new { ok = basariliMi, text = code });
+                    }
+                    else
+                    {
+                        code = 2;
+                        basariliMi = false;
+                        return Json(new { ok = basariliMi, text = code });
+                    }
+                }
+
+            }
+            basariliMi = false;
+            code = 3;
+            return Json(new { ok = basariliMi, text = code });
+
+
+        }
+        //*********Role Edit sonu ****************
+
+        /// <summary>
+        /// **************      AdminEditUyeKitapResult BAŞI
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isim"></param>
+        /// <returns></returns>
+
+
+
+
+            /*
+             * 
+             * KullaniciAdi Getir
+             * 
+             * 
+             * */
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult UyeKullaniciAdi(int? id, string tip = "uye")
+        {
+            List<Uye> uyelerListesi = new List<Uye>();
+            uyelerListesi = db.Uyeler.ToList();
+            List<SelectListItem> sonuc = new List<SelectListItem>();
+            bool basariliMi = true;
+            //string yazarlar = "";
+            try
+            {
+                switch (tip)
+                {
+                    case "uye":
+                        foreach (var ad in uyelerListesi)
+                        {
+
+                            sonuc.Add(new SelectListItem
+                            {
+                                Text = ad.KullaniciAdi,
+                                Value = ad.ID.ToString()
+                            });
+
+                        }
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+
+            catch (Exception)
+            {
+                basariliMi = false;
+                sonuc = new List<SelectListItem>();
+                sonuc.Add(new SelectListItem
+                {
+                    Text = "Bir hata oluştu!",
+                    Value = "default"
+                });
+
+            }
+
+            return Json(new { ok = basariliMi, text = sonuc });
+        }
+
+
+        /*
+         * 
+         * 
+         * Uyeye Ait Kitap Adlari Getir
+         * 
+         * 
+         * */
+
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult UyeKitapJson(int? id, string tip = "uye")
+        {
+            List<SelectListItem> sonuc = new List<SelectListItem>();
+            bool basariliMi = true;
+            //gelen id kullanıcının id si
+            //List<Uye> uyelerListesi = new List<Uye>();
+            //uyelerListesi = db.Uyeler.ToList();
+            var uye = db.Uyeler.Find(id);
+            var uyeninKitapIDs = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.KitapID).ToList();
+                //elimde uyenin kitaplarinin ıd leri var
+           if(uyeninKitapIDs!=null)
+            {
+                foreach (var item in uyeninKitapIDs)
+                {
+                    var UyeninKitaplari = db.Kitaplar.Where(k => k.ID == item).ToList();
+                    foreach (var kitaplar in UyeninKitaplari)
+                    {
+                        sonuc.Add(new SelectListItem
+                        {
+
+                            Text = kitaplar.Isim,
+                            Value = kitaplar.ID.ToString()
+                        });
+                        return Json(new { ok = basariliMi, text = sonuc });
+                    }
+                    //elimde uyenin kitaplari var
+
+
+                }
+            }
+            
+                basariliMi = false;
+                sonuc = new List<SelectListItem>();
+                sonuc.Add(new SelectListItem
+                {
+                    Text = "Bir hata oluştu!",
+                    Value = "default"
+                });
+
+            return Json(new { ok = basariliMi, text = sonuc });
+
+        }
+
+          
+        
+
+        [HttpPost]
+        [AllowAnonymous]
+
+
+        public JsonResult AdminEditUyeKitapJson(int? id, string isim)
+        {
+
+            bool basarliMi = true;
+            string sonuc = "editKitap";
+            List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
+            try
+            {
+                if (HttpContext.Session["KullaniciAdi"] == null)
+
+                {
+                    sonuc = "Login";
+                    return Json(new { ok = basarliMi, text = sonuc });
+                }
+                //sonuc = "EditUye";
+                var uyeninKitapIds = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.KitapID).ToList();
+                if(uyeninKitapIds.Count!=0)
+                {
+
+                    return Json(new { ok = basarliMi, text = sonuc });
+                }
+               
+                    sonuc = "createkitap";
+                    //model.Add(new KitapYazarAddModel() { Id = yazarResult.ID, Isim = yazarResult.Isim, YazarYorum = yazarResult.Yorum ,});
+                    ////return View(model);
+
+                    return Json(new { ok = basarliMi, text = sonuc });
+
+                
+
+            }
+            catch (Exception)
+            {
+                basarliMi = false;
+                sonuc = "Başarısız İşlem";
+                return Json(new { ok = basarliMi, text = sonuc });
+                throw;
+            }
+
+
+        }
+
+        // GET: Kitaps/Edit/5
+        [AllowAnonymous]
+        public ActionResult AdminEditUyeKitapResult(int? id)
+        {
+            List<KitapUyeViewModel> model = new List<KitapUyeViewModel>();
+            string kitapdurum = "";
+            //ilgili kullanıcının bilgilerini AdminEditUyeKitapResultta gösterecek olan metod
+            //gelen id kullanicinin id si 
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Uye uye = db.Uyeler.Find(id);
+            var uyeninKitaplariIDs = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.UyeID).ToList();
+            if(uyeninKitaplariIDs!=null)
+            {
+                foreach (var item in uyeninKitaplariIDs)
+                {
+                    var kitaplari = db.Kitaplar.Where(k => k.ID == item).ToList();
+                    foreach (var kitaplar in kitaplari)
+                    {
+                        if(kitaplar.KitapDurum==1)
+                        {
+                            kitapdurum = "Kütüphanede";
+                            model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi=uye.KullaniciAdi, KitapAdi = kitaplar.Isim,KitapDurum=kitapdurum });
+
+                        }
+                        kitapdurum = "Üyede";
+                        model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
+
+                    }
+                }
+            }
+           
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+
+        // POST: Kitaps/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AdminEditUyeKitapResult(int? id, int yazarId, string kitapadi, string aciklama, string yazaryorum, string yayinci)
+        {
+
+            var yazarResult = db.Yazarlar.Where(y => y.ID == yazarId).FirstOrDefault();
+            Yazar gelenYazar = new Yazar();
+
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+            Kitap kitap = db.Kitaplar.Find(id);
+            if (kitap == null)
+            {
+                return HttpNotFound();
+            }
+            if (kitapadi != null)
+            {
+
+                if (yazarResult == null)
+                {
+                    if (ModelState.IsValid)
+                    {
+
+                        ///KİTAP GÜNCELLEME
+                        kitap.Isim = kitapadi;
+                        kitap.Yayinci = yayinci;
+                        kitap.Aciklama = aciklama;
+                        kitap.YazarID = yazarId;
+                        kitap.Yazar.Isim = yazarResult.Isim;
+                        kitap.Yazar.Soyisim = yazarResult.Soyisim;
+                        kitap.Yazar.Yorum = yazaryorum;
+                        db.Entry(kitap).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("IndexKitap", "Kitap");
+                    }
+                }
+                else //yazar zaten varsa kitabın yazarı değiştirilmek isteniyorsa
+                {
+                    //    int gelenYazarId = yazarVarmi.ID;
+                    //    kitap.YazarID = gelenYazarId;
+                    //    kitap.Yazar.Isim = yazaradi;
+                    //    kitap.Yazar.Soyisim = yazarsoyadi;
+                    //    kitap.Yazar.Yorum = yazaryorum;
+                    //    kitap.Aciklama = aciklama;
+                    //    kitap.Isim = kitapadi;
+                    //    kitap.Yayinci = kitap.Yayinci;
+                    ViewBag.yazarHata = "Yazar Seçmediniz ya da boş bir yazar seçtiniz";
+                    return View(ViewBag.yazarHata);
+
+                }
+
+
+            }
+
+            return View();
+        }
 
 
 
     }
-
-
-
-
 
 
 

@@ -13,9 +13,9 @@
 <span class="border-dark border-bottom">
     <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
 </span>
-<h3 align="center">Var Olan Kitaplarınız</h3>
+<h3 align="center">Üye Detay</h3>
 
-<table class="table-responsive" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+<table class="table-responsive" align="center" style="width:70%; height:750px" cellspacing="0" cellpadding="0">
     <thead>
         <tr>
             <th>
@@ -31,9 +31,7 @@
             <th>
                 @Html.Label("Uye Soyisim:")
             </th>
-            <th>
-                @Html.Label("Uye Sifre:")
-            </th>
+
             <th>
                 @Html.Label("Uye Email")
             </th>
@@ -72,54 +70,56 @@
 
         @if (Model != null)
         {
-
+            
             foreach (var item in Model)
             {
 
-        <tr>
-            
-            <td>
-                @item.UyeIsim
-            </td>
-            <td>
-                @item.KullaniciAdi
-            </td>
-            <td>
-                @item.Role
-            </td>
-            <td>
-                @item.UyeSoyisim
-            </td>
-            <td>
-                @item.UyeEmail
-            </td>
-            <td>
+                <tr>
 
-                @item.Aciklama
-            </td>
-            <td>
+                    <td>
+                        @item.UyeIsim
+                    </td>
+                    <td>
+                        @item.KullaniciAdi
+                    </td>
+                    <td>
+                        @item.Role
+                    </td>
+                    <td>
+                        @item.UyeSoyisim
+                    </td>
+                    <td>
+                        @item.UyeEmail
+                    </td>
+                    <td>
 
-                @item.KitapDurum
-            </td>
-            <td>
-                @item.KitapAdi
-            </td>
-            <td>
-                @item.yayinci
-            </td>
-            <td>
-                @item.YazarAdi
-            </td>
-            <td>
-                @item.YazarSoyadi
-            </td>
+                        @item.Aciklama
+                    </td>
+                    <td>
 
-            <td>
-                @item.YazarYorum
-            </td>
-           
+                        @item.KitapDurum
+                    </td>
+                    <td>
+                        @item.KitapAdi
+                    </td>
+                    <td>
+                        @item.yayinci
+                    </td>
+                    <td>
+                        @item.YazarAdi
+                    </td>
+                    <td>
+                        @item.YazarSoyadi
+                    </td>
 
-        </tr>
+                    <td>
+                        @item.YazarYorum
+                    </td>
+                    <td colspan="2">
+                        <button type="submit" class="btn-outline-info btn-duzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum" >Üyenin Kitabını Düzenle</button>
+                    </td>
+
+                </tr>
 
             }
 
@@ -138,23 +138,47 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".btn-duzenle").click(function () {
+                alert("butona tıklandı");
                 var id = $(this).data("id");
-                //alert(id);
-                var isim = $(this).data("isim");
-                alert(isim);
-                var soyisim = $(this).data("soisim");
+               alert(id);
+               
+                //alert(isim);}&kullaniciadi=${kullaniciadi}&uyeisim=${uyeisim}&kitapadi=${kitapadi}&kitapdurum=${kitapdurum}
+                //var kullaniciadi = $(this).data("kullaniciadi").val();
 
-                var yorum = $(this).data("yorum");
+                //var uyeisim = $(this).data("uyeisim").val();
+                //var kitapadi = $(this).data("kitapadi").val();
+                //var kitapdurum = $(this).data("kitapdurum").val();
 
                 $.ajax({
-                   url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                   url: `/Admin/AdminEditUyeKitapJson?id=${id}`,
                     @*url:'@Url.Action("EditYazarId","Yazar")',*@
                     method: "post",
                     dataType: "json",
                    // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
                     success: function (data) {
+                         if (data.text == "login") {
+                                window.location.href = `/Security/Login`;
 
-                    }, complete: function () {
+                            }
+                            else if (data.text == "editKitap") {
+
+                                window.location.href = `/Admin/AdminEditUyeKitapResult?id=${id}`;
+                                //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                         }
+                         else if (data.text == "createkitap")
+                         {
+                             window.location.href=`/Admin/AdminAddUyeKitap?id=${id}`
+                         }
+                            else {
+                                alert("hata");
+                            }
+
+                            //alert("gitmelisin")
+                            //}, complete: function () {
+                            //    alert("Olmadı!")
+
+                    },
+                    complete: function () {
 
                     }
                 });
@@ -162,26 +186,7 @@
 
         });
 
-        $(document).ready(function () {
-            $(".btn-sil").click(function () {
-                var isim = $(this).data("isim");
-                var soyisim = $(this).data("soisim");
-                var yorum = $(this).data("yorum");
-                $.ajax({
-                    url: `https://localhost:44339/Yazar/DeleteYazar?isim="${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
-                    @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
-                    method: "post",
-                    dataType: "json",
-                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
-                    success: function (data) {
-
-                    }, complete: function () {
-
-                    }
-                });
-            })
-
-        });
+       
 
     </script>
 

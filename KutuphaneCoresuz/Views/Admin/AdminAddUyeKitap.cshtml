@@ -147,14 +147,14 @@
         $(document).ready(function()
         {
             GetNames();
-
+            GetUyeNames();
 
             var btn = document.getElementById("#btn-yazarekle");
             var modal = document.getElementById("#mymodal");
             var ad = document.getElementById("#ad");
                 $("#btn-yazarekle").click(function()
                 {
-                    alert("butona tıklandı");
+                    //alert("butona tıklandı");
 
                          $.ajax({
                             url: '@Url.Action("CreateYazar","Yazar")',
@@ -163,7 +163,7 @@
                             data: $('form.tagForm').serialize(),
                              success: function (sayfa) {
 
-                                 alert(sayfa.text);
+                                 //alert(sayfa.text);
                                 if (sayfa.text == 0) {
 
                                     window.location.href = '@Url.Action("Login","Security")';
@@ -183,22 +183,22 @@
                             error: function() {
                                 alert('Error');
                             }
-                        });
-                        return false;
+                        });//ajax sonu
+                        //return false;
 
-                });
+                });//click sonu
 
-              modal.on('hidden', function ()
-            {
-                GetNames();
-                ad.change(function(){
-                    window.location.reload(true);
-                });
+            //  modal.on('hidden', function ()
+            //{
+            //    GetNames();
+            //    ad.change(function(){
+            //        window.location.reload(true);
+            //    });
 
 
 
-            });
-        });
+            //});//modal on sonu
+        });//document.ready sonu
         function GetNames() {
 
             $.ajax({
@@ -218,7 +218,8 @@
             });
         }
  function GetUyeNames()
-{
+ {
+     //alert("fonksiyon");
         $.ajax({
          url: `/Admin/UyeAdSoyad?id=0`,
         method: "post",
@@ -235,9 +236,9 @@
             complete: function () {
 
             }
-            });
+       });//ajax sonu
 
-        }
+}
 
     </script>
 }

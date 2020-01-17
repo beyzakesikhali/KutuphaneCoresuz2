@@ -126,8 +126,7 @@
                 //
                 //
 
-
-                alert('@ViewBag.Login');
+               
                 $(".btn-duzenle").click(function () {
                     var id = $(this).data("id");
                     var isim = $(this).data("isim");
@@ -159,7 +158,7 @@
                         method: "post",
                         dataType: "json",
                         success: function (data) {
-                            alert(data.text);
+                           // alert(data.text);
                             if (data.text == "login") {
                                 window.location.href = `/Security/Login`;
 
@@ -173,7 +172,7 @@
                                 alert("hata");
                             }
 
-                            alert("gitmelisin")
+                            //alert("gitmelisin")
                             //}, complete: function () {
                             //    alert("Olmadı!")
 
@@ -188,7 +187,7 @@
 
                 $(".btn-sil").click(function () {
                     var id = $(this).data("id");
-                    alert(id);
+                    //alert(id);
                     //var isim = $(this).data("isim");
                     //alert(isim);
                     //var soyisim = $(this).data("soyisim");
@@ -204,7 +203,7 @@
                         dataType: "json",
                         // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
                         success: function (data) {
-                             alert(data.text);
+                            // alert(data.text);
                             if (data.text == "login") {
                                 window.location.href = '@Url.Action("Login","Security")';
 
@@ -217,7 +216,7 @@
                                 alert("hata");
                             }
 
-                            alert("gitmelisin")
+                            //alert("gitmelisin")
                             //}, complete: function () {
                             //    alert("Olmadı!")
 
@@ -232,7 +231,7 @@
 
                 $(".btn-detay").click(function () {
                     var id = $(this).data("id");
-                    alert(id);
+                   // alert(id);
                     //var isim = $(this).data("isim");
                     //alert(isim);
                     //var soyisim = $(this).data("soyisim");
@@ -248,7 +247,7 @@
                         dataType: "json",
                         // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
                         success: function (data) {
-                             alert(data.text);
+                            // alert(data.text);
                             if (data.text == "login") {
                                 window.location.href = '@Url.Action("Login","Security")';
 
@@ -261,7 +260,7 @@
                                 alert("hata");
                             }
 
-                            alert("gitmelisin")
+                            //alert("gitmelisin")
                             //}, complete: function () {
                             //    alert("Olmadı!")
 

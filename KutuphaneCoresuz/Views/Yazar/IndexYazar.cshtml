@@ -16,7 +16,7 @@
         background-color: aliceblue;
     }
 </style>
-@if (Context.Session["KullaniciAdi"].Equals("Beyza") == true)
+@if (Context.Session["KullaniciAdi"].Equals("admin") == true)
 {
     @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 }
@@ -31,7 +31,7 @@ else
     <br />
     <br />
     <h2>Yazarlar</h2>
-    @if (Context.Session["KullaniciAdi"].Equals("Beyza") == true)
+    @if (Context.Session["KullaniciAdi"].Equals("admin") == true)
     {
         <p>
             |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazarAction", "Yazar")'">YENİ BİR YAZAR EKLE</button> |
@@ -67,7 +67,7 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => item.Yorum)
                 </td>
-                @if (Context.Session["KullaniciAdi"].Equals("Beyza") == true)
+                @if (Context.Session["KullaniciAdi"].Equals("admin") == true)
                 {
                     <td>
 
@@ -98,16 +98,16 @@ else
             //
             //     //
             $(".btn-yazarsil").click(function () {
-                alert("butona basıldı");
+              //  alert("butona basıldı");
                 var id = $(this).data("id");
-                alert(id);
+              //  alert(id);
                 $.ajax({
                     url: `/Yazar/DeleteYazarJson?id=${id}`,
                     //data: formData,
                     method: "post",
                     dataType: "json",
                     success: function (data) {
-                        alert(data.text);
+                      //  alert(data.text);
                         if (data.text == "login") {
                             window.location.href = `/Security/Login`;
 
@@ -121,25 +121,25 @@ else
                             alert("hata");
                         }
 
-                        alert("gitmelisin")
+                       // alert("gitmelisin")
 
                     }//success sonu
                 });//  alert("Ajax sonu");
 
             });//btn.click sonu
 
-            alert("nevar");
+           // alert("nevar");
             $(".btn-yazarduzenle").click(function () {
-                alert("butona basıldı");
+               // alert("butona basıldı");
                 var id = $(this).data("id");
-                alert(id);
+               // alert(id);
                 $.ajax({
                     url: `/Yazar/EditYazarJson?id=${id}`,
                     //data: formData,
                     method: "post",
                     dataType: "json",
                     success: function (data) {
-                        alert(data.text);
+                      //  alert(data.text);
                         if (data.text == "login") {
                             window.location.href = `/Security/Login`;
 

@@ -62,17 +62,28 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult DetailsKitap(KitapYazarAddModel model)
         {
-            int id = model.Id;
-            if (id == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kitap kitap = db.Kitaplar.Find(id);
-            if (kitap == null)
-            {
-                return HttpNotFound();
-            }
-            return View(kitap);
+            int id = 0;
+            //modelin içinde kitap id var 
+            
+                id = model.Id;
+                if (id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                // List<KitapYazarAddModel> gosterilecek = new List<KitapYazarAddModel>();
+                //List<Kitap> kitaplar = db.Kitaplar.Where(k=>k.ID==id).ToList();
+
+
+           
+           
+
+
+                if (model == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(model);
+            
         }
         [HttpPost]
         [AllowAnonymous]
@@ -208,7 +219,7 @@ namespace KutuphaneCoresuz.Controllers
             string AktifUye = HttpContext.Session["KullaniciAdi"].ToString();
             var KitapVarmi = db.Kitaplar.Where(k => k.Isim == SeciliKitapAdi).FirstOrDefault();
             var YazarResult = db.Yazarlar.Where(i => i.ID == SeciliYazarID).FirstOrDefault();
-            if (AktifUye.Equals("Beyza") == true)//admine kitap eklemesin admin sadece sisteme kitap eklesin diye
+            if (AktifUye.Equals("admin") == true)//admine kitap eklemesin admin sadece sisteme kitap eklesin diye
             {
                 if (KitapVarmi == null)//yeni kitap gelmiş demektir
                 {
@@ -335,7 +346,7 @@ namespace KutuphaneCoresuz.Controllers
        
         // GET: Kitaps/Edit/5
         [AllowAnonymous]
-        public ActionResult EditKitap(int? id)
+        public ActionResult EditKitap(int? id,int uyeId)
         {
 
             if (id == null)
@@ -344,7 +355,9 @@ namespace KutuphaneCoresuz.Controllers
             }
             Kitap kitap = db.Kitaplar.Find(id);
             List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
-
+            ////////hata var bakılcak
+            /////düzeltildi
+            
             model.Add(new KitapYazarAddModel { Id = kitap.ID, KitapAdi = kitap.Isim, YazarAdi = kitap.Yazar.Isim, YazarSoyadi = kitap.Yazar.Soyisim, yayinci = kitap.Yayinci, Aciklama = kitap.Aciklama, YazarYorum = kitap.Yazar.Yorum, });
 
             if (kitap == null)
@@ -523,6 +536,8 @@ namespace KutuphaneCoresuz.Controllers
         [AllowAnonymous]
         public ActionResult DeleteKitap(int? id, string kitapismi)
         {
+          
+            
             if (HttpContext.Session["KullaniciAdi"] == null)
             {
                 return RedirectToAction("Login", "Security");
@@ -540,15 +555,22 @@ namespace KutuphaneCoresuz.Controllers
 
                 else
                 {
+                   Kitap deletekitap = db.Kitaplar.Find(id);
+                   if(deletekitap.KitapDurum==1)
+                    {
+                        deletekitap.aktiflik = 0;
+                        db.Entry(deletekitap).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("IndexKitap", "Kitap");
+                    }
+                   else
+                    {
+                        return View("HATA! Kitap Üyede silemezsiniz.");
+                    }
+                    
 
-                    Kitap deletekitap = db.Kitaplar.Find(id);
-                    deletekitap.aktiflik = 0;
-
-                    db.Entry(deletekitap).State = EntityState.Modified;
-
-                    db.SaveChanges();
-                    return RedirectToAction("IndexKitap", "Kitap");
                 }
+
             }
 
         }

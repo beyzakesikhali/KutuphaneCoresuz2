@@ -5,8 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (Context.Session["KullaniciAdi"].ToString() == "admin")
+{
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
-@Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+}
+else
+{
+    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+
+}
 
 <br />
 <br />
@@ -15,7 +23,7 @@
     @using (Html.BeginForm("DeleteUye", "Uye", new { id = Model.ID }, FormMethod.Post))
     {
 
-        <table class="table" style="width:20%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
+        <table class="table" style="width:40%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
 
             <tr>
                 <td>
@@ -138,13 +146,13 @@
             </tr>
 
             <tr>
-                <td colspan="2">
+                <td>
                     <div class="form-actions no-color">
                         <button class="btn-outline-danger" type="submit" name="sil"> Sil</button>|
                     </div>
 
-                </td>
-                <td>
+
+
                     <div class="form-actions no-color">
                         <button class="btn-outline-danger" type="submit" name="sil" onclick="@Url.Action("EditUye", "Uye", new { id = Model.ID })"> Profil Düzenle</button>
                     </div>

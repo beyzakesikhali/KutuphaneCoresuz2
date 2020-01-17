@@ -2424,7 +2424,6 @@
     <Content Include="Views\Admin\IndexAdmin.cshtml" />
     <Content Include="Views\Shared\_HeaderUye.cshtml" />
     <Content Include="Views\Shared\_HeaderAdmin.cshtml" />
-    <Content Include="Views\Security\YazarAra.cshtml" />
     <Content Include="Views\Security\KitapAra.cshtml" />
     <Content Include="Views\Admin\AdminEditUyeResult.cshtml" />
     <Content Include="Views\Uye\PostEditUye.cshtml" />
@@ -2433,6 +2432,7 @@
     <Content Include="Views\Admin\AddKitap.cshtml" />
     <Content Include="Views\Shared\_GridKitapPartialView.cshtml" />
     <Content Include="Views\Admin\UyeDetailsResult.cshtml" />
+    <Content Include="Views\Admin\AdminEditUyeKitapResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
