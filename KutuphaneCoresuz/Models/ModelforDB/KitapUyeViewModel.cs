@@ -17,7 +17,12 @@ namespace KutuphaneCoresuz.Models.ModelforDB
         public string UyeEmail { get; set; }
         public string Aciklama { get; set; }
         public string KitapDurum { get; set; }
-        public int PageSize { get; set; }
+        public string KitapAdi { get; set; }
+        public string yayinci { get; set; }
+        public string YazarAdi { get; set; }
+        public string YazarSoyadi { get; set; }
+        public string  YazarYorum { get; set; }
+
         //public string KitapAdi { get; set; }
         //public string yayinci { get; set; }
         //public string YazarAdi { get; set; }

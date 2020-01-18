@@ -6,9 +6,11 @@
 }
 
 @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
-<h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Session["KullaniciAdi"] </h4>
 
-<table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
+
+<br />
+<br />
+<table class="table-responsive" align="center" style="margin-left:250px;  width:65%; height:75%" cellspacing="0" cellpadding="0">
     <thead>
         <tr>
             <th> @Html.Label("Uye Adi:")</th>
@@ -28,13 +30,14 @@
             <th>
                 @Html.Label("Uye Tür")
             </th>
-            <th>
+            <th colspan="7">
                 İşlemler
             </th>
 
         </tr>
     </thead>
     <tbody>
+
 
         @if (Model != null)
         {
@@ -58,17 +61,36 @@
                     <td>
                         @item.Aciklama
                     </td>
-                    <td>
-                        @item.RoleId
-                    </td>
-                    <td>
+
+
+                    @if (item.RoleId == 0)
+                    {
+                        <td>Uye</td>
+
+                    }
+                    else
+                    {
+                        <td> Admin</td>
+
+                    }
+
+
+                    <td colspan="2">
+
+
                         @*<button class="btn-outline-warning" type="submit" name="update" onclick="location.href='/Uye/EditUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId'">Uye Düzenle</button>*@
                         @*<button class="btn-outline-success" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId">Uye Detaylar</button>*@
                         @*<button class="btn-outline-danger" type="submit" name="detaylar" onclick="location.href='/Uye/DeleteUye?id=@item.ID&isim=@item.isim&KullaniciAdi=@item.KullaniciAdi&Soyisim=@item.Soyisim&Email=@item.Email&Aciklama=@item.Aciklama&RoleId=@item.RoleId" ,'">Uye Sil</button>*@
                         <button class="btn-outline-warning btn-duzenle" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi DÜZENLE</button>
-
-
-
+                    </td>
+                    <td>
+                        <button class="btn-outline-warning btn-sil" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uyeyi Sil</button>
+                    </td>
+                    <td colspan="2">
+                        <button class="btn-outline-warning btn-kitapekle" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId onclick="location.href=`/Admin/AdminAddUyeKitap?id=@item.ID`">Uyeye Kitap Ekle</button>
+                    </td>
+                    <td colspan="2">
+                        <button class="btn-outline-warning btn-detay" data-id=@item.ID data-isim=@item.isim data-soyisim=@item.Soyisim data-kadi=@item.KullaniciAdi data-aciklama=@item.Aciklama data-role=@item.RoleId>Uye Detay</button>
                     </td>
 
                 </tr>
@@ -94,78 +116,166 @@
 
 
 @section Scripts
-{
+    {
     <script type="text/javascript">
 
-        $(document).ready(function () {
+            $(document).ready(function () {
+
+                //btnduzenle kodları
+                //
+                //
+                //
+
+               
+                $(".btn-duzenle").click(function () {
+                    var id = $(this).data("id");
+                    var isim = $(this).data("isim");
+                    //var soyisim = $(this).data("soyisim");
+                    //var kullaniciAdi = $(this).data("kadi");
+                    //var aciklama = $(this).data("aciklama");
+                    //var roleId = $(this).data("role");
+                    //var email = $(this).data("email");
+
+                    //alert(id);
+                    var model = $(this).data("model");
+                    //alert(isim);
+
+                    //var data ="id: ' + id + ',isim: ' + isim + ' ,soyisim: ' + soyisim + ',kullaniciadi: ' + kullaniciAdi + ',aciklama: ' + aciklama + ',roleid: ' + roleId + '"',
+                    //var formData = new FormData();
+
+                    //formData.append("id", id);
+                    //formData.append("isim", isim);
+                    //formData.append("soyisim", soyisim);
+                    //formData.append("kullaniciadi", kullaniciAdi);
+                    //formData.append("aciklama", aciklama);
+                    //formData.append("roleid", roleId);
+                    //alert(formdata);
 
 
-            alert(@ViewBag.Login);
-            $(".btn-duzenle").click(function () {
-                var id = $(this).data("id");
-                alert(id);
-                var isim = $(this).data("isim");
-                alert(isim);
-                var soyisim = $(this).data("soyisim");
-                var kullaniciAdi = $(this).data("kadi");
-                var aciklama = $(this).data("aciklama");
-                var roleId = $(this).data("role");
-                //var data ="id: ' + id + ',isim: ' + isim + ' ,soyisim: ' + soyisim + ',kullaniciadi: ' + kullaniciAdi + ',aciklama: ' + aciklama + ',roleid: ' + roleId + '"',
-                //var formData = new FormData();
+                    $.ajax({
+                        url: `/Admin/AdminEditUye?id=${id}`,
+                        //data: formData,
+                        method: "post",
+                        dataType: "json",
+                        success: function (data) {
+                           // alert(data.text);
+                            if (data.text == "login") {
+                                window.location.href = `/Security/Login`;
 
-                //formData.append("id", id);
-                //formData.append("isim", isim);
-                //formData.append("soyisim", soyisim);
-                //formData.append("kullaniciadi", kullaniciAdi);
-                //formData.append("aciklama", aciklama);
-                //formData.append("roleid", roleId);
-                //alert(formdata);
+                            }
+                            else if (data.text == "editUye") {
 
+                                window.location.href = `/Admin/AdminEditUyeResult?id=${id}`;
+                                //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                            }
+                            else {
+                                alert("hata");
+                            }
 
-                $.ajax({
-                    url: `/Uye/EditUye?id=${id}`,
-                    //data: formData,
-                    method: "get",
-                    dataType: "json",
-                    success: function (data) {
-                        window.href="@Url.Action("EditUye","Uye")"
+                            //alert("gitmelisin")
+                            //}, complete: function () {
+                            //    alert("Olmadı!")
 
-                    }, complete: function () {
-                        alert("Olmadı!")
-
-                    }
+                        }
+                    });
+                    //  alert("Ajax sonu");
                 });
-              //  alert("Ajax sonu");
-            })
+                // btnsil kodları //
+                // // //
+                //
 
-        });
 
-        $(document).ready(function () {
-            $(".btn-sil").click(function () {
-                var id = $(this).data("id");
-                alert(id);
-                var isim = $(this).data("isim");
-                alert(isim);
-                var soyisim = $(this).data("soyisim");
+                $(".btn-sil").click(function () {
+                    var id = $(this).data("id");
+                    //alert(id);
+                    //var isim = $(this).data("isim");
+                    //alert(isim);
+                    //var soyisim = $(this).data("soyisim");
 
-                var kullaniciAdi = $(this).data("kadi");
-                var aciklama = $(this).data("aciklama");
-                var roleId = $(this).data("role");
-                $.ajax({
-                    url: `/Uye/DeleteUye?id=${id}&isim=${isim}&soyisim=${soyisim}&kullaniciadi=${kullaniciAdi}&aciklama=${aciklama}&roleid=${roleId}"`,
-                    @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
-                    method: "post",
-                    dataType: "json",
-                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
-                    success: function (data) {
+                    //var kullaniciAdi = $(this).data("kadi");
+                    //var aciklama = $(this).data("aciklama");
+                    //var roleId = $(this).data("role");
+                    $.ajax({
+                        //  url: `/Uye/DeleteUye?id=${id}&isim=${isim}&soyisim=${soyisim}&kullaniciadi=${kullaniciAdi}&aciklama=${aciklama}&roleid=${roleId}"`,
+                        @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
+                        url: `/Admin/AdminDeleteUye?id=${id}`,
+                        method: "post",
+                        dataType: "json",
+                        // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                        success: function (data) {
+                            // alert(data.text);
+                            if (data.text == "login") {
+                                window.location.href = '@Url.Action("Login","Security")';
 
-                    }, complete: function () {
+                            }
+                            else if (data.text == "DeleteUye") {
 
-                    }
-                });
-            })
+                                window.location.href = `/Admin/AdminDeleteUyeResult?id=${id}`;
+                            }
+                            else {
+                                alert("hata");
+                            }
 
-        });
+                            //alert("gitmelisin")
+                            //}, complete: function () {
+                            //    alert("Olmadı!")
+
+
+                        }, complete: function () {
+
+                        }
+                    });
+                });//btn-sil click
+
+                
+
+                $(".btn-detay").click(function () {
+                    var id = $(this).data("id");
+                   // alert(id);
+                    //var isim = $(this).data("isim");
+                    //alert(isim);
+                    //var soyisim = $(this).data("soyisim");
+
+                    //var kullaniciAdi = $(this).data("kadi");
+                    //var aciklama = $(this).data("aciklama");
+                    //var roleId = $(this).data("role");
+                    $.ajax({
+                        //  url: `/Uye/DeleteUye?id=${id}&isim=${isim}&soyisim=${soyisim}&kullaniciadi=${kullaniciAdi}&aciklama=${aciklama}&roleid=${roleId}"`,
+                        @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
+                        url: `/Admin/UyeDetails?id=${id}`,
+                        method: "post",
+                        dataType: "json",
+                        // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                        success: function (data) {
+                            // alert(data.text);
+                            if (data.text == "login") {
+                                window.location.href = '@Url.Action("Login","Security")';
+
+                            }
+                            else if (data.text == "UyeDetay") {
+
+                                window.location.href = `/Admin/UyeDetailsResult?id=${id}`;
+                            }
+                            else {
+                                alert("hata");
+                            }
+
+                            //alert("gitmelisin")
+                            //}, complete: function () {
+                            //    alert("Olmadı!")
+
+
+                        }, complete: function () {
+
+                        }
+                    });
+                });//btn-sil click
+
+
+
+
+
+            });//document.ready
 
     </script>
 

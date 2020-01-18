@@ -1,0 +1,74 @@
+﻿@model List<KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel>
+@{
+    ViewBag.Title = "_GridKitapPartialView";
+ 
+}
+
+
+
+@{
+    WebGrid webgrid = new WebGrid(source: Model, canPage: true, rowsPerPage: 10, canSort: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "grid", fieldNamePrefix: "gridItem");
+    webgrid.Pager(WebGridPagerModes.NextPrevious);
+
+}
+@*@using (Html.BeginForm("Arama", "Kitap", FormMethod.Post, new { @class = "form-inline md-form form-sm mt-0" }))
+    {*@
+
+@*<i class="fas fa-search" aria-hidden="true" style="position:absolute; right:5px; top:50px;"> Arama Yap</i>
+    <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+           aria-label="Search"  style="position:absolute; right:5px; top:50px;">
+    <button class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit"  style="position:absolute; right:5px; top:70px;">Search</button>*@
+@*<div style="position:absolute; right:5px; top:50px;">
+        <form class="example" action="" style="margin:auto;max-width:300px ">
+            <input type="text" placeholder="Search.." name="search2" id="txtSearch">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+    </div>*@
+
+
+@* } *@
+
+
+    <div id="grid">
+        @webgrid.GetHtml(
+         columns:
+                webgrid.Columns
+                (
+                webgrid.Column(null, null, format: @<input type="hidden" name="IDHidden" value="@item.ID" />)
+                 ),
+
+        tableStyle: "webgrid",
+        mode: WebGridPagerModes.All,
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        selectedRowStyle: "webgrid-selected-row",
+        rowStyle: "webgrid-row-style")
+        </ div >
+
+
+        @*//htmlAttributes: new { @id = "webgrid" },
+        //columns: webgrid.Columns(
+        //    webgrid.Column("ID","Id"),
+        //    webgrid.Column("KitapAdi", "Kitap Adi"),
+        //     webgrid.Column("YazarAdi", "Yazar Adi"),
+        //      webgrid.Column("Yazar Soyadi", "Yazar Soyadi"),
+        //     webgrid.Column("Yayinci", "Yayinci"),
+        //     webgrid.Column("Aciklama", "Aciklama"),
+        //     webgrid.Column("Yazar Yorum", "Yazar Yorum"),
+        //     webgrid.Column("Kitap Durum", "Kitap Durum")
+            webgrid.Column("KitapAdi", header: "Kitap Adı", format: @<text>@item.KitapAdi</text>, style: "NameColWidth"),
+webgrid.Column("YazarAdi", header: "Yazar Adı", format: @<text>@item.YazarAdi</text>, style: "NameColWidth"),
+webgrid.Column("YazarSoyadi", header: "Yazar Soyadı", format: @<text>@item.YazarSoyadi</text>, style: "NameColWidth"),
+webgrid.Column("yayinci", header: "Yayıncı", format: @<text>@item.yayinci</text>, style: "NameColWidth"),
+webgrid.Column("Aciklama", header: "Açıklama", format: @<text>@item.Aciklama</text>, style: "NameColWidth"),
+webgrid.Column("YazarYorum", header: "Yazar Yorum", format: @<text>@item.YazarYorum</text>, style: "NameColWidth"),
+webgrid.Column("KitapDurum", header: "Kitap Durum", format:@<text>@item.KitapDurum</text>)
+
+            
+            *@
+
+
+
+
+        @*</div>*@

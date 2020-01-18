@@ -1,123 +1,150 @@
-﻿@model KutuphaneCoresuz.Models.Data.Yazar
+﻿@model List<KutuphaneCoresuz.Models.Data.Yazar>
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
+<style type="text/css">
+    tr th {
+        background-color: #10707f;
+        color: aliceblue;
+    }
+
+    tr td {
+        color: #10707f;
+        background-color: aliceblue;
+    }
+</style>
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
 
+<div id="logo" class="pull-left">
+    <h4>Yazar Duzenle</h4>
+    <div class="form-horizontal">
+        @foreach (var item in Model)
+        {
+            using (Html.BeginForm("EditYazarId", "Yazar", FormMethod.Post))
+            {
+                <table class="table-hover" align="center" style="margin-left:250px;  width:35%; height:35%" cellspacing="0" cellpadding="0">
+                    <tr hidden="hidden">
+                        <td hidden="hidden">
+                         
+                                <input type="hidden" name="id" class="form-control" value="@item.ID" />
+                          
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                @Html.Label("İsim")
+                            </p>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="isim" value="@item.Isim" />
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <h2>Create</h2>
-
-    <div id="header">
-        <div class="container">
-
-            <div id="logo" class="pull-left">
-                <h2>Edit</h2>
-
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-horizontal">
-                        <h4>Yazar</h4>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.ID)
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Isim, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Isim, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Isim, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Soyisim, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Soyisim, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Soyisim, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Yorum, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Yorum, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Yorum, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        @*<div class="form-group">
-                                @Html.LabelFor(model => model.kitap_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.kitap_id, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.kitap_id, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                @Html.Label("Soyisim")
+                            </p>
+                        </td>
+                   
+                        <td>
+                            <input type="text" class="form-control" name="soyisim" value="@item.Soyisim" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                @Html.Label("Yorum")
+                            </p>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="yorum" value="@item.Yorum" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button class="btn-outline-warning btn-duzenle" data-id="@item.ID" data-isim="@item.Isim" data-soyisim="@item.Soyisim" data-yorum="@item.Yorum">YAZARI DÜZENLE</button>
+                                    @*<button class="btn-outline-danger btn-sil" data-id=@Model.ID data-isim=@Model.Isim data-soisim=@Model.Soyisim data-yorum=@Model.Yorum>BU YAZARI SİL</button>*@
+                                    <button class="btn-outline-danger btn-sil" data-id="@item.ID" data-isim="@item.Isim" data-soyisim="@item.Soyisim" data-yorum="@item.Yorum" onclick="location.href='/Yazar/DeleteYazar?id=@item.ID'">BU YAZARI SİL</button>
                                 </div>
-                            </div>*@
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button class="btn-outline-warning btn-duzenle" data-id=ID data-isim=Isim data-soisim=Soyisim data-yorum=Yorum>YAZARI DÜZENLE</button>
-                                @*<button class="btn-outline-danger btn-sil" data-id=@Model.ID data-isim=@Model.Isim data-soisim=@Model.Soyisim data-yorum=@Model.Yorum>BU YAZARI SİL</button>*@
-                                <button class="btn-outline-danger btn-sil" data-id=ID data-isim=Isim data-soisim=Soyisim data-yorum=Yorum>BU YAZARI SİL</button>
                             </div>
-                        </div>
+                            </td>
+                        <td>
+                            <div>
+                                | <button class="btn-outline-success" type="submit" name="DetailsUye" onclick="location.href='/Yazar/DetailsYazar?id=@item.ID'">Profil Detay</button> |
 
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.kitap_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.kitap_id, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.kitap_id, "", new { @class = "text-danger" })
                     </div>
-                }
+                </div>*@
 
-                <div>
-                    | <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("IndexYazar", "Yazar")'">Profil Detay</button> |
+           
 
-                </div>
-            </div>
-        </div>
-    </div>
+    }
 }
-    @section Scripts
+
+        </div>
+
+        @section Scripts
 {
-        <script type="text/javascript">
+            <script type="text/javascript">
         $(document).ready(function () {
             $(".btn-duzenle").click(function () {
-                var id = $(this).data("id");
-                alert(id);
-                var isim = $(this).data("isim");
-                alert(isim);
-                var soyisim = $(this).data("soisim");
+                //var id = $(this).data(id);
+                //alert(id);
+                //var isim = $(this).data(isim);
+                //alert(isim);
+                //var soyisim = $(this).data(soyisim);
 
-                var yorum = $(this).data("yorum");
+                //var yorum = $(this).data(yorum);
+                var id = $(this).data("id");
+                var isim = $(this).data("isim").val();
+                var soyisim = $(this).data("soyisim").val();
+                var yorum = $(this).data("yorum").val();
 
                 $.ajax({
-                   url: `https://localhost:44339/Yazar/EditYazarId?id="${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
+                    url: `/Yazar/EditYazarId?id=${id}&isim=${isim}&soyisim=${soyisim}&yorum=${yorum}`,
                     @*url:'@Url.Action("EditYazarId","Yazar")',*@
                     method: "post",
                     dataType: "json",
-                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
                     success: function (data) {
 
                     }, complete: function () {
 
                     }
                 });
-            })
+            });
 
         });
 
-        $(document).ready(function () {
+        @*$(document).ready(function () {
             $(".btn-sil").click(function () {
-                var isim = $(this).data("isim");
-                var soyisim = $(this).data("soisim");
-                var yorum = $(this).data("yorum");
+                var id = $(this).data("id").val();
+                var isim = $(this).data("isim").val();
+                var soyisim = $(this).data("soyisim").val();
+                var yorum = $(this).data("yorum").val();
                 $.ajax({
-                    url: `https://localhost:44339/Yazar/DeleteYazar?isim="${isim}&soyisim=${soyisim}&yorum=${yorum}"`,
-                    @*/  url:'@Url.Action("EditYazarId","Yazar")',*@
+                    url: `/Yazar/DeleteYazar?id=${id}isim=${isim}&soyisim=${soyisim}&yorum=${yorum}`,
+                    /  url:'@Url.Action("EditYazarId","Yazar")',
                     method: "post",
                     dataType: "json",
                    // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
@@ -129,10 +156,10 @@
                 });
             })
 
-        });
+        });*@
 
-        </script>
+            </script>
 
 
-    }
+        }
 

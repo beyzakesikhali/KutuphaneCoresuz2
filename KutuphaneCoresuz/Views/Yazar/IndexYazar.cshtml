@@ -1,56 +1,166 @@
-﻿@model  IEnumerable<KutuphaneCoresuz.Models.Data.Yazar>
+﻿@model  List<KutuphaneCoresuz.Models.Data.Yazar>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style type="text/css">
+    tr th {
+        background-color: #10707f;
+        color: aliceblue;
+    }
 
-@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+    tr td {
+        color: #10707f;
+        background-color: aliceblue;
+    }
+</style>
+@if (Context.Session["KullaniciAdi"].Equals("admin") == true)
+{
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+}
+else
+{
+    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 
-    <div class="" align="center">
-        <br />
-        <br />
-        <h2>Yazarlar</h2>
+}
 
+
+<div class="" align="center">
+    <br />
+    <br />
+    <h2>Yazarlar</h2>
+    @if (Context.Session["KullaniciAdi"].Equals("admin") == true)
+    {
         <p>
             |  <button class="btn-outline-success" type="button" name="DetailsUye" onclick="location.href='@Url.Action("CreateYazarAction", "Yazar")'">YENİ BİR YAZAR EKLE</button> |
         </p>
-        <table class="table" align="center" style="width:auto; height:auto">
-            <tr>
-                <th>
-                    -İsim-
-                </th>
-                <th>
-                    -Soyisim-
-                </th>
-                <th>
-                    -Yorum-
-                </th>
+    }
 
-                <th></th>
+    <table class="table-responsive table-hover" align="center" style="width:2500px; height:auto">
+        <tr>
+            <th>
+                -İsim-
+            </th>
+            <th>
+                -Soyisim-
+            </th>
+            <th>
+                -Yorum-
+            </th>
+
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Isim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Soyisim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Yorum)
+                </td>
+                @if (Context.Session["KullaniciAdi"].Equals("admin") == true)
+                {
+                    <td>
+
+                        |  <button class="btn-outline-warning btn-yazarduzenle" data-id=@item.ID data-isim=@item.Isim data-soyisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI DÜZENLE</button>
+                        @*onclick="location.href='/Yazar/EditYazarId?id=@item.ID&isim=@item.Isim&soyisim=@item.Soyisim&yorum=@item.Yorum'"*@
+                        @*onclick="location.href='/Yazar/DeleteYazar?id=@item.ID'"*@
+                        |  <button class="btn-outline-danger btn-yazarsil" data-id=@item.ID data-isim=@item.Isim data-soyisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
+                        |  <button class="btn-outline-dark" data-id=@item.ID data-isim=@item.Isim data-soyisim=@item.Soyisim data-yorum=@item.Yorum>YAZAR DETAY</button>|
+                    </td>
+                }
+
             </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Isim)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Soyisim)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Yorum)
-                    </td>
+        }
+    </table>
 
-                    <td>
-                        |  <button class="btn-outline-warning" onclick="location.href='@Url.Action("EditYazarId", "Yazar")'">YAZARI DÜZENLE</button>
-                        |  <button class="btn-outline-danger" btn-sil" data-id=@item.ID data-isim=@item.Isim data-soisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
-                        |  <button class="btn-outline-dark" type="button" name="DetailsUye" onclick="location.href='@Url.Action("DetailsYazar", "Yazar")'">YAZAR DETAY</button>|
-                    </td>
-                </tr>
-            }
-        </table>
-        </div>
-    
+</div>
+
+
+
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+           
+            //btnSil kodları
+            //
+            //     //
+            $(".btn-yazarsil").click(function () {
+              //  alert("butona basıldı");
+                var id = $(this).data("id");
+              //  alert(id);
+                $.ajax({
+                    url: `/Yazar/DeleteYazarJson?id=${id}`,
+                    //data: formData,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+                      //  alert(data.text);
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "deleteyazar") {
+
+                            window.location.href = `/Yazar/DeleteYazar?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                       // alert("gitmelisin")
+
+                    }//success sonu
+                });//  alert("Ajax sonu");
+
+            });//btn.click sonu
+
+           // alert("nevar");
+            $(".btn-yazarduzenle").click(function () {
+               // alert("butona basıldı");
+                var id = $(this).data("id");
+               // alert(id);
+                $.ajax({
+                    url: `/Yazar/EditYazarJson?id=${id}`,
+                    //data: formData,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+                      //  alert(data.text);
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "editYazar") {
+
+                            window.location.href = `/Yazar/EditYazarId?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                        alert("gitmelisin")
+
+                    }//success sonu
+                });//  alert("Ajax sonu");
+
+            });//btn.click sonu
+
+        });
+    </script>
+
+}

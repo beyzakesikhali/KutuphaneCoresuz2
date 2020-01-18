@@ -1,65 +1,69 @@
-﻿@model KutuphaneCoresuz.Models.Data.Yazar
+﻿@model  KutuphaneCoresuz.Models.Data.Yazar
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Partial("~/Views/Shared/_Header.cshtml")
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+
+<br />
+<br />
+
+<div id="logo" class="pull-left" >
+    <h2 align="center">Yazar Silme Sayfası</h2>
 
 
-    
-    <div id="logo" class="pull-left" align="center">
-        <h2>Delete</h2>
+    @using (Html.BeginForm("DeleteYazar", "Yazar",new { id=Model.ID} ,FormMethod.Post))
+    {
 
-        <h3>Are you sure you want to delete this?</h3>
-        <div>
-            <h4>Yazar</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
+        <table class="table" style="position:relative; left:0; width:65%; height:200px" cellspacing="0" cellpadding="0">
+
+            <tr class="dl-horizontal" align="center">
+                <td>
                     @Html.DisplayNameFor(model => model.Isim)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Isim)
-                </dd>
-
-                <dt>
+                </td>
+                <td>
                     @Html.DisplayNameFor(model => model.Soyisim)
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Soyisim)
-                </dd>
-
-                <dt>
+                </td>
+                <td>
                     @Html.DisplayNameFor(model => model.Yorum)
-                </dt>
+                </td>
+            </tr>
+            <tr>
 
-                <dd>
+                <td>
+                    @Html.DisplayFor(model => model.Isim)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Soyisim)
+                </td>
+                <td>
                     @Html.DisplayFor(model => model.Yorum)
-                </dd>
+                </td>
 
-                @*<dt>
-                        @Html.DisplayNameFor(model => model.kitap_id)
-                    </dt>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-actions no-color">
+                        <button class="btn-outline-danger" type="submit" name="sil" onclick="location.href='/Yazar/DeleteYazar?id=@Model.ID"> Sil</button>|
+                    </div>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.kitap_id)
-                    </dd>*@
+                </td>
+                <td>
+                    <div class="form-actions no-color">
+                        <button class="btn-outline-danger" type="submit" name="sil" onclick="location.href='/Yazar/EditUyeYazarId?id=@Model.ID'"> Düzenle</button>|
+                    </div>
 
-            </dl>
+            </tr>
 
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+        </table>
 
-                <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-default" /> |
-                    @Html.ActionLink("Tüm Listeyi Gör", "Index")
-                </div>
-            }
-        </div>
-        </div>
- 
+
+
+    }
+
+</div>
+
+

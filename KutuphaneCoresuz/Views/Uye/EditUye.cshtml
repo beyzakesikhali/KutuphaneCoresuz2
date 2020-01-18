@@ -4,186 +4,235 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (Context.Session["KullaniciAdi"].ToString() == "admin")
+{
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+}
+else
+{
+    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+}
+
+    <div id="logo" class="pull-left" align="center">
 
 
-@Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+        @Html.AntiForgeryToken()
 
-<div id="logo" class="pull-left" align="center">
+        <div class="form-horizontal">
+            <br />
+            <br />
 
 
-    @Html.AntiForgeryToken()
+            <hr />
 
-    <div class="form-horizontal">
-        <br />
-        <br />
-        <h4>Uye Düzenle</h4>
-        <h4>Şifrenizi Yazmayı Unutmayın</h4>
-        <hr />
-        @using (Html.BeginForm("EditUye", "Uye", FormMethod.Post))
-        {
-            foreach (var item in Model)
+            @foreach (var item in Model)
             {
+                using (Html.BeginForm("PostEditUye", "Uye",new { id=item.ID}, FormMethod.Post))
+                {
+                <table class="table-hover myTable" style="width:20%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <p>
+                                @Html.Label("İsim")
 
 
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.Hidden("id:", item.ID, new { htmlAttributes = new { @class = "form-control" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("İsim", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBox("Adı:", item.isim, new { htmlAttributes = new { @class = "form-control" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("KullaniciAdi", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBox("Kullanici Adi", item.KullaniciAdi, new { htmlAttributes = new { @class = "form-control" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Soyisim", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBox("Soyisim:", item.Soyisim, new { htmlAttributes = new { @class = "form-control" } })
-
-                    </div>
-                </div>
-
-                @*<div class="form-group">
-                        @Html.Label("Rol", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(item => item.Sifre, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(item => item.Sifre, "", new { @class = "text-danger" })
-                        </div>
-                    </div>*@
+                            </p>
+                        </td>
+                        <td>
+                            <input type="text" value="@item.isim" class="form-control" name="isim" />
 
 
-                <div class="form-group">
-                    @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBox("Email:", item.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @*@Html.TextBox("Adı:", item.isim, new { htmlAttributes = new { @class = "form-control" } })*@
 
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.Label("Şifre", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.Password("Sifre:", item.Sifre, new { htmlAttributes = new { @class = "form-control" } })
 
-                    </div>
-                </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                @Html.Label("KullaniciAdi")
 
-                <div class="form-group">
-                    @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBox("Açıklama", item.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
 
-                    </div>
-                </div>
+                            </p>
+                        </td>
+                        <td>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" value="Kaydet" class="btn btn-danger">Değiştir</button>
-                    </div>
-                </div>
+                            <input type="text" value="@item.KullaniciAdi" class="form-control" name="kullaniciadi" />
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+
+                                @Html.Label("Soyisim", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                            </p>
+                        </td>
+                        <td>
+
+                            <input type="text" value="@item.Soyisim" class="form-control" name="soyisim" />
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+                            </p>
+                        </td>
+                        <td>
+                            <input type="text" value="@item.Email" class="form-control" name="email" />
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </p>
+                        </td>
+                        <td>
+                            <input type="text" value="@item.Aciklama" class="form-control" name="aciklama" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn-outline-info" type="submit" name="DetailsUye" onclick="location.href='Uye/PostEditUye?id=@item.ID&isim=@item.isim&kullaniciadi=@item.KullaniciAdi&soyisim=@item.Soyisim&email=@item.Email&aciklama=@item.Aciklama'">Değiştir</button>
+                        </td>
+                    </tr>
+
+                </table>
 
             }
-        }
+            }
 
-        @*//modal*@
-        @* !!!! buraya modal koyacaksın!!!!!*@
+            @*//modal*@
+            @* !!!! buraya modal koyacaksın!!!!!*@
 
-        <div class="col-md-offset-2 col-md-10">
-            <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Rol Değiştir</button>
-        </div>
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="form-group">
-
-                            <form id="tag-form" class="tagForm" method="post">
-                                @foreach (var item in Model)
-                                {
-                                    @Html.Label("Kullanıcı Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" name="@Html.Name(item.isim)">
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.Label("Şifre:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" name="@Html.Name(item.Sifre)">
-
-                                        </div>
-                                    </div>
-                                }
-                            </form>
+            <div class="col-md-offset-2 col-md-10" align="center">
+                <button class="btn-outline-warning" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Rol Değiştir</button>
+            </div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                            <button type="button" class="btn btn-primary" id="btn-editrole">Yazar Ekle</button>
+                        <div class="modal-body">
+                            <div class="form-group">
+
+                                <form id="tag-form" class="tagForm" method="post">
+                                    @foreach (var item in Model)
+                                    {
+                                        @Html.Label("Kullanıcı Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" id="kullaniciadi" name="kullaniciadi">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Şifre:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <input type="password" class="form-control" id="sifre" name="sifre">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Rol:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+
+                                                <select class="form-control role" id="ad" name=role>
+                                                    <option value="Uye">Üye</option>
+                                                    <option value="Admin">Admin</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    }
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                <button type="button" class="btn btn-primary" id="btn-editrole">Doğrula</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+       
+        <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("UyeAnasayfasi", "Security")'">AnaSayfaya Dön</button>
+
     </div>
-
-
-
-    <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("UyeAnasayfasi", "Security")'">AnaSayfaya Dön</button>
-</div>
 
 
 @section Scripts
 {
     <script type="text/javascript">
         $(document).ready(function () {
-
+            
+          
             $("#btn-editrole").click(function () {
- "aciklama":  $(this).data("aciklama"), "roleid":  $(this).data("roleid") } ),
-                   //data: { "id": id, "isim": isim, "kullaniciadi": kullaniciadi, "soyisim": soyisim, "aciklama": aciklama, "roleid": roleid },                alert("butona tıklandı");
-                    $.ajax({
-                            url: '@Url.Action("AdminKontrol","Uye")',
-                            method: "POST",
-                            dataType:"json",
-                            data: $('form.tagForm').serialize(),
-                        success: function (sayfa) {
-                            if (sayfa.text == 1) {
 
-                                $(location).attr('href', '@Url.Action("RolEdit","Uye")');
+                
+                   var selectedRole = $(this).children("option:selected").val();
 
-                            }
-                            else {
-                                alert("Yanlış Kullanıcı Adı ve Şifre");
-                            }
+                
+            
+            //    var kullaniciadi = document.getElementById('#kullaniciadi');
+            //var sifre = document.getElementById('#sifre');
+
+                //"aciklama":  $(this).data("aciklama"), "roleid":  $(this).data("roleid") } ),
+                //data: { "id": id, "isim": isim, "kullaniciadi": kullaniciadi, "soyisim": soyisim, "aciklama": aciklama, "roleid": roleid },                alert("butona tıklandı");
+                $.ajax({
+
+                    url: `/Admin/RoleEdit?kullaniciadi=${kullaniciadi}&sifre=${sifre}&role=${selectedRole}`,
+                    method: "post",
+                    dataType: "json",
+                    data: $('form.tagForm').serialize(),
+                    success: function (sayfa) {
+                        if (sayfa.text == 1) {
 
 
+                            // $(".myTable").append(
+                            //    "<tr>" +
+                            //    "<td><p> Role: </p></td>" +
+                            //    "<td> <input type='text' value='role' name='role'</td>" +
+                            //    "</tr>"
+                            //);
+                            $(location).attr('href', '@Url.Action("EditUye","Uye")');
 
-                        },
-                        error: function () {
+
+                        }
+                        else if (sayfa.text == 2) {
+                            alert("Yanlış Kullanıcı Adı ve Şifre");
+                        }
+                        else {
                             alert("Hata");
                         }
 
-            });
-        }
+                    },
+                    error: function () {
+                        alert("Hata");
+                    }
+
+                });//ajax sonu
+            });//click sonu
+        });
+
     </script>
 
 }
