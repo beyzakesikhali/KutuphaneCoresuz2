@@ -1582,6 +1582,7 @@ C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.dll
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.pdb
 C:\Users\KOBI BEYZA\source\repos\Kutuphane27\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache
+C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache
 C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Microsoft.DiaSymReader.Native.x86.dll
 C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\bin\Microsoft.DiaSymReader.Native.amd64.dll
 C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\bin\KutuphaneCoresuz.dll.config
@@ -1846,4 +1847,3 @@ C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\b
 C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csproj.CopyComplete
 C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.dll
 C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.pdb
-C:\Users\Administrator\Desktop\Yeni klasör\KutuphaneCoresuz2\KutuphaneCoresuz\obj\Debug\KutuphaneCoresuz.csprojAssemblyReference.cache

@@ -9,7 +9,12 @@
 
 @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 
-
+@if (TempData["kitapyok"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["null"])');
+    </script>
+}
 <span class="border-dark border-bottom">
     <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
 </span>
@@ -36,7 +41,7 @@
             <th>
                 @Html.Label("Kitap Durum")
             </th>
-           
+
         </tr>
     </thead>
     <tbody>
@@ -47,28 +52,28 @@
             foreach (var item in Model)
             {
 
-        <tr>
-            <td>
-                @item.KitapAdi
-            </td>
-            <td>
-                @item.YazarAdi
-            </td>
-            <td>
-                @item.YazarSoyadi
-            </td>
-            <td>
-                @item.yayinci
-            </td>
-            <td>
-                @item.Aciklama
-            </td>
-            <td>
-                @item.KitapDurum
-            </td>
-         
-          
-        </tr>
+                <tr>
+                    <td>
+                        @item.KitapAdi
+                    </td>
+                    <td>
+                        @item.YazarAdi
+                    </td>
+                    <td>
+                        @item.YazarSoyadi
+                    </td>
+                    <td>
+                        @item.yayinci
+                    </td>
+                    <td>
+                        @item.Aciklama
+                    </td>
+                    <td>
+                        @item.KitapDurum
+                    </td>
+
+
+                </tr>
 
             }
 

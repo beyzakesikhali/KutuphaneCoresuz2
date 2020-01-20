@@ -338,6 +338,7 @@ namespace KutuphaneCoresuz.Controllers
                 throw;
             }
 
+                    return Json(new { ok = basarliMi, text = sonuc });
 
         }
 
@@ -356,6 +357,7 @@ namespace KutuphaneCoresuz.Controllers
 
                 }
             }
+            return View("HATA");
 
             ViewBag["yazaryok"] = "Hiç Yazar Yok";
             return View();
@@ -491,8 +493,11 @@ namespace KutuphaneCoresuz.Controllers
                 throw;
             }
 
+        //delete delete delete delete YAZAR****** DELETE YAZAR*****
 
         }
+
+      
 
         [AllowAnonymous]
 

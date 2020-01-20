@@ -53,6 +53,10 @@ namespace KutuphaneCoresuz.Controllers
                     return View(model);
                 }
             }
+            else
+            {
+                TempData["kitapyok2"] = "Hiç Kİtap Yok";
+            }
 
 
             return View();
@@ -346,7 +350,7 @@ namespace KutuphaneCoresuz.Controllers
        
         // GET: Kitaps/Edit/5
         [AllowAnonymous]
-        public ActionResult EditKitap(int? id)
+        public ActionResult EditKitap(int? id,int uyeId)
         {
 
             if (id == null)

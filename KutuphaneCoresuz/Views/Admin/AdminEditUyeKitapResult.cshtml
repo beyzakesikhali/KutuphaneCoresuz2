@@ -15,74 +15,121 @@
 
     @foreach (var item in Model)
     {
-        using (Html.BeginForm("AdminEditUyeKitapResult", "Admin",new { id=item.id}, FormMethod.Post))
+
+        using (Html.BeginForm("AdminEditUyeKitapResult", "Admin", new { id = item.id }, FormMethod.Post))
         {
-    <div class="form-horizontal">
-        <h2>Kitap Duzenle</h2>
-        <br />
-        <hr />
-        <div class="col-md-10">
-            <input type="hidden" id="id" name="id" class="form-control" value="@item.id"   />
-        </div>
-        <div class="form-group">
-            @Html.Label("Kullanıcı Adı:", new { @class = "control-label col-md-3" })
-            <div class="col-md-10">
-
-                <div class="form-group">
-                    <select class="form-control" id="kullaniciAd"  name="kullaniciadi">
-                        <option>Kullancı Adı Seçiniz</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Hangi Kitabı Düzenlenecek", new { @class = "control-label col-md-3" })
-            <div class="col-md-10">
-
-                <div class="form-group">
-                    <select class="form-control" id="uyeAd"  name="uyeisim">
-                        <option>Uye Adı Seçiniz</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Kitap Adı Seçiniz", new { @class = "control-label col-md-3" })
-            <div class="col-md-10">
-
-                <div class="form-group">
-                    <select class="form-control" id="kitapadi" name="kitapadi">
-                        <option>Kitap Adı Seçiniz</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Kitap Durum:", htmlAttributes: new { @class = "control-label col-md-2" })
-             
+            <div class="form-horizontal">
+                <h2>Kitap Duzenle</h2>
+                <br />
+                <hr />
                 <div class="col-md-10">
 
-                    <select class="form-control role" id="kitapdurum" name=role>
-                        <option value="Uye">Üyede</option>
-                        <option value="kutuphane">Kütüphanede</option>
-                    </select>
+                    <input type="hidden" id="id" name="id" class="form-control" value="@item.id" />
                 </div>
                 <div class="form-group">
-                    <button type="submit" value="Kaydet" class="btn btn-danger btn-kitapduzenle" style="width:inherit" id="btn-degistir">Değiştir</button>
+                    @Html.Label("Kullanıcı Adı:", new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
 
+                        <div class="form-group">
+                            <select class="form-control" id="kullaniciAd" name="kullaniciadi">
+
+                                <input type="hidden" name="id" class="form-control" value="@item.id" />
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("      ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-10">
+
+                                <div class="form-group">
+                                    <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="kullaniciadi">
+
+                                        <option>Kullancı Adı Seçiniz</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Hangi Kitabı Düzenlenecek", new { @class = "control-label col-md-3" })
+                            <div class="col-md-10">
+
+                                <div class="form-group">
+                                    <select class="form-control" id="uyeAd" name="uyeisim">
+
+                                        @Html.Label("      ", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-10">
+
+                                            <div class="form-group">
+                                                <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="uyeisim">
+
+                                                    <option>Uye Adı Seçiniz</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.Label("Kitap Adı Seçiniz", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-10">
+
+                                        <div class="form-group">
+                                            <select class="form-control" id="kitapadi" name="kitapadi">
+                                                <option>Kitap Adı Seçiniz</option>
+
+                                                @Html.Label("      ", new { @class = "control-label col-md-3" })
+                                                <div class="col-md-10">
+
+                                                    <div class="form-group">
+                                                        <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="kitapadi">
+                                                            <option>Uye Adı Seçiniz</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    @Html.Label("Kitap Durum:", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                                    <div class="col-md-10">
+
+                                                        <select class="form-control role" id="kitapdurum" name=role>
+                                                            <option value="Uye">Üyede</option>
+                                                            <option value="kutuphane">Kütüphanede</option>
+
+                                                            @Html.Label("Rol:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-10">
+
+                                                                <select class="form-control role" id="ad" name=role>
+                                                                    <option value="Uye">Üye</option>
+                                                                    <option value="Admin">Admin</option>
+
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="submit" value="Kaydet" class="btn btn-danger btn-kitapduzenle" style="width:inherit" id="btn-degistir">Değiştir</button>
+
+                                                            </div>
+
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            </div></div>
-            }
-       }
+     
+    }
+}
 
 
 
 
-            @section Scripts
+    @section Scripts
 {
-                <script type="text/javascript">
+        <script type="text/javascript">
+
                     function GetNames() {
 
                         $.ajax({
@@ -103,7 +150,135 @@
 
                         });
                     }
-                  
+
+
+        $(document).ready(function () {
+            $(".btn-kitapduzenle").click(function () {
+                 var selectedRole = $(this).children("option:selected").val();
+                //var id = $(this).data("id");
+                //  var kitapadi = $(this).data("kitapadi").value();
+                ////var yazaradi = $(this).data("yazaradi").value();
+                ////var yazarsoyadi = $(this).data("yazarsoyadi").val();
+                // var yazaradisoyadi = document.getElementById("#ad");
+                //var yayinci = $(this).data("yayinci").val();
+                //var aciklama = $(this).data("aciklama").val();
+                //var yazaryorum = $(this).data("yazaryorum").val();
+                //var kullaniciadi = $(this).data("kullaniciadi").val();
+
+                $.ajax({
+                    url:`/Admin/AdminEditUyeKitapJson?id=${id}`,
+                    @*url:'@Url.Action("EditYazarId","Yazar")',
+
+                        &kullaniciadi=${kullaniciadi}&kitapadi=${kitapadi}&yazaradi=${yazaradisoyadi}&yayinci=${yayinci}&aciklama=${aciklama}&yazaryorum=${yazaryorum}*@
+                    method: "post",
+                    dataType: "json",
+                    // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (sayfa) {
+
+                          // alert(sayfa.text);
+                                if (sayfa.text == 0) {
+
+                                    window.location.href = '@Url.Action("Login","Security")';
+                                }
+                                else if (sayfa.text == 1)
+                                {
+
+                                        GetNames();
+
+
+                                }
+                                        else if (sayfa.text == 2) {
+                                    window.location.href = '@Url.Action("AdminEditUyeKitapResult","Admin")';
+                                        }
+                            },
+                            error: function() {
+                                alert('Error');
+                            }
+                        });
+                        return false;
+
+
+                    }, complete: function () {
+
+                    }
+                });
+            });//btn click sonu
+
+
+             GetNames();
+
+
+            var btn = document.getElementById("#btn-yazarekle");
+            var modal = document.getElementById("#mymodal");
+            var ad = document.getElementById("#ad");
+                $("#btn-yazarekle").click(function()
+                {
+                    //alert("butona tıklandı");
+
+                         $.ajax({
+                            url: '@Url.Action("CreateYazar","Yazar")',
+                            method: "POST",
+                            dataType:"json",
+                            data: $('form.tagForm').serialize(),
+                             success: function (sayfa) {
+
+                                 //alert(sayfa.text);
+                                if (sayfa.text == 0) {
+
+                                    window.location.href = '@Url.Action("Login","Security")';
+                                }
+                                else if (sayfa.text == 1)
+                                {
+                                    $("#mymodal").modal('hide');
+
+                                        GetNames();
+
+
+                                }
+                                        else if (sayfa.text == 2) {
+                                    window.location.href = '@Url.Action("CreateYazarAction","Yazar")';
+                                        }
+                            },
+                            error: function() {
+                                alert('Error');
+                            }
+                        });
+                        return false;
+
+                });
+
+              modal.on('hidden', function ()
+            {
+                GetNames();
+                ad.change(function(){
+                    window.location.reload(true);
+                });
+
+
+
+            });
+        });//document.ready
+        function GetNames() {
+
+            $.ajax({
+                url: `/Kitap/AdSoyad?id=0`,
+                method: "post",
+                dataType: "json",
+                success: function (data) {
+
+                    $.each(data.text, function (key, yazarDetaylari) {
+                        $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                        //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+
+                    });
+                },
+                complete: function () {
+
+                }
+            });
+            }
+                  }
+
  function GetUyeNames()
  {
     // alert("fonksiyon");
@@ -136,7 +311,11 @@
                     success: function (data) {
 
                         $.each(data.text, function (key, uyeDetaylari) {
+
                             $("#kullaniciAd").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
+                            $("#uyeAd").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
                             //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
 
                         });
@@ -149,18 +328,28 @@
 
                     function GetKitapAdi(id) {
                        // alert("kitap");
-                        
+
                       // id = document.getElementById("#id").val();
                        // alert($("#id").val());
                 // alert("fonksiyon");
                 $.ajax({
                     url: `/Admin/UyeKitapJson?id=${id}`,
+
+             function GetKitapAdi() {
+                // alert("fonksiyon");
+                $.ajax({
+                    url: `/Admin/UyeKitapJson?id=0`,
+
                     method: "post",
                     dataType: "json",
                     success: function (data) {
 
                         $.each(data.text, function (key, uyeDetaylari) {
+
                             $("#kitapadi").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
+                            $("#uyeAd").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
                             //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
 
                         });
@@ -170,6 +359,7 @@
                     }
                 });//ajax sonu
             }
+
 
                     $(document).ready(function () {
                         GetNames();
@@ -183,9 +373,9 @@
 
                         });
                     });
-          
-                    
 
 
-                </script>
-            }
+
+
+        </script>
+    }

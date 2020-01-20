@@ -54,6 +54,17 @@
                         <li><a href="@Url.Action("IndexKitap","Kitap")">Tüm Kitaplar</a></li>
 
                     </ul>
+                <li class="menu-has-children">
+                    @Html.ActionLink("Sil", "", "")
+                    <ul>
+                        <li><a href="#"></a></li>
+                        <li><a href=@Url.Action("IndexYazar","Yazar")> Sistemden Yazar Sil</a></li>
+                        <li><a href="@Url.Action("IndexKitap","Kitap")">Sistemden Kitap Sil</a></li>
+                        <li><a href="@Url.Action("AdminDeleteUyeResult","Admin")">Sistemden Uye Sil</a></li>
+                        <li><a href="@Url.Action("IndexYazar","Yazar")">Tüm Yazarlar</a></li>
+                        <li><a href="@Url.Action("IndexKitap","Kitap")">Tüm Kitaplar</a></li>
+
+                    </ul>
 
                 </li>
                 <li class="menu-has-children">

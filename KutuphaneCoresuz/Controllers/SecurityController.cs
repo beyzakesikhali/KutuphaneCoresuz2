@@ -105,7 +105,7 @@ namespace KutuphaneCoresuz.Controllers
             int gelenRole = Convert.ToInt32(Role.Admin);
             if (mevcut == null)
             {
-                ViewBag.Null("Kayıtlı Değilsiniz");
+                TempData["null"]="Kayıtlı Değilsiniz";
                 return View();
             }
 
@@ -128,7 +128,7 @@ namespace KutuphaneCoresuz.Controllers
                     }
                     else
                     {
-                        ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
+                        TempData["LoginError"] = "hatalı kullanıcı adı veya şifre";
 
                     }
                 }
@@ -202,6 +202,10 @@ namespace KutuphaneCoresuz.Controllers
                 if (model != null)
                 {
                     return View(model);
+                }
+                else
+                {
+                    TempData["kitapyok"] = "Hiç Kitabınız Yok";
                 }
             }
 
