@@ -53,6 +53,10 @@ namespace KutuphaneCoresuz.Controllers
                     return View(model);
                 }
             }
+            else
+            {
+                TempData["kitapyok2"] = "Hiç Kİtap Yok";
+            }
 
 
             return View();
@@ -372,10 +376,17 @@ namespace KutuphaneCoresuz.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult EditKitap(int? id, string kitapadi,int yazarId, string yayinci, string aciklama,string yazaryorum )
+        public ActionResult EditKitap(int? id, string kitapadi,string yazaradisoyadi, string yayinci, string aciklama,string yazaryorum )
         {
-           
-            var yazarResult = db.Yazarlar.Where(y => y.ID == yazarId).FirstOrDefault();
+            //string[] yazaradi = yazaradisoyadi.Split(' ');
+            //string isim;
+            //string soyisim;
+            //int sayi = yazaradi.Count();
+            //soyisim = yazaradi[yazaradi.Count()];
+            //isim = yazaradi[yazaradi.Count()-soyisim.Count()];
+            int yazarid = Convert.ToInt32(yazaradisoyadi);
+            
+            var yazarResult = db.Yazarlar.Where(y => y.ID == yazarid).FirstOrDefault();
             Yazar gelenYazar = new Yazar();
            
             if(id==0)
@@ -391,7 +402,7 @@ namespace KutuphaneCoresuz.Controllers
             if (kitapadi != null)
             {
 
-                if (yazarResult== null)
+                if (yazarResult!= null)
                 {
                     if (ModelState.IsValid)
                     {
@@ -400,7 +411,7 @@ namespace KutuphaneCoresuz.Controllers
                         kitap.Isim = kitapadi;
                         kitap.Yayinci = yayinci;
                         kitap.Aciklama = aciklama;
-                        kitap.YazarID = yazarId;
+                        kitap.YazarID = yazarResult.ID;
                         kitap.Yazar.Isim = yazarResult.Isim;
                         kitap.Yazar.Soyisim = yazarResult.Soyisim;
                         kitap.Yazar.Yorum = yazaryorum;
@@ -457,12 +468,12 @@ namespace KutuphaneCoresuz.Controllers
                     return Json(new { ok = basarliMi, text = sonuc });
                 }
                 //sonuc = "EditUye";
-                var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+                var kitapResult = db.Kitaplar.Where(u => u.ID == id).FirstOrDefault();
 
-                if (yazarResult != null)
+                if (kitapResult != null)
                 {
                     sonuc = "deleteKitap";
-                    model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Soyisim = yazarResult.Soyisim, Yorum = yazarResult.Yorum });
+                  //  model.Add(new Kitap() { ID = kitapResult.ID, Isim = kitapResult.Isim, Yayinci=kitapResult.Yayinci, Aciklama = kitapResult.Aciklama });
                     //return View(model);
 
                     return Json(new { ok = basarliMi, text = sonuc });
@@ -490,6 +501,8 @@ namespace KutuphaneCoresuz.Controllers
             string yazarAdi = "";
             string yazarSoyadi = "";
             string yazarYorum = "";
+            var kitapUyeyeAitMi = db.UyeKitap.Where(x => x.KitapID == id).FirstOrDefault();
+            
             string mevcutKullanici = HttpContext.Session["KullaniciAdi"].ToString();
             if (mevcutKullanici == null)
             {

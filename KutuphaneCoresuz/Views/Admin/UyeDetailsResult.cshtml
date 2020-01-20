@@ -8,14 +8,24 @@
 }
 
 @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+@*<div style="font-family:fantasy; color:#01579B; padding-left:20px">
+        <h2> Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h2>
 
+    </div>*@
+<style type="text/css">
+    select option {
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    }
 
-<span class="border-dark border-bottom">
-    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
-</span>
+        select option[value="1"] {
+            color: red;
+        }
+</style>
 <h3 align="center">Üye Detay</h3>
 
-<table class="table-responsive" align="center" style="width:70%; height:750px" cellspacing="0" cellpadding="0">
+<table class="table-responsive" align="center" style="width:85%; height:750px" cellspacing="0" cellpadding="0">
     <thead>
         <tr>
             <th>
@@ -70,7 +80,7 @@
 
         @if (Model != null)
         {
-            
+
             foreach (var item in Model)
             {
 
@@ -97,20 +107,30 @@
             </td>
             <td>
 
-                @item.KitapDurum
-            </td>
-            <td>
-                @item.KitapAdi
-            </td>
-            <td>
-                @item.yayinci
-            </td>
-            <td>
-                @item.YazarAdi
-            </td>
-            <td>
-                @item.YazarSoyadi
-            </td>
+                        <select class="form-control" id="kitapdurum" name="kitapdurum">
+                            <option value="1"> @item.KitapDurum</option>
+                            @if (item.KitapDurum == "Üyede")
+                            {
+                                <option>Kütüphanede</option>
+                            }
+                            else
+                            {
+                                <option>Üyede</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        @item.KitapAdi
+                    </td>
+                    <td>
+                        @item.yayinci
+                    </td>
+                    <td>
+                        @item.YazarAdi
+                    </td>
+                    <td>
+                        @item.YazarSoyadi
+                    </td>
 
             <td>
                 @item.YazarYorum
@@ -131,6 +151,11 @@
 
         </tr>
 
+                    </td>
+                </tr>
+
+
+
             }
 
         }
@@ -146,12 +171,20 @@
 @section Scripts
 {
     <script type="text/javascript">
+
         $(document).ready(function () {
             $(".btn-duzenle").click(function () {
                 alert("butona tıklandı");
                 var id = $(this).data("id");
-               alert(id);
-               
+                var kitapadi = $(this).data("kitapadi");
+              //  var singleValues = $("#kitapdurum").val();
+                var kitapdurum = $("#kitapdurum").val();
+                alert(kitapdurum);
+
+                //var kitapdurum = $(this).data("option:selected");
+                //var kitapdurum  = $(this).data("kitapdurum");
+                alert(id);
+
                 //alert(isim);}&kullaniciadi=${kullaniciadi}&uyeisim=${uyeisim}&kitapadi=${kitapadi}&kitapdurum=${kitapdurum}
                 //var kullaniciadi = $(this).data("kullaniciadi").val();
 
@@ -160,43 +193,95 @@
                 //var kitapdurum = $(this).data("kitapdurum").val();
 
                 $.ajax({
-                   url: `/Admin/AdminEditUyeKitapJson?id=${id}`,
+                    url: `/Admin/AdminEditUyeKitapJson?id=${id}&kitapadi=${kitapadi}&kitapdurum=${kitapdurum}`,
                     @*url:'@Url.Action("EditYazarId","Yazar")',*@
                     method: "post",
                     dataType: "json",
-                   // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
                     success: function (data) {
-                         if (data.text == "login") {
-                                window.location.href = `/Security/Login`;
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
 
-                            }
-                            else if (data.text == "editKitap") {
+                        }
+                        else if (data.text == "editKitap") {
+                            window.location.reload(false);
 
-                                window.location.href = `/Admin/AdminEditUyeKitapResult?id=${id}`;
-                                //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
-                         }
-                         else if (data.text == "createkitap")
-                         {
-                             window.location.href=`/Admin/AdminAddUyeKitap?id=${id}`
-                         }
-                            else {
-                                alert("hata");
-                            }
+                            //window.location.href = `/Admin/AdminEditUyeKitapResult?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else if (data.text == "createkitap") {
+                            window.location.href = `/Admin/AdminAddUyeKitap?id=${id}`
+                        }
+                        else {
+                            alert("hata");
+                        }
 
-                            //alert("gitmelisin")
-                            //}, complete: function () {
-                            //    alert("Olmadı!")
+                        //alert("gitmelisin")
+                        //}, complete: function () {
+                        //    alert("Olmadı!")
+
+                    },
+                    complete: function () {
+                        alert("Kitap durum değiştirildi");
+
+                    }
+                });//ajax sonu
+            });//click sonu
+
+             $(".btn-kitapduzenle").click(function () {
+                alert("butona tıklandı");
+                var id = $(this).data("id");
+                //var kitapadi = $(this).data("kitapadi").val();
+                //var kitapdurum = $(this).data("kitapdurum").val();
+                //alert(id);
+
+                //alert(isim);}&kullaniciadi=${kullaniciadi}&uyeisim=${uyeisim}&kitapadi=${kitapadi}&kitapdurum=${kitapdurum}
+                //var kullaniciadi = $(this).data("kullaniciadi").val();
+
+                //var uyeisim = $(this).data("uyeisim").val();
+                //var kitapadi = $(this).data("kitapadi").val();
+                //var kitapdurum = $(this).data("kitapdurum").val();
+
+                $.ajax({
+                    url: `/Admin/AdminEditUyeKitapResultJson?id=${id}`,
+                    @*url:'@Url.Action("EditYazarId","Yazar")',*@
+                    method: "post",
+                    dataType: "json",
+                    // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (data) {
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "editUyeKitap") {
+                            window.location.reload(false);
+
+                            window.location.href = `/Admin/AdminEditUyeKitapResult?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else if (data.text == "createkitap") {
+                            window.location.href = `/Admin/AdminAddUyeKitap?id=${id}`
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                        //alert("gitmelisin")
+                        //}, complete: function () {
+                        //    alert("Olmadı!")
 
                     },
                     complete: function () {
 
                     }
-                });
-            })
+                });//ajax sonu
+            });//click sonu
 
-        });
 
-       
+        });//document sonu
+
+
+
 
     </script>
 

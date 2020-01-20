@@ -11,12 +11,15 @@ namespace KutuphaneCoresuz.Models.Data
     {
         [Key]
         public int ID { get; set; }
+        public int aktiflik { get; set; }
         public int UyeID { get; set; }
         public int KitapID { get; set; }
         [ForeignKey("UyeID")]
         public virtual Uye Uye { get; set; }
         [ForeignKey("KitapID")]
         public virtual Kitap Kitap { get; set; }
+
+        
       
     }
 }

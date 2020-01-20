@@ -66,8 +66,8 @@ namespace KutuphaneCoresuz.Controllers
         {
             //string sifre = "123456";
             //string sifrele = Crypto.HashPassword(sifre);
-            ////Uye admin = new Uye();
-            //var admin = db.Uyeler.Where(u => u.KullaniciAdi == "admin" && u.Soyisim == "kesikhalı").FirstOrDefault();
+            //Uye admin = new Uye();
+            //var admin = db.Uyeler.Where(u => u.KullaniciAdi == "admin" && u.Soyisim == "Kesikhalı").FirstOrDefault();
 
             //db.Uyeler.Add(new Uye
             //{
@@ -76,9 +76,10 @@ namespace KutuphaneCoresuz.Controllers
             //    Soyisim = "Kesikhalı",
             //    Sifre = Crypto.HashPassword("123456789"),
             //    RoleId = 1
-            //});
 
-            //db.Uyeler.Remove(admin);
+            //});
+            //admin.aktiflik = 1;
+            //db.Entry(admin).State=EntityState.Modified;
             //db.SaveChanges();
             //aktiflikDuzenle();
             return View();

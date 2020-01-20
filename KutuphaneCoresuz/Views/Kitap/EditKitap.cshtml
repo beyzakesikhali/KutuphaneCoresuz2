@@ -51,6 +51,10 @@
                         <input type="text" class="form-control" name="yayinci" value="@item.yayinci" />
                     </div>
                 </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="yazaryorum" value="@item.YazarYorum" />
+                    </div>
+                </div>
                 <div class="form-group">
                     @Html.Label("Yazar Yorum", "", htmlAttributes: new { @class = "control-label col-md-2" })
 
@@ -81,61 +85,12 @@
     }
 
 
-    <div class="col-md-offset-2 col-md-10" style="position:absolute; right:900px; top:260px; width:50px;">
-        <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
-    </div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <form id="tag-form" class="tagForm" method="post">
-                            <div class="form-group">
-                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazaradi">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazarsoyadi">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazaryorum">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                    <button type="button" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 
     @section Scripts
 {
         <script type="text/javascript">
-        $(document).ready(function () {
+            $(document).ready(function () {
+                GetNames();
             $(".btn-kitapduzenle").click(function () {
                 var id = $(this).data("id");
                   var kitapadi = $(this).data("kitapadi").value();
@@ -213,7 +168,7 @@
 
 
 
-            });
+            });//modal sonu
         });//document.ready
         function GetNames() {
 
@@ -234,29 +189,8 @@
                 }
             });
             }
-                  }
- function GetUyeNames()
- {
-    // alert("fonksiyon");
-        $.ajax({
-         url: `/Admin/UyeAdSoyad?id=0`,
-        method: "post",
-        dataType: "json",
-        success: function (data)
-            {
-
-                $.each(data.text, function (key, uyeDetaylari) {
-                $("#uyeAd").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
-                //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
-
-            });
-            },
-            complete: function () {
-
-            }
-       });//ajax sonu
-
-
+                  
+ 
 
 
         </script>

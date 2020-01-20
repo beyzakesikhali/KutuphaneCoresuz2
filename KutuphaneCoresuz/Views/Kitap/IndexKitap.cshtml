@@ -6,7 +6,7 @@
     ViewBag.Title = "anasayfa";
 
 }
-@if (Context.Session["KullaniciAdi"].ToString().Equals("admin")==true)
+@if (Context.Session["KullaniciAdi"].ToString().Equals("admin") == true)
 {
     @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
@@ -16,6 +16,12 @@ else
     @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 }
 
+@if (TempData["kitapyok2"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["kitapyok2"])');
+    </script>
+}
 
 
 <span class="border-dark border-bottom">
@@ -47,7 +53,7 @@ else
                     İşlemler
                 </th>
             }
-            </tr>
+        </tr>
     </thead>
     <tbody>
 
@@ -86,9 +92,9 @@ else
 
                         }
                     </td>
-                       
 
-                    
+
+
                 </tr>
             }
         }
@@ -100,12 +106,12 @@ else
     {
     <script type="text/javascript">
         $(document).ready(function () {
-          //  alert("js");
+            //  alert("js");
             //btnSil kodları
             //
             //     //
             $(".btn-kitapsil").click(function () {
-               // alert("butona basıldı");
+                // alert("butona basıldı");
                 var id = $(this).data("id");
                 alert(id);
                 $.ajax({
@@ -114,7 +120,7 @@ else
                     method: "post",
                     dataType: "json",
                     success: function (data) {
-                      //  alert(data.text);
+                        //  alert(data.text);
                         if (data.text == "login") {
                             window.location.href = `/Security/Login`;
 
@@ -128,16 +134,16 @@ else
                             alert("hata");
                         }
 
-                       // alert("gitmelisin")
+                        // alert("gitmelisin")
 
                     }//success sonu
                 });//  alert("Ajax sonu");
 
             });//btn.click sonu
 
-            alert("nevar");
+            //  alert("nevar");
             $(".btn-kitapduzenle").click(function () {
-               // alert("butona basıldı");
+                // alert("butona basıldı");
                 var id = $(this).data("id");
                 //var kitapadi = $(this).data("kitapadi");
                 //var yazaradi = $(this).data("yazaradi");
@@ -146,14 +152,14 @@ else
                 //var aciklama = $(this).data("aciklama");
                 //var yazaryorum = $(this).data("yazaryorum");
 
-               // alert(id);
+                // alert(id);
                 $.ajax({
                     url: `/Kitap/EditKitapJson?id=${id}`,
                     //data: formData,
                     method: "post",
                     dataType: "json",
                     success: function (data) {
-                      //  alert(data.text);
+                        //  alert(data.text);
                         if (data.text == "login") {
                             window.location.href = `/Security/Login`;
 
@@ -161,6 +167,7 @@ else
                         else if (data.text == "editKitap") {
 
                             window.location.href = `/Kitap/EditKitap?id=${id}`;
+                            alert("gitti");
                             //&kitapisim=${kitapadi}&yazarisim=${yazaradi}&yazarsoyisim=${yazarsoyadi}&yayinci=${yayinci}&aciklama=${aciklama}&yazaryorum=${yazaryorum}
                             //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
                         }
@@ -168,7 +175,7 @@ else
                             alert("hata");
                         }
 
-                       // alert("gitmelisin")
+                        // alert("gitmelisin")
 
                     }//success sonu
                 });//  alert("Ajax sonu");

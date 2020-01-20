@@ -15,73 +15,143 @@
 
     @foreach (var item in Model)
     {
-        using (Html.BeginForm("EditKitap", "Kitap", FormMethod.Post))
+
+        using (Html.BeginForm("AdminEditUyeKitapResult", "Admin", new { id = item.id }, FormMethod.Post))
         {
-    <div class="form-horizontal">
-        <h2>Kitap Duzenle</h2>
-        <br />
-        <hr />
-        <div class="col-md-10">
-            <input type="hidden" name="id" class="form-control" value="@item.id"   />
-        </div>
-        <div class="form-group">
-            @Html.Label("      ", new { @class = "control-label col-md-3" })
-            <div class="col-md-10">
-
-                <div class="form-group">
-                    <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="kullaniciadi">
-                        <option>Kullancı Adı Seçiniz</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("      ", new { @class = "control-label col-md-3" })
-            <div class="col-md-10">
-
-                <div class="form-group">
-                    <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="uyeisim">
-                        <option>Uye Adı Seçiniz</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("      ", new { @class = "control-label col-md-3" })
-            <div class="col-md-10">
-
-                <div class="form-group">
-                    <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="kitapadi">
-                        <option>Uye Adı Seçiniz</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Rol:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-horizontal">
+                <h2>Kitap Duzenle</h2>
+                <br />
+                <hr />
                 <div class="col-md-10">
 
-                    <select class="form-control role" id="ad" name=role>
-                        <option value="Uye">Üye</option>
-                        <option value="Admin">Admin</option>
-                    </select>
+                    <input type="hidden" id="id" name="id" class="form-control" value="@item.id" />
                 </div>
                 <div class="form-group">
-                    <button type="submit" value="Kaydet" class="btn btn-danger btn-kitapduzenle" style="width:inherit" id="btn-degistir">Değiştir</button>
+                    @Html.Label("Kullanıcı Adı:", new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
 
+                        <div class="form-group">
+                            <select class="form-control" id="kullaniciAd" name="kullaniciadi">
+
+                                <input type="hidden" name="id" class="form-control" value="@item.id" />
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("      ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-10">
+
+                                <div class="form-group">
+                                    <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="kullaniciadi">
+
+                                        <option>Kullancı Adı Seçiniz</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Hangi Kitabı Düzenlenecek", new { @class = "control-label col-md-3" })
+                            <div class="col-md-10">
+
+                                <div class="form-group">
+                                    <select class="form-control" id="uyeAd" name="uyeisim">
+
+                                        @Html.Label("      ", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-10">
+
+                                            <div class="form-group">
+                                                <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="uyeisim">
+
+                                                    <option>Uye Adı Seçiniz</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.Label("Kitap Adı Seçiniz", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-10">
+
+                                        <div class="form-group">
+                                            <select class="form-control" id="kitapadi" name="kitapadi">
+                                                <option>Kitap Adı Seçiniz</option>
+
+                                                @Html.Label("      ", new { @class = "control-label col-md-3" })
+                                                <div class="col-md-10">
+
+                                                    <div class="form-group">
+                                                        <select class="form-control" id="uyeAd" style="width:200px; position:absolute; left:660px; bottom:3px" name="kitapadi">
+                                                            <option>Uye Adı Seçiniz</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    @Html.Label("Kitap Durum:", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                                    <div class="col-md-10">
+
+                                                        <select class="form-control role" id="kitapdurum" name=role>
+                                                            <option value="Uye">Üyede</option>
+                                                            <option value="kutuphane">Kütüphanede</option>
+
+                                                            @Html.Label("Rol:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                            <div class="col-md-10">
+
+                                                                <select class="form-control role" id="ad" name=role>
+                                                                    <option value="Uye">Üye</option>
+                                                                    <option value="Admin">Admin</option>
+
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="submit" value="Kaydet" class="btn btn-danger btn-kitapduzenle" style="width:inherit" id="btn-degistir">Değiştir</button>
+
+                                                            </div>
+
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            </div></div>
-            }
-       }
+     
+    }
+}
 
 
 
 
-            @section Scripts
+    @section Scripts
 {
-                <script type="text/javascript">
+        <script type="text/javascript">
+
+                    function GetNames() {
+
+                        $.ajax({
+                            url: `/Kitap/AdSoyad?id=0`,
+                            method: "post",
+                            dataType: "json",
+                            success: function (data) {
+
+                                $.each(data.text, function (key, yazarDetaylari) {
+                                    $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                                    //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+
+                                });
+                            },
+                            complete: function () {
+
+                            }
+
+                        });
+                    }
+
+
         $(document).ready(function () {
             $(".btn-kitapduzenle").click(function () {
                  var selectedRole = $(this).children("option:selected").val();
@@ -208,6 +278,7 @@
             });
             }
                   }
+
  function GetUyeNames()
  {
     // alert("fonksiyon");
@@ -240,7 +311,11 @@
                     success: function (data) {
 
                         $.each(data.text, function (key, uyeDetaylari) {
+
+                            $("#kullaniciAd").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
                             $("#uyeAd").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
                             //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
 
                         });
@@ -250,17 +325,31 @@
                     }
                 });//ajax sonu
             }
+
+                    function GetKitapAdi(id) {
+                       // alert("kitap");
+
+                      // id = document.getElementById("#id").val();
+                       // alert($("#id").val());
+                // alert("fonksiyon");
+                $.ajax({
+                    url: `/Admin/UyeKitapJson?id=${id}`,
 
              function GetKitapAdi() {
                 // alert("fonksiyon");
                 $.ajax({
                     url: `/Admin/UyeKitapJson?id=0`,
+
                     method: "post",
                     dataType: "json",
                     success: function (data) {
 
                         $.each(data.text, function (key, uyeDetaylari) {
+
+                            $("#kitapadi").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
                             $("#uyeAd").append(`<option value="${uyeDetaylari["Value"]}">${uyeDetaylari["Text"]}</option>`);
+
                             //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
 
                         });
@@ -271,5 +360,22 @@
                 });//ajax sonu
             }
 
-                </script>
-            }
+
+                    $(document).ready(function () {
+                        GetNames();
+                        GetUyeNames();
+                        GetKullaniciNames();
+                        var id = document.getElementById("#id");
+                        GetKitapAdi(id);
+
+                        $(".btn-kitapduzenle").click(function () {
+                            var selectedRole = $(this).children("option:selected").val();
+
+                        });
+                    });
+
+
+
+
+        </script>
+    }
