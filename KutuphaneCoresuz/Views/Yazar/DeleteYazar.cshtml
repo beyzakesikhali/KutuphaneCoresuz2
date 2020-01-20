@@ -1,0 +1,69 @@
+﻿@model  KutuphaneCoresuz.Models.Data.Yazar
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+
+<br />
+<br />
+
+<div id="logo" class="pull-left" >
+    <h2 align="center">Yazar Silme Sayfası</h2>
+
+
+    @using (Html.BeginForm("DeleteYazar", "Yazar",new { id=Model.ID} ,FormMethod.Post))
+    {
+
+        <table class="table" style="position:relative; left:0; width:65%; height:200px" cellspacing="0" cellpadding="0">
+
+            <tr class="dl-horizontal" align="center">
+                <td>
+                    @Html.DisplayNameFor(model => model.Isim)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Soyisim)
+
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Yorum)
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(model => model.Isim)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Soyisim)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Yorum)
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-actions no-color">
+                        <button class="btn-outline-danger" type="submit" name="sil" onclick="location.href='/Yazar/DeleteYazar?id=@Model.ID"> Sil</button>|
+                    </div>
+
+                </td>
+                <td>
+                    <div class="form-actions no-color">
+                        <button class="btn-outline-danger" type="submit" name="sil" onclick="location.href='/Yazar/EditUyeYazarId?id=@Model.ID'"> Düzenle</button>|
+                    </div>
+
+            </tr>
+
+        </table>
+
+
+
+    }
+
+</div>
+
+

@@ -1,0 +1,91 @@
+﻿@model  KutuphaneCoresuz.Models.Data.Yazar
+
+@{
+    ViewBag.Title = "Details";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+
+
+<div>
+
+    <div class="">
+        <table class="table" style="width:20%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
+
+
+            <tr>
+                <td>
+                    <p>
+
+                        @Html.Label("Yazar Adı:")
+                    </p>
+
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(m => m.Isim)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        @Html.Label("Yazar Soyadi:")
+                    </p>
+
+
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(m => m.Soyisim)
+
+
+                </td>
+
+
+            </tr>
+
+
+
+
+            <tr>
+                <td>
+                    <p>
+                        @Html.Label("Yazar Yorum:")
+                    </p>
+
+
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(m => m.Yorum)
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+
+
+                    <button class="btn btn-info" type="button" onclick="@Url.Action("UyeAnaSayfasi", "Security")"> Anasayfaya Dön</button>
+
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>

@@ -1,0 +1,282 @@
+﻿@model  KutuphaneCoresuz.Models.ModelforDB.KitapYazarAddModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create";
+
+}
+@if (Context.Session["KullaniciAdi"].ToString() == "admin")
+{
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+    @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
+}
+else
+{
+    @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
+}
+
+<br />
+<br />
+<br />
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+<div class="form-horizontal" align="center">
+    <h4>Kitap Ekle</h4>
+    <hr />
+
+    @using (Html.BeginForm("CreateKitap", "Kitap", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
+        <div class="form-group">
+            @Html.Label("Kitabın ismi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" class="form-control" name=@Html.NameFor(m => m.KitapAdi)>
+            </div>
+        </div>
+        
+            @Html.Label("Yazar Adı Seçin", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="input-group" style="width:300px; position:inherit; left:500px; top:250px">
+
+                <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" name=@Html.NameFor(m => m.YazarAdi)>
+                    <option selected>Yazar Seçin...</option>
+
+                </select>
+
+
+                <div class="input-group-append ">
+                    <button class="btn btn-outline-secondary btn-popup" type="button" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" style="width:300px" value="" class="btn btn-warning" name="dfdf" id="dfdf">Kaydet</button>
+            </div>
+        </div>
+
+
+
+    }
+
+    <button class="btn-outline-warning btn-duzenle" type="submit" onclick='@Url.Action("IndexKitap","Kitap")'>Tüm Kitaplar</button>
+    <div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px;">
+        <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
+    </div>
+    
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <form id="tag-form" class="tagForm" method="post">
+                            <div class="form-group">
+                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="yazaradi">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="yazarsoyadi">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="yazaryorum">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                <button type="submit" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+      
+        <br />
+
+
+
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        $(document).ready(function()
+        {
+            GetNames();
+
+
+            var btn = document.getElementById("#btn-yazarekle");
+            var modal = document.getElementById("#mymodal");
+            var ad = document.getElementById("#ad");
+                $("#btn-yazarekle").click(function()
+                {
+                   // alert("butona tıklandı");
+
+                         $.ajax({
+                            url: '@Url.Action("CreateYazar","Yazar")',
+                            method: "POST",
+                            dataType:"json",
+                            data: $('form.tagForm').serialize(),
+                             success: function (sayfa) {
+
+                                // alert(sayfa.text);
+                                if (sayfa.text == 0) {
+
+                                    window.location.href = '@Url.Action("Login","Security")';
+                                }
+                                else if (sayfa.text == 1)
+                                {
+                                    $("#mymodal").modal('hide');
+
+                                        GetNames();
+
+
+                                }
+                                        else if (sayfa.text == 2) {
+                                    window.location.href = '@Url.Action("CreateYazarAction","Yazar")';
+                                        }
+                            },
+                            error: function() {
+                                alert('Error');
+                            }
+                        });
+                        return false;
+
+                });
+
+              modal.on('hidden', function ()
+            {
+                GetNames();
+                ad.change(function(){
+                    window.location.reload(true);
+                });
+
+
+
+            });
+        });
+        function GetNames() {
+
+            $.ajax({
+                url: `/Kitap/AdSoyad?id=0`,
+                method: "post",
+                dataType: "json",
+                success: function (data) {
+
+                    $.each(data.text, function (key, yazarDetaylari) {
+                        $("#inputGroupSelect04").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                        //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+
+                    });
+                }, complete: function () {
+
+                }
+            });
+        }
+               @*btn.click(function showPopup(){
+                    alert("butona basıldı");
+                    $("myModal").dialog({
+                       modal: true,
+                       autoOpen: true,
+                       width: 700,
+                       height: 500,
+                       minWidth: 700,
+                       minHeight: 500,
+                       position: ["center", 200],
+                       close: GetNames(),
+                       overlay: {
+                            opacity: 0.5,
+                            background: "black"
+                       },
+                        buttons: {
+                            "Kaydet": function () {
+                                $.ajax({
+                                    url: '@Url.Action("CreateYazar","Yazar")',
+                                    method: "post",
+                                    dataType: "json",
+                                    data: { id: ID, },
+                                    success: function (sonuc) {
+                                        if (sonuc.code == 1) {
+                                            window.location.href = '@Url.Action("Login","Security")'
+                                        }
+                                        else if (sonuc.code == 2) {
+                                            window.location.href = '@Url.Action("CreateYazar","Yazar")'
+                                        }
+                                    }
+                                    , complete: function () {
+
+
+                                    }
+                                });
+
+                            },
+                            "Çık": function () {
+                                $(this).dialog("close");
+                            }
+                        }
+
+                    });
+                });
+
+            });*@
+
+
+
+           //ad.change(function () {
+           //    var yazarID = ad.val();
+           //    GetSurnames(yazarID);
+
+           //});
+
+
+
+
+
+        @*function GetSurnames(yazarID) {
+
+
+            $.ajax({
+
+                url: '@Url.Action("AdSoyad","Kitap")',
+                method: "post",
+                method: "post",
+                dataType: "json",
+                data: {id:yazarID, tip:"yazarSoyadGetir"},
+                success: function (sonuc) {
+                    $("#soyad option").remove();
+                    $("#soyad").prop("disabled", false);
+                    $.each(sonuc.text, function (index, item) {
+                            $("#soyad").append(`<option value="${item["Value"]}">${item["Text"]}</option>`);
+                        });
+                    }
+                , complete: function () {
+
+                }
+            });
+           }*@
+
+
+
+    </script>
+}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>

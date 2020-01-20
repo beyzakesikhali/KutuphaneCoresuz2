@@ -1,0 +1,121 @@
+﻿@model KutuphaneCoresuz.Models.Data.Uye
+@{
+    Layout = null;
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/cssLogin.css" rel="stylesheet" />
+@if (TempData["null"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["null"])');
+    </script>
+}
+@if (TempData["LoginError"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["LoginError"])');
+    </script>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-8 login-box">
+            <div class="col-lg-12 login-key">
+                <i class="carousel-fade" aria-hidden="true"></i>
+                @*<p class="alert-danger">@ViewBag.Error</p>*@
+            </div>
+
+            <div class="col-lg-12 login-title">
+                GİRİŞ EKRANI
+            </div>
+            <div>
+                @ViewBag.LoginError
+            </div>
+            <div class="col-lg-12 login-form">
+                <div class="col-lg-12 login-form">
+
+                    @using (Html.BeginForm("Login", "Security", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            @Html.Label("Kullanıcı Adı", "Kullanıcı Adı:", new { @class = "form-control-label" })
+
+                            @Html.TextBoxFor(model => model.KullaniciAdi, "", new { placeholder = "Kullanıcı Adınız:", @class = "form-control" })
+                        </div>
+                        <div>
+                            @Html.Label("Şifre:", "Sifreniz:", new { @class = "form-control-label" })
+                            @Html.PasswordFor(model => model.Sifre, new { placeholder = "Şifreniz:", @class = "form-control" })
+                        </div>
+                        <div>
+                            <div class="col-lg-6 login-btm login-button">
+                                <br />
+                                <button type="submit" class="btn-dark btn-outline-light" id="giris" name="kayit" style="width:100px; height:50px; position:page; ">Giriş Yap</button>
+                                @if (TempData["loginbasarili"] != null)
+                                {
+                                    <script>
+                                    alert('@Html.Raw(TempData["loginbasarili"])')
+                                    </script>
+                                }
+
+                                @if (TempData["loginbasarisiz"] != null)
+                                {
+                                    <script>
+                                    alert('@Html.Raw(TempData["loginbasarisiz"])')
+                                    </script>
+                                }
+
+
+                                @if (TempData["kayitsiz"] != null)
+                                {
+                                    <script>
+                                    alert('@Html.Raw(TempData["kayitsiz"])')
+                                    </script>
+                                }
+
+                                @*<form>*@
+                                <br />
+                                <button type="button" onclick="location.href='@Url.Action("CreateUye","Uye")'" class="btn-dark btn-outline-light" style="width:100px; height:50px; position:page; " name="giris"> Kayıt Ol</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+        @*<script type="text/javascript">
+            $(document).ready(function() {
+    console.log( "ready!" );
+});*@
+             @*$(document).ready(function() {
+                 alert("sfsd");
+                $("#giris").click(function () {
+                     if ('@TempData["loginbasarili"]' != null) 
+                    alert('@TempData["loginbasarili"]');
+
+            if ('@TempData["loginbasarisiz"]' != null)
+                    alert('@TempData["loginbasarisiz"]');
+
+                  if ('@TempData["kayitsiz"]' != null)
+                    alert('@TempData["kayitsiz"]');
+
+                });
+
+                
+            });*@
+  
+        @*</script>*@
+
+
+
+    
+
+
+
