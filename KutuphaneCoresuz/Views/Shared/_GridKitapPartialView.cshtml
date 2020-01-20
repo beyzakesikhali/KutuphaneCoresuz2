@@ -34,41 +34,54 @@
         @webgrid.GetHtml(
          columns:
                 webgrid.Columns
-                (
-                webgrid.Column(null, null, format: @<input type="hidden" name="IDHidden" value="@item.ID" />)
-                 ),
-
-        tableStyle: "webgrid",
-        mode: WebGridPagerModes.All,
-        headerStyle: "webgrid-header",
-        footerStyle: "webgrid-footer",
-        selectedRowStyle: "webgrid-selected-row",
-        rowStyle: "webgrid-row-style")
-        </ div >
-
-
-        @*//htmlAttributes: new { @id = "webgrid" },
-        //columns: webgrid.Columns(
-        //    webgrid.Column("ID","Id"),
-        //    webgrid.Column("KitapAdi", "Kitap Adi"),
-        //     webgrid.Column("YazarAdi", "Yazar Adi"),
-        //      webgrid.Column("Yazar Soyadi", "Yazar Soyadi"),
-        //     webgrid.Column("Yayinci", "Yayinci"),
-        //     webgrid.Column("Aciklama", "Aciklama"),
-        //     webgrid.Column("Yazar Yorum", "Yazar Yorum"),
-        //     webgrid.Column("Kitap Durum", "Kitap Durum")
-            webgrid.Column("KitapAdi", header: "Kitap Adı", format: @<text>@item.KitapAdi</text>, style: "NameColWidth"),
+                (webgrid.Column(null, null, format: @<input type="hidden" name="IDHidden" value="@item.ID" />),
+webgrid.Column("KitapAdi", header: "Kitap Adı", format: @<text>@item.KitapAdi</text>, style: "NameColWidth"),
 webgrid.Column("YazarAdi", header: "Yazar Adı", format: @<text>@item.YazarAdi</text>, style: "NameColWidth"),
 webgrid.Column("YazarSoyadi", header: "Yazar Soyadı", format: @<text>@item.YazarSoyadi</text>, style: "NameColWidth"),
 webgrid.Column("yayinci", header: "Yayıncı", format: @<text>@item.yayinci</text>, style: "NameColWidth"),
 webgrid.Column("Aciklama", header: "Açıklama", format: @<text>@item.Aciklama</text>, style: "NameColWidth"),
 webgrid.Column("YazarYorum", header: "Yazar Yorum", format: @<text>@item.YazarYorum</text>, style: "NameColWidth"),
-webgrid.Column("KitapDurum", header: "Kitap Durum", format:@<text>@item.KitapDurum</text>)
-
-            
-            *@
+webgrid.Column("KitapDurum", header: "Kitap Durum", format:@<text>@item.KitapDurum</text>),
+webgrid.Column(null, null, format: @<input type="hidden" name="IDHidden" value="@item.ID" />)
 
 
 
 
-        @*</div>*@
+
+
+),
+
+tableStyle: "webgrid",
+mode: WebGridPagerModes.All,
+headerStyle: "webgrid-header",
+footerStyle: "webgrid-footer",
+selectedRowStyle: "webgrid-selected-row",
+rowStyle: "webgrid-row-style")
+
+
+
+    @*//htmlAttributes: new { @id = "webgrid" },
+            //columns: webgrid.Columns(
+            //    webgrid.Column("ID","Id"),
+            //    webgrid.Column("KitapAdi", "Kitap Adi"),
+            //     webgrid.Column("YazarAdi", "Yazar Adi"),
+            //      webgrid.Column("Yazar Soyadi", "Yazar Soyadi"),
+            //     webgrid.Column("Yayinci", "Yayinci"),
+            //     webgrid.Column("Aciklama", "Aciklama"),
+            //     webgrid.Column("Yazar Yorum", "Yazar Yorum"),
+            //     webgrid.Column("Kitap Durum", "Kitap Durum")
+                webgrid.Column("KitapAdi", header: "Kitap Adı", format: @<text>@item.KitapAdi</text>, style: "NameColWidth"),
+    webgrid.Column("YazarAdi", header: "Yazar Adı", format: @<text>@item.YazarAdi</text>, style: "NameColWidth"),
+    webgrid.Column("YazarSoyadi", header: "Yazar Soyadı", format: @<text>@item.YazarSoyadi</text>, style: "NameColWidth"),
+    webgrid.Column("yayinci", header: "Yayıncı", format: @<text>@item.yayinci</text>, style: "NameColWidth"),
+    webgrid.Column("Aciklama", header: "Açıklama", format: @<text>@item.Aciklama</text>, style: "NameColWidth"),
+    webgrid.Column("YazarYorum", header: "Yazar Yorum", format: @<text>@item.YazarYorum</text>, style: "NameColWidth"),
+    webgrid.Column("KitapDurum", header: "Kitap Durum", format:@<text>@item.KitapDurum</text>)
+
+
+    *@
+
+
+
+
+    </div>

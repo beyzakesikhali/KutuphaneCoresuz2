@@ -338,7 +338,7 @@ namespace KutuphaneCoresuz.Controllers
                 throw;
             }
 
-                    return Json(new { ok = basarliMi, text = sonuc });
+                    
 
         }
 

@@ -19,7 +19,12 @@
 
         using (Html.BeginForm("DeleteKitap", "Kitap", new { id = item.Id }, FormMethod.Post))
         {
-
+            if (TempData["kitapUyede"] != null)
+            {
+                <script>
+        alert('@Html.Raw(TempData["kitapUyede"])');
+                </script>
+            }
             <table class="table" style="position:relative; left:0; width:65%; height:200px" cellspacing="0" cellpadding="0">
 
                 <tr class="dl-horizontal" align="center">
@@ -40,7 +45,7 @@
                     <td>
                         @Html.DisplayName(item.YazarYorum)
                     </td>
-                    
+
                 </tr>
                 <tr>
 
@@ -82,4 +87,4 @@
         }
 
     }
-    </div>
+</div>

@@ -35,21 +35,86 @@
                 </div>
             </div>
         </div>
+
+
         @*bu satırda kullanıcı sayfayı yüklemeden güvenlik kontrolleri yapılır ve hata mesajı gönderilir  *@
         <div class="form-group">
             @Html.Label("Kitabın ismi", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="text" class="form-control" name=@Html.NameFor(m => m.KitapAdi)>
             </div>
-        </div>
-        <div class="form-group">
+        </div> 
+        <br />
+        <br />
+        <div class="form-group" style="width:400px; position:absolute; left:750px; top:300px">
             @Html.Label("      ", new { @class = "control-label col-md-3" })
             <div class="col-md-10">
 
                 <div class="form-group">
-                    <select class="form-control" id="ad" style="width:200px; position:absolute; left:660px; bottom:3px" name=@Html.NameFor(m => m.YazarAdi)>
-                        <option>Yazar Adı Seçiniz</option>
-                    </select>
+                    @*<div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-popup" type="button" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
+
+                        </div>*@
+                    @*<div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px;">
+                            <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
+                        </div>*@
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary btn-popup" type="button" data-toggle="modal" data-target="#exampleModalCenter">Yazar EKle</button>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect03">
+                            <option>Yazar Adı Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form id="tag-form" class="tagForm" method="post">
+                                            <div class="form-group">
+                                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" name="yazaradi">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" name="yazarsoyadi">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" name="yazaryorum">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                    <button type="submit" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<select class="form-control" id="ad" style="width:200px; position:absolute; left:660px; bottom:3px" name=@Html.NameFor(m => m.YazarAdi)>
+                            <option>Yazar Adı Seçiniz</option>
+                        </select>*@
                 </div>
             </div>
         </div>
@@ -80,7 +145,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" style="width:300px" class="btn btn-warning">Kaydet</button>
+                <button type="submit" style="width:300px"  class="btn btn-warning">Kaydet</button>
             </div>
         </div>
 
@@ -91,58 +156,7 @@
     <button class="btn-outline-warning btn-uyeEkle" type="submit" onclick='@Url.Action("AddUyeAdmin","Admin")'>Uye Ekle</button>
 
 
-    <div class="input-group-append">
-        <button class="btn btn-outline-secondary btn-popup" type="button" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
 
-    </div>
-    @*<div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px;">
-            <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
-        </div>*@
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <form id="tag-form" class="tagForm" method="post">
-                            <div class="form-group">
-                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazaradi">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazarsoyadi">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazaryorum">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                    <button type="submit" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>    
 
 @section Scripts
@@ -215,7 +229,7 @@
                 success: function (data) {
 
                     $.each(data.text, function (key, yazarDetaylari) {
-                        $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                        $("#inputGroupSelect03").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
                         //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
 
                     });

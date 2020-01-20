@@ -194,14 +194,14 @@
                                 {
                                     @Html.Label("Kullanıcı Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="@Html.Name(item.isim)">
+                                        <input type="text" id="kullaniciadi" class="form-control" name="kullaniciadi)">
 
                                     </div>
 
                                     <div class="form-group">
                                         @Html.Label("Şifre:", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            <input type="password" class="form-control" name="@Html.Name(item.Sifre)">
+                                            <input type="password" id="sifre" class="form-control" name="sifre">
 
                                         </div>
                                     </div>
@@ -263,28 +263,33 @@
             var modal = document.getElementById("#mymodal");
             var ad = document.getElementById("#ad");
             $(".btn-dogrula").click(function () {
-               // alert("butona tıklandı");
+                var sifre = document.getElementById("#sifre");
+                var kullaniciadi = document.getElementById("#kullaniciadi");
+                alert("butona tıklandı");
 
                 $.ajax({
-                    url: '@Url.Action("RoleEdit","Admin")',
+                    url:`/Admin/RoleEdit?kullaniciadi=${kullaniciadi}&sifre=${sifre}`,
                     method: "POST",
                     dataType: "json",
-                    data: $('form.tagForm').serialize(),
+                   // data: $('form.tagForm').serialize(),
                     success: function (sayfa) {
 
-                       // alert(sayfa.text);
+                        // alert(sayfa.text);
                         if (sayfa.text == 0) {
 
                             window.location.href = '@Url.Action("Login","Security")';
                         }
                         else if (sayfa.text == 1) {
                             $("#mymodal").modal('hide');
-
+                            alert(sayfa.text);
                             GetNames();
 
 
                         }
                         else if (sayfa.text == 2) {
+                            alert(sayfa.text);
+
+                            alert("Şifre Yanlış Tekrar Deneyin!");
                             window.location.href = '@Url.Action("Admin","AdminUyeResult")';
                         }
                     },
@@ -297,31 +302,31 @@
             });
 
 
-            modal.on('hidden', function () {
-                GetNames();
-                ad.change(function () {
-                    window.location.reload(true);
-                });
+            //modal.on('hidden', function () {
+            //    GetNames();
+            //    ad.change(function () {
+            //        window.location.reload(true);
+            //    });
 
 
 
-            });
+            //});
 
-        //    $("#btn-degistir").click(function navigate(target) {
-        //        //Grab your values
-        //        var id = documet.getElementById('id').value;
-        //        var isim = document.getElementById('isim').value;
-        //        var kullaniciadi = document.getElementById('kullaniciadi').value;
-        //        var soyisim = document.getElementById('soyisim').value;
-        //        var email = document.getElementById('email').value;
-        //         var aciklama = document.getElementById('aciklama').value;
+            //    $("#btn-degistir").click(function navigate(target) {
+            //        //Grab your values
+            //        var id = documet.getElementById('id').value;
+            //        var isim = document.getElementById('isim').value;
+            //        var kullaniciadi = document.getElementById('kullaniciadi').value;
+            //        var soyisim = document.getElementById('soyisim').value;
+            //        var email = document.getElementById('email').value;
+            //         var aciklama = document.getElementById('aciklama').value;
 
-        //        // $.data(target, { id : $("#id").val(), isim: $("#isim").val(), kullaniciadi: $("#kullaniciadi").val(), soyisim:$("#soyisim").val(), email:$("#email").val(), aciklama:$("#aciklama").val(), });
-        //        //Perform your navigation
-        //        window.location.href = target+'?id='+id+'&isim='+isim+'&kullaniciadi'+kullaniciadi+'&soyisim'+soyisim+'&email'+email+'&aciklama'+aciklama;
-        //    });
-        //});
-
+            //        // $.data(target, { id : $("#id").val(), isim: $("#isim").val(), kullaniciadi: $("#kullaniciadi").val(), soyisim:$("#soyisim").val(), email:$("#email").val(), aciklama:$("#aciklama").val(), });
+            //        //Perform your navigation
+            //        window.location.href = target+'?id='+id+'&isim='+isim+'&kullaniciadi'+kullaniciadi+'&soyisim'+soyisim+'&email'+email+'&aciklama'+aciklama;
+            //    });
+            //});
+        });
 
     </script>
 

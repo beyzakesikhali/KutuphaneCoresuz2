@@ -24,10 +24,7 @@ else
 }
 
 
-<span class="border-dark border-bottom">
-    <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
-</span>
-<h3 align="center">Var Olan Kitaplarınız</h3>
+<h3 align="center">Sistemdeki Tüm Kitaplar</h3>
 
 <table class="table" align="center" style="width:45%; height:200px" cellspacing="0" cellpadding="0">
     <thead>
@@ -86,7 +83,7 @@ else
                             @*onclick="location.href='/Yazar/EditYazarId?id=@item.ID&isim=@item.Isim&soyisim=@item.Soyisim&yorum=@item.Yorum'"*@
                             @*onclick="location.href='/Yazar/DeleteYazar?id=@item.ID'"*@
                             <button class="btn-outline-danger btn-kitapsil" data-id=@item.Id data-kitapadi=@item.KitapAdi data-yazaradi=@item.YazarAdi data-yazarsoyadi=@item.YazarSoyadi data-yayinci="@item.yayinci" data-aciklama="@item.Aciklama" data-yazaryorum="@item.YazarYorum">Kitap SİL</button>
-                            <button class="btn-outline-dark" data-id=@item.Id data-kitapadi=@item.KitapAdi data-yazaradi=@item.YazarAdi data-yazarsoyadi=@item.YazarSoyadi data-yayinci="@item.yayinci" data-aciklama="@item.Aciklama" data-yazaryorum="@item.YazarYorum">Kitap DETAY</button>
+                            <button class="btn-outline-dark btn-kitapdetay" data-id=@item.Id data-kitapadi=@item.KitapAdi data-yazaradi=@item.YazarAdi data-yazarsoyadi=@item.YazarSoyadi data-yayinci="@item.yayinci" data-aciklama="@item.Aciklama" data-yazaryorum="@item.YazarYorum">Kitap DETAY</button>
 
 
 
@@ -183,6 +180,38 @@ else
             });//btn.click sonu
 
         });
+        $(".btn-kitapdetay").click(function () {
+              //  alert("butona basıldı");
+                var id = $(this).data("id");
+              //  alert(id);
+                $.ajax({
+                    url: `/Kitap/DetailsKitapJson?id=${id}`,
+                    //data: formData,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+                      //  alert(data.text);
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "detailsKitap") {
+
+                            window.location.href = `/Kitap/DetailsKitap?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                       // alert("gitmelisin")
+
+                    }//success sonu
+                });//  alert("Ajax sonu");
+
+            });//btn.click sonu
+
+
     </script>
 
 }

@@ -3,20 +3,11 @@
     <div class="container">
 
         <div id="logo" class="pull-left" style="position:absolute; top:5px; left:10px;">
-            @*@if (Context.Session["KullaniciAdi"].ToString() != null)
-            {*@ 
-            <h2 style="color:#10707f; ">Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString()  </h2>
-            @*}
-            else
-            {
-                <script type="text/javascript">
-                    alert("Oturum süreniz doldu yönlendirliyorsunuz");
-                     setTimeout(function(){   
-        window.location.assign("/Security/Login");
-        //3 saniye sonra yönlenecek
-        }, 3000);
-                </script>
-            }*@
+
+
+            <span class="border-dark border-bottom">
+                <h4 style="font-family:fantasy; color:	#01579B; padding-left:20px">Projeye Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h4>
+            </span>
         </div>
 
         @*@if(ViewContext.RouteData.Values["controller"].ToString()=="UyeAnaSayfasi")
@@ -54,7 +45,7 @@
                         <li><a href="@Url.Action("IndexKitap","Kitap")">Tüm Kitaplar</a></li>
 
                     </ul>
-                <li class="menu-has-children">
+                @*<li class="menu-has-children">
                     @Html.ActionLink("Sil", "", "")
                     <ul>
                         <li><a href="#"></a></li>
@@ -66,7 +57,7 @@
 
                     </ul>
 
-                </li>
+                </li>*@
                 <li class="menu-has-children">
                     @Html.ActionLink("Profil", "UyeAnaSayfasi", "Security")
                     <ul>

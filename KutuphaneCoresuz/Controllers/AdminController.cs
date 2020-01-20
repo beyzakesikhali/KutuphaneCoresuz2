@@ -251,12 +251,12 @@ namespace KutuphaneCoresuz.Controllers
 
                 }
             }
-            else
-            {
+            //else
+            //{
 
-                model.Add(new Uye() { ID = uyeResult.ID, isim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Soyisim = uyeResult.Soyisim, Email = uyeResult.Email, Sifre = "", Aciklama = uyeResult.Aciklama, RoleId = 1 });
+            //    model.Add(new Uye() { ID = uyeResult.ID, isim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Soyisim = uyeResult.Soyisim, Email = uyeResult.Email, Sifre = "", Aciklama = uyeResult.Aciklama, RoleId = 1 });
 
-            }
+            //}
             return View(model);
 
         }
@@ -948,21 +948,28 @@ namespace KutuphaneCoresuz.Controllers
 
             foreach (var item in uyeninkitaplari)
             {
-                if (item.KitapDurum == 1)
+                if (item.KitapDurum == 1 && item.aktiflik==1)
                 {
                     kitapdurum = "Kütüphanede";
                     model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Role = "Uye", UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapdurum, KitapAdi = item.Isim, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, YazarYorum = item.Yazar.Yorum }); ;
 
                 }
-                kitapdurum = "Üyede";
-                model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Role = "Uye", UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapdurum, KitapAdi = item.Isim, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, YazarYorum = item.Yazar.Yorum });
+                else if(item.KitapDurum == 2 && item.aktiflik == 1)
+                    {
+                         kitapdurum = "Üyede";
+                        model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, Role = "Uye", UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapdurum, KitapAdi = item.Isim, yayinci = item.Yayinci, YazarAdi = item.Yazar.Isim, YazarSoyadi = item.Yazar.Soyisim, YazarYorum = item.Yazar.Yorum });
+
+                    }
 
 
+
+                }
             }
-        }
+            model.Add(new KitapUyeViewModel() { id = uyeResult.ID, UyeIsim = uyeResult.isim, KullaniciAdi = uyeResult.KullaniciAdi, UyeSoyisim = uyeResult.Soyisim, UyeEmail = uyeResult.Email, Aciklama = uyeResult.Aciklama, KitapDurum = kitapyok, KitapAdi = kitapyok, yayinci = kitapyok, YazarAdi = yazarYok, YazarSoyadi = yazarYok, YazarYorum = yazarYok });
 
 
-        return View(model);
+
+            return View(model);
     }
 
     //[HttpPost]
@@ -1029,7 +1036,7 @@ namespace KutuphaneCoresuz.Controllers
                 }
                 else
                 {
-                    code = 2;
+                    code = 2;//şifre yanlış hatası verilsin
                     basariliMi = false;
                     return Json(new { ok = basariliMi, text = code });
                 }
@@ -1117,6 +1124,9 @@ namespace KutuphaneCoresuz.Controllers
      * 
      * */
 
+            //kitapların hepsinin ismini getirir.
+
+
     [HttpPost]
     [AllowAnonymous]
     public JsonResult UyeKitapJson(int? id, string tip = "uye")
@@ -1175,8 +1185,8 @@ namespace KutuphaneCoresuz.Controllers
     [AllowAnonymous]
 
 
-
-        public JsonResult AdminEditUyeKitapJson(int? id, string isim ,string kitapdurum)
+    //Kitapdurumlarını düzenliyor
+        public JsonResult AdminEditUyeKitapJson(int? id, string kitapadi ,string kitapdurum)
 
     {
 
@@ -1201,7 +1211,7 @@ namespace KutuphaneCoresuz.Controllers
                 {
 
 
-                    var guncellenecekKitap = db.Kitaplar.Where(k => k.Isim == isim).FirstOrDefault();
+                    var guncellenecekKitap = db.Kitaplar.Where(k => k.Isim == kitapadi).FirstOrDefault();
                     if (guncellenecekKitap.KitapDurum == 2 && kitapdurum == "Kütüphanede")
                     {
                         kitapDurum = 1;
@@ -1249,14 +1259,83 @@ namespace KutuphaneCoresuz.Controllers
          * 
          * */
         // GET: Kitaps/Edit/5
+        //Veritabanındaki Tüm kitapları GEtirecek Ajax kodu
+
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult KitaplarJson(int? id, string tip = "yazarAdGetir")
+        {
+            List<Kitap> yazarlarListesi = new List<Kitap>();
+            yazarlarListesi = db.Kitaplar.ToList();
+            List<SelectListItem> sonuc = new List<SelectListItem>();
+            bool basariliMi = true;
+            //string yazarlar = "";
+            try
+            {
+                switch (tip)
+                {
+                    case "yazarAdGetir":
+                        foreach (var ad in yazarlarListesi)
+                        {
+                            if (ad.aktiflik == 1)
+                            {
+                                sonuc.Add(new SelectListItem
+                                {
+                                    Text = ad.Isim,
+                                    Value = ad.ID.ToString()
+                                });
+                            }
+
+
+                        }
+
+                        break;
+                    //case "yazarSoyadGetir":
+
+                    //    foreach (var soyad in db.Yazarlar.Where(y => y.ID ==id).ToList())
+
+                    //    {
+                    //        if (id != null)
+                    //        {
+                    //            sonuc.Add(new SelectListItem
+                    //            {
+                    //                Text = soyad.Soyisim,
+                    //                Value = soyad.ID.ToString()
+                    //            });
+                    //        }
+
+
+                    //    }
+                    //break;
+                    default:
+                        break;
+                }
+
+            }
+
+            catch (Exception)
+            {
+                basariliMi = false;
+                sonuc = new List<SelectListItem>();
+                sonuc.Add(new SelectListItem
+                {
+                    Text = "Bir hata oluştu!",
+                    Value = "default"
+                });
+
+            }
+
+            return Json(new { ok = basariliMi, text = sonuc });
+        }
+
 
 
 
         [HttpPost]
 [AllowAnonymous]
 
-
-public JsonResult AdminEditUyeKitapResultJson(int? id)
+//uyeninş id si
+public JsonResult AdminEditUyeKitapResultJson(int? id, string kitapadi)
 {
 
     bool basarliMi = true;
@@ -1264,6 +1343,8 @@ public JsonResult AdminEditUyeKitapResultJson(int? id)
     int kitapDurum = 2;//üyede
 
     List<KitapYazarAddModel> model = new List<KitapYazarAddModel>();
+    List<Kitap> modelkitap = new List<Kitap>();
+
     try
     {
         if (HttpContext.Session["KullaniciAdi"] == null)
@@ -1276,6 +1357,8 @@ public JsonResult AdminEditUyeKitapResultJson(int? id)
         var uyeninKitapIds = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.KitapID).ToList();
         if (uyeninKitapIds.Count != 0)
         {
+            
+
 
 
             return Json(new { ok = basarliMi, text = sonuc });
@@ -1301,10 +1384,11 @@ public JsonResult AdminEditUyeKitapResultJson(int? id)
 
 }
 
-[AllowAnonymous]
+
+        [AllowAnonymous]
 public ActionResult AdminEditUyeKitapResult(int? id)
 {
-    List<KitapUyeViewModel> model = new List<KitapUyeViewModel>();
+    KitapUyeViewModel model = new KitapUyeViewModel();
     string kitapdurum = "";
     //ilgili kullanıcının bilgilerini AdminEditUyeKitapResultta gösterecek olan metod
     //gelen id kullanicinin id si 
@@ -1324,13 +1408,21 @@ public ActionResult AdminEditUyeKitapResult(int? id)
                 if (kitaplar.KitapDurum == 1)
                 {
                     kitapdurum = "Kütüphanede";
-                    model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
+                            model.id = uye.ID;
+                            model.KullaniciAdi = uye.KullaniciAdi;
+                            model.KitapAdi = kitaplar.Isim;
+                            model.KitapDurum = kitapdurum;
+                    //model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
 
                 }
                 kitapdurum = "Üyede";
-                model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
+                        model.id = uye.ID;
+                        model.KullaniciAdi = uye.KullaniciAdi;
+                        model.KitapAdi = kitaplar.Isim;
+                        model.KitapDurum = kitapdurum;
+                        //model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
 
-            }
+                    }
         }
     }
 

@@ -62,6 +62,51 @@ namespace KutuphaneCoresuz.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        [AllowAnonymous]
+
+
+        public JsonResult DetailsKitapJson(int? id, string isim)
+        {
+
+            bool basarliMi = true;
+            string sonuc = "detailsKitap";
+            List<Kitap> model = new List<Kitap>();
+            try
+            {
+                if (HttpContext.Session["KullaniciAdi"] == null)
+
+                {
+                    sonuc = "Login";
+                    return Json(new { ok = basarliMi, text = sonuc });
+                }
+                //sonuc = "EditUye";
+                var kitapResult = db.Kitaplar.Where(u => u.ID == id).FirstOrDefault();
+
+                if (kitapResult != null)
+                {
+                    sonuc = "detailsKitap";
+                    model.Add(new Kitap() { ID = kitapResult.ID, Isim = kitapResult.Isim, Yayinci = kitapResult.Yayinci });
+                    //return View(model);
+
+                    return Json(new { ok = basarliMi, text = sonuc });
+
+                }
+                sonuc = "hata";
+                return Json(new { ok = basarliMi, text = sonuc });
+
+            }
+            catch (Exception)
+            {
+                basarliMi = false;
+                sonuc = "Başarısız İşlem";
+                return Json(new { ok = basarliMi, text = sonuc });
+                throw;
+            }
+
+
+        }
         // GET: Kitaps/Details/5
         [AllowAnonymous]
         public ActionResult DetailsKitap(KitapYazarAddModel model)
@@ -578,7 +623,8 @@ namespace KutuphaneCoresuz.Controllers
                     }
                    else
                     {
-                        return View("HATA! Kitap Üyede silemezsiniz.");
+                        TempData["kitapUyede"] = "Kitap Üyede Silemezsiniz!!";
+                        return View();
                     }
                     
 

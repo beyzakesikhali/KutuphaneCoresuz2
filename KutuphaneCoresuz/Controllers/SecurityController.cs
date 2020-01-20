@@ -64,6 +64,36 @@ namespace KutuphaneCoresuz.Controllers
 
         public ActionResult Login()
         {
+            //List<UyeKitap> uyekitaplar = db.UyeKitap.ToList();
+            //List<Kitap> kitaplar = db.Kitaplar.ToList();
+            //List<UyeKitap> degistir =new List<UyeKitap>();
+            //int id = 0;
+            //for (int i = 0; i < uyekitaplar.Count; i++)
+            //{
+            //    uyekitaplar[i].aktiflik = 0;
+            //    db.Entry(uyekitaplar[i]).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //}
+            //for (int i = 0; i < kitaplar.Count; i++)
+            //{
+               
+            //    if (kitaplar[i].aktiflik == 1)
+            //    {
+            //        degistir=uyekitaplar.Where(x => x.KitapID == kitaplar[i].ID).ToList();
+
+
+            //        foreach (var item in degistir)
+            //        {
+
+            //            item.aktiflik = 1;
+            //            db.Entry(item).State = EntityState.Modified;
+            //            db.SaveChanges();
+
+            //        }
+
+            //    }
+
+            //}
             //string sifre = "123456";
             //string sifrele = Crypto.HashPassword(sifre);
             //Uye admin = new Uye();
@@ -237,13 +267,26 @@ namespace KutuphaneCoresuz.Controllers
             List<Yazar> yazarlar = db.Yazarlar.ToList();
             List<Kitap> kitaplar = db.Kitaplar.ToList();
             List<Uye> uyeler = db.Uyeler.ToList();
-
+            List<UyeKitap> uyekitaplar = db.UyeKitap.ToList();
+        
 
             for (int i = 0; i < kitaplar.Count; i++)
             {
                 if(kitaplar[i].aktiflik==0)
                 {
+                    
                     kitaplar[i].aktiflik = 1;
+                    db.Entry(kitaplar[i]).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+            }
+            for (int i = 0; i < kitaplar.Count; i++)
+            {
+                if (kitaplar[i].aktiflik == 1)
+                {
+
+                    uyekitaplar[i].aktiflik = 1;
                     db.Entry(kitaplar[i]).State = EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -273,6 +316,10 @@ namespace KutuphaneCoresuz.Controllers
                 }
 
             }
+
+            
+
+
         }
 
         public List<KitapYazarAddModel> ModeleEkle()

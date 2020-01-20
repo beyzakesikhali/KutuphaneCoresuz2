@@ -107,17 +107,25 @@
             </td>
             <td>
 
-                        <select class="form-control" id="kitapdurum" name="kitapdurum">
-                            <option value="1"> @item.KitapDurum</option>
-                            @if (item.KitapDurum == "Üyede")
-                            {
-                                <option>Kütüphanede</option>
-                            }
-                            else
-                            {
-                                <option>Üyede</option>
-                            }
-                        </select>
+                <select class="form-control" id="kitapdurum" name="kitapdurum">
+                    <option value="1"> @item.KitapDurum</option>
+                    @if (item.KitapAdi != "Kayıtlı Kitabınız Yok")
+                    {
+                        if (item.KitapDurum == "Üyede")
+                        {
+                            <option>Kütüphanede</option>
+                        }
+                        else
+                        {
+                            <option>Üyede</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="1"> @item.KitapDurum</option>
+                    }
+
+                </select>
                     </td>
                     <td>
                         @item.KitapAdi
@@ -131,31 +139,27 @@
                     <td>
                         @item.YazarSoyadi
                     </td>
-
             <td>
                 @item.YazarYorum
             </td>
             @if (item.KitapAdi != "Kayıtlı Kitabınız Yok")
             {
-                <td colspan="2">
-                    <button type="submit" class="btn-outline-info btn-duzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum">Üyenin Kitabını Düzenle</button>
+                <td>
+                    <button type="submit" class="btn-outline-info btn-duzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum">Kitap Durumunu Düzenle</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn-outline-info btn-kitapduzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum">Üyenin Kitap Bilgilerini Düzenle</button>
+
                 </td>
             }
             else
             {
                 <td colspan="2">
-                    <button type="submit" class="btn-outline-info btn-duzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum" onclick="location.href='/Admin/AdminAddUyeKitap?id=@item.id'">Üyeye Kitap Ekle</button>
+                    <button type="submit" class="btn-outline-info btn-ekle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum" onclick="location.href='/Admin/AdminAddUyeKitap?id=@item.id'">Üyeye Kitap Ekle</button>
                 </td>
             }
 
-
         </tr>
-
-                    </td>
-                </tr>
-
-
-
             }
 
         }
@@ -174,16 +178,16 @@
 
         $(document).ready(function () {
             $(".btn-duzenle").click(function () {
-                alert("butona tıklandı");
+                //alert("butona tıklandı");
                 var id = $(this).data("id");
                 var kitapadi = $(this).data("kitapadi");
               //  var singleValues = $("#kitapdurum").val();
                 var kitapdurum = $("#kitapdurum").val();
-                alert(kitapdurum);
+               // alert(kitapdurum);
 
                 //var kitapdurum = $(this).data("option:selected");
                 //var kitapdurum  = $(this).data("kitapdurum");
-                alert(id);
+              //  alert(id);
 
                 //alert(isim);}&kullaniciadi=${kullaniciadi}&uyeisim=${uyeisim}&kitapadi=${kitapadi}&kitapdurum=${kitapdurum}
                 //var kullaniciadi = $(this).data("kullaniciadi").val();
@@ -228,8 +232,8 @@
                 });//ajax sonu
             });//click sonu
 
-             $(".btn-kitapduzenle").click(function () {
-                alert("butona tıklandı");
+             $(".btn-ekle").click(function () {
+               // alert("butona tıklandı");
                 var id = $(this).data("id");
                 //var kitapadi = $(this).data("kitapadi").val();
                 //var kitapdurum = $(this).data("kitapdurum").val();
@@ -244,6 +248,55 @@
 
                 $.ajax({
                     url: `/Admin/AdminEditUyeKitapResultJson?id=${id}`,
+                    @*url:'@Url.Action("EditYazarId","Yazar")',*@
+                    method: "post",
+                    dataType: "json",
+                    // data: {id:yazarID, isim:isim, soyisim:soyisim, yorum:yorum},
+                    success: function (data) {
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "editUyeKitap") {
+                            window.location.reload(false);
+
+                            window.location.href = `/Admin/AdminEditUyeKitapResult?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else if (data.text == "createkitap") {
+                            window.location.href = `/Admin/AdminAddUyeKitap?id=${id}`
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                        //alert("gitmelisin")
+                        //}, complete: function () {
+                        //    alert("Olmadı!")
+
+                    },
+                    complete: function () {
+
+                    }
+                });//ajax sonu
+            });//click sonu
+
+            $(".btn-kitapduzenle").click(function () {
+               // alert("butona tıklandı");
+                var id = $(this).data("id");
+                var kitapadi = $(this).data("kitapadi");
+                //var kitapdurum = $(this).data("kitapdurum").val();
+                //alert(id);
+
+                //alert(isim);}&kullaniciadi=${kullaniciadi}&uyeisim=${uyeisim}&kitapadi=${kitapadi}&kitapdurum=${kitapdurum}
+                //var kullaniciadi = $(this).data("kullaniciadi").val();
+
+                //var uyeisim = $(this).data("uyeisim").val();
+                //var kitapadi = $(this).data("kitapadi").val();
+                //var kitapdurum = $(this).data("kitapdurum").val();
+
+                $.ajax({
+                    url: `/Admin/AdminEditUyeKitapResultJson?id=${id}&kitapadi=${kitapadi}`,
                     @*url:'@Url.Action("EditYazarId","Yazar")',*@
                     method: "post",
                     dataType: "json",
