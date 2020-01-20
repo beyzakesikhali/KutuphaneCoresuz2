@@ -7,122 +7,141 @@
 
 @Html.Partial("~/Views/Shared/_HeaderAdmin.cshtml")
 
+@if (TempData["terslik"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["terslik"])');
+    </script>
+}
+
+
+@if (TempData["secimyok"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["secimyok"])');
+    </script>
+}
 <hr />
 <div align="center">
     @using (Html.BeginForm("AdminEditUyeKitapResult", "Admin", FormMethod.Post))
     {
         <br />
         <br />
-    <table class="table-hover" style="width:30%; padding:0;" cellspacing="0" cellpadding="0">
-        <tbody>
-            @*<tr>
-    <td>
-        <p>
-                @Html.Label("Üye İsim:")
-                <label id="kullaniciadi"></label>
+        <table class="table-hover" style="width:30%; padding:0;" cellspacing="0" cellpadding="0">
+            <tbody>
+                @*<tr>
+                    <td>
+                        <p>
+                                @Html.Label("Üye İsim:")
+                                <label id="kullaniciadi"></label>
 
-            </p>
-       
-        </td>*@
-            <tr>
-        <td>
-            <input type="hidden" class="id" value="@Html.NameFor(m=>m.id)"/>
+                            </p>
 
-        </td>
-    </tr>
+                        </td>*@
+                <tr>
+                    <td>
+                        <input type="hidden" id="id" name="id" value=@Model.id />
 
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Üye İsim")
-                    </p>
-                </td>
-                <td>
-                  <div>
-                    <select class="form-control" id="uyeAd" name="uyeisim">
-                    <option>Üye Adı Seçiniz</option>
-                    </select>
-                  </div>
-                    
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Üyenin Hangi Kitabını Değiştirmek İStiyorsanız Seçin")
+                    </td>
+                </tr>
 
-                    </p>
-                </td>
-                <td>
-                    <div class="input-group">
-
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Üye İsim")
+                        </p>
+                    </td>
+                    <td>
                         <div>
-                            <select class="form-control" id="kitapadi" name="degisecekkitapisim">
+                            <select class="form-control" id="uyeAd" name="uyeisim">
+                                <option>Üye Adı Seçiniz</option>
+                            </select>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Üyenin Hangi Kitabını Değiştirmek İStiyorsanız Seçin")
+
+                        </p>
+                    </td>
+                    <td>
+                        <div class="input-group">
+
+                            <div>
+                                <select class="form-control" id="kitapadi" name="degisecekkitapisim">
+                                    <option>Kitap Adı Seçiniz</option>
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Tüm Kitaplar")
+
+                        </p>
+                    </td>
+                    <td>
+                        <div>
+                            <select class="form-control" id="kitapAdlari" name="gelenkitapisim">
                                 <option>Kitap Adı Seçiniz</option>
                             </select>
                         </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            @Html.Label("Kitap Durum")
 
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Tüm Kitaplar")
-
-                    </p>
-                </td>
-                <td>
-                    <div>
-                        <select class="form-control" id="kitapAdlari" name="gelenkitapisim">
-                            <option>Kitap Adı Seçiniz</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>
-                        @Html.Label("Kitap Durum")
-
-                    </p>
-                </td>
-                <td>
-                    <div>
-                        <select class="form-control" id="kitapdurum" name="kitapdurum">
-                            <option>Kütüphanede</option>
-                            <option>Üyede</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
+                        </p>
+                    </td>
+                    <td>
+                        <div>
+                            <select class="form-control" id="kitapdurum" name="kitapdurum">
+                                <option>Kütüphanede</option>
+                                <option>Üyede</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
 
     }
-    
-</div>
-    <div align="center" class="form-group" style="position:absolute; top:500px;width:300px; left:42%; width:300px">
-        <div  style="position:inherit; width:inherit" align="center">
-            <button type="submit" style="position:inherit; width:300px" class="btn btn-warning">Kaydet</button>
-        </div>
-    </div>
- 
-        <button style="position:absolute; top:600px; width:300px; left:50%; width:300px" class="btn-outline-warning btn-duzenle" type="submit" onclick="location.href='@Url.Action("IndexKitap","Kitap")'">Tüm Kitaplar</button>
-        <button  style="position:absolute; top:650px; width:300px; left:50%; width:300px"class="btn-outline-warning btn-uyeEkle" type="submit" onclick="location.href='@Url.Action("AddUyeAdmin","Admin")'">Uye Ekle</button>
 
-    
+</div>
+<div align="center" class="form-group" style="position:absolute; top:500px;width:300px; left:42%; width:300px">
+    <div style="position:inherit; width:inherit" align="center">
+        <button type="submit" data-id=@Model.id style="position:inherit; width:300px" class="btn btn-warning">Kaydet</button>
+    </div>
+</div>
+
+<button style="position:absolute; top:600px; width:300px; left:50%; width:300px" class="btn-outline-warning btn-duzenle" type="submit" onclick="location.href='@Url.Action("IndexKitap","Kitap")'">Tüm Kitaplar</button>
+<button style="position:absolute; top:650px; width:300px; left:50%; width:300px" class="btn-outline-warning btn-uyeEkle" type="submit" onclick="location.href='@Url.Action("AddUyeAdmin","Admin")'">Uye Ekle</button>
+
+
 
 @section Scripts
     {
     <script type="text/javascript">
         $(document).ready(function () {
             GetUyeNames();
-            var id = document.getElementById(".id");
+            var id = $("#id").val();
             alert(id);
             GetKitapAdi(id);
             GetKitapAdlari();
+           //burası olmadı
+            $("#kitapadi").change(function () {
+                GetKitapAdi(id);
+
+            });
 
             $(".btn-kitapduzenle").click(function () {
                 var selectedRole = $(this).children("option:selected").val();
@@ -193,10 +212,10 @@
                 }
            });//ajax sonu
      }
-    
+
         function GetKitapAdi(id) {
            // var id = document.getElementById("#id");
-                    // alert("fonksiyon");
+                     alert(id);
                     $.ajax({
                         url: `/Admin/UyeKitapJson?id=${id}`,
 

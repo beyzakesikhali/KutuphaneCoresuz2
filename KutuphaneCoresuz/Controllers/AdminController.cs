@@ -1396,33 +1396,49 @@ public ActionResult AdminEditUyeKitapResult(int? id)
     {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
     }
+    if(HttpContext.Session["KullaniciAdi"]==null)
+            {
+                return RedirectToAction("Login", "Security");
+            }
     Uye uye = db.Uyeler.Find(id);
-    var uyeninKitaplariIDs = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.UyeID).ToList();
+    var uyeninKitaplariIDs = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.KitapID).ToList();
     if (uyeninKitaplariIDs != null)
     {
         foreach (var item in uyeninKitaplariIDs)
         {
             var kitaplari = db.Kitaplar.Where(k => k.ID == item).ToList();
+                    
             foreach (var kitaplar in kitaplari)
-            {
-                if (kitaplar.KitapDurum == 1)
+            { 
+                if(kitaplar.aktiflik==1)
                 {
-                    kitapdurum = "Kütüphanede";
-                            model.id = uye.ID;
-                            model.KullaniciAdi = uye.KullaniciAdi;
-                            model.KitapAdi = kitaplar.Isim;
-                            model.KitapDurum = kitapdurum;
-                    //model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
+                            if (kitaplar.KitapDurum == 1)
+                            {
+
+                                kitapdurum = "Kütüphanede";
+                                model.id = uye.ID;
+                                model.KullaniciAdi = uye.KullaniciAdi;
+                                model.KitapAdi = kitaplar.Isim;
+                                model.KitapDurum = kitapdurum;
+                               //model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
+
+                            }
+                            else if(kitaplar.KitapDurum==2)
+                            {
+                                kitapdurum = "Üyede";
+                                model.id = uye.ID;
+                                model.KullaniciAdi = uye.KullaniciAdi;
+                                model.KitapAdi = kitaplar.Isim;
+                                model.KitapDurum = kitapdurum;
+                                //model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
+
+
+
+                            }
 
                 }
-                kitapdurum = "Üyede";
-                        model.id = uye.ID;
-                        model.KullaniciAdi = uye.KullaniciAdi;
-                        model.KitapAdi = kitaplar.Isim;
-                        model.KitapDurum = kitapdurum;
-                        //model.Add(new KitapUyeViewModel { id = uye.ID, KullaniciAdi = uye.KullaniciAdi, KitapAdi = kitaplar.Isim, KitapDurum = kitapdurum });
 
-                    }
+            }
         }
     }
 
@@ -1433,127 +1449,57 @@ public ActionResult AdminEditUyeKitapResult(int? id)
     return View(model);
 }
 
-// POST: Kitaps/Edit/5
-// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-[HttpPost]
-[AllowAnonymous]
+        // POST: Kitaps/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [AllowAnonymous]
 
-//public ActionResult AdminEditUyeKitapResult(int? id, string yazarId, string kitapadi, string aciklama, string yazaryorum, string yayinci)
-//{
-
-//    // var yazarResult = db.Yazarlar.Where(y => y.ID == yazarId).FirstOrDefault();
-//    //Yazar gelenYazar = new Yazar();
-
-//    //if (id == 0)
-//    //{
-//    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-//    //}
-//    //Kitap kitap = db.Kitaplar.Find(id);
-//    //if (kitap == null)
-//    //{
-//    //    return HttpNotFound();
-//    //}
-//    //if (kitapadi != null)
-//    //{
-
-//    //    if (yazarResult == null)
-//    //    {
-//    //        if (ModelState.IsValid)
-//    //        {
-
-//    //            ///KİTAP GÜNCELLEME
-//    //            kitap.Isim = kitapadi;
-//    //            kitap.Yayinci = yayinci;
-//    //            kitap.Aciklama = aciklama;
-//    //           // kitap.YazarID = yazarId;
-//    //            kitap.Yazar.Isim = yazarResult.Isim;
-//    //            kitap.Yazar.Soyisim = yazarResult.Soyisim;
-//    //            kitap.Yazar.Yorum = yazaryorum;
-//    //            db.Entry(kitap).State = EntityState.Modified;
-//    //            db.SaveChanges();
-//    //            return RedirectToAction("IndexKitap", "Kitap");
-//    //        }
-//    //    }
-//    //    else //yazar zaten varsa kitabın yazarı değiştirilmek isteniyorsa
-//    //    {
-//    //        //    int gelenYazarId = yazarVarmi.ID;
-//    //        //    kitap.YazarID = gelenYazarId;
-//    //        //    kitap.Yazar.Isim = yazaradi;
-//    //        //    kitap.Yazar.Soyisim = yazarsoyadi;
-//    //        //    kitap.Yazar.Yorum = yazaryorum;
-//    //        //    kitap.Aciklama = aciklama;
-//    //        //    kitap.Isim = kitapadi;
-//    //        //    kitap.Yayinci = kitap.Yayinci;
-//    //        ViewBag.yazarHata = "Yazar Seçmediniz ya da boş bir yazar seçtiniz";
-//    //        return View(ViewBag.yazarHata);
-
-//    //    }
-
-
-//}
-
-public ActionResult AdminEditUyeKitapResult(int? id, int yazarId, string kitapadi, string aciklama, string yazaryorum, string yayinci)
-{
-
-    var yazarResult = db.Yazarlar.Where(y => y.ID == yazarId).FirstOrDefault();
-    Yazar gelenYazar = new Yazar();
-
-    if (id == 0)
-    {
-        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-    }
-    Kitap kitap = db.Kitaplar.Find(id);
-    if (kitap == null)
-    {
-        return HttpNotFound();
-    }
-    if (kitapadi != null)
-    {
-
-        if (yazarResult == null)
+        public ActionResult AdminEditUyeKitapResult(int? id, string uyeisim, string degisecekkitapisim, string gelenkitapisim, string kitapdurum)
         {
-            if (ModelState.IsValid)
+            Uye uye = new Uye();
+            List<Kitap> kitaplarininListesi = new List<Kitap>();
+            UyeKitap uyekitap = new UyeKitap();
+
+            //
+
+            //,
+
+            var secilenUyeResult = db.Uyeler.Where(y => y.isim == uyeisim).FirstOrDefault();
+            //
+
+            if (id == 0)
             {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                ///KİTAP GÜNCELLEME
-                kitap.Isim = kitapadi;
-                kitap.Yayinci = yayinci;
-                kitap.Aciklama = aciklama;
-                kitap.YazarID = yazarId;
-                kitap.Yazar.Isim = yazarResult.Isim;
-                kitap.Yazar.Soyisim = yazarResult.Soyisim;
-                kitap.Yazar.Yorum = yazaryorum;
-                db.Entry(kitap).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("IndexKitap", "Kitap");
             }
+            var gelenUyeResult = db.Uyeler.Find(id);
+            if (gelenUyeResult != null)
+            {
+                if (degisecekkitapisim != null && gelenkitapisim != null)
+                {
+                    var kitaplari = db.UyeKitap.Where(x => x.UyeID == id).Select(x => x.KitapID).ToList();
+                    foreach (var item in kitaplari)
+                    {
+                        kitaplarininListesi = db.Kitaplar.Where(k => k.ID == item).ToList();
+                        foreach (var value in kitaplarininListesi)
+                        {
+                            var degisecekKitap = db.Kitaplar.Where(k => k.Isim == degisecekkitapisim).FirstOrDefault();
+                            degisecekKitap.Isim = gelenkitapisim;
+                            db.Entry(degisecekKitap).State = EntityState.Modified;
+                            db.SaveChanges();
+
+                        }
+                    }
+
+                }
+                TempData["secimyok"] = "Seçim Yapmalısınız!";
+                return View();
+
+            }
+            TempData["terslik"] = "Ters Giden Bir şeyler var";
+            return View();
         }
-        else //yazar zaten varsa kitabın yazarı değiştirilmek isteniyorsa
-        {
-            //    int gelenYazarId = yazarVarmi.ID;
-            //    kitap.YazarID = gelenYazarId;
-            //    kitap.Yazar.Isim = yazaradi;
-            //    kitap.Yazar.Soyisim = yazarsoyadi;
-            //    kitap.Yazar.Yorum = yazaryorum;
-            //    kitap.Aciklama = aciklama;
-            //    kitap.Isim = kitapadi;
-            //    kitap.Yayinci = kitap.Yayinci;
-            ViewBag.yazarHata = "Yazar Seçmediniz ya da boş bir yazar seçtiniz";
-            return View(ViewBag.yazarHata);
-
-        }
-
-
-    }
-
-
-    return View();
-}
-
-
 
 }
 
