@@ -3,8 +3,22 @@
             <div class="container">
 
                 <div id="logo" class="pull-left">
-                    <!-- Uncomment below if you prefer to use a text logo -->
-                    <!--<h1><a href="#hero">Regna</a></h1>-->
+                    <div id="logo" class="pull-left" style="position:absolute; top:5px; left:10px;">
+                        @if (Context.Session["KullaniciAdi"].ToString() != null)
+                        {
+                            <h2 style="color:#10707f; ">Hoşgeldiniz Context.Session["KullaniciAdi"].ToString()  </h2>
+                        }
+                        else
+                        {
+                            <script type="text/javascript">
+                                alert("Oturum süreniz doldu yönlendirliyorsunuz");
+                                setTimeout(function () {
+                                    window.location.assign("/Security/Login");
+                                    //3 saniye sonra yönlenecek
+                                }, 3000);
+                            </script>
+                        }
+                    </div>
                 </div>
 
                 @*@if(ViewContext.RouteData.Values["controller"].ToString()=="UyeAnaSayfasi")

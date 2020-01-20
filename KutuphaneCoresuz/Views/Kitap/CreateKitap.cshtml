@@ -34,17 +34,87 @@ else
                 <input type="text" class="form-control" name=@Html.NameFor(m => m.KitapAdi)>
             </div>
         </div>
-        <div class="form-group">
-            @Html.Label("      ", new { @class = "control-label col-md-3" })
-            <div class="col-md-10">
+        
+            @Html.Label("Yazar Adı Seçin", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="input-group" style="width:300px; position:inherit; left:500px; top:250px">
 
-                <div class="form-group">
-                    <select class="form-control" id="ad" style="width:200px; position:absolute; left:660px; bottom:3px" name=@Html.NameFor(m => m.YazarAdi)>
-                        <option>Yazar Adı Seçiniz</option>
-                    </select>
+                <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" name=@Html.NameFor(m => m.YazarAdi)>
+                    <option selected>Yazar Seçin...</option>
+
+                </select>
+
+
+                <div class="input-group-append ">
+                    <button class="btn btn-outline-secondary btn-popup" type="button" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
+
+                </div>
+                @*<div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px;">
+                <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
+            </div>*@
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <form id="tag-form" class="tagForm" method="post">
+                                        <div class="form-group">
+                                            @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="yazaradi">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="yazarsoyadi">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="yazaryorum">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                <button type="submit" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+      
+      
+        <br />
+
+
+
+        @* </div>*@
+        @*<div class="form-group">
+                @Html.Label("      ", new { @class = "control-label col-md-3" })
+                <div class="col-md-10">
+
+                    <div class="form-group">
+                        <select class="form-control" id="ad" style="width:200px; position:absolute; left:660px; bottom:3px" name=@Html.NameFor(m => m.YazarAdi)>
+                            <option>Yazar Adı Seçiniz</option>
+                        </select>
+                    </div>
+                </div>
+            </div>*@
         <div class="form-group">
             @Html.Label("Yayıncı", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -71,62 +141,15 @@ else
     }
 
     <button class="btn-outline-warning btn-duzenle" type="submit" onclick='@Url.Action("IndexKitap","Kitap")'>Tüm Kitaplar</button>
-    <div class="col-md-offset-2 col-md-10" style="position:absolute; right:850px; top:260px; width:50px;">
-        <button class="btn-outline-warning btn-popup" value="Yazar Yoksa Tıklayın" data-toggle="modal" data-target="#exampleModalCenter">Yazar Ekle</button>
-    </div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Yazar Ekle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <form id="tag-form" class="tagForm" method="post">
-                            <div class="form-group">
-                                @Html.Label("Yazar Adı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazaradi">
 
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.Label("Yazar Soyadı:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazarsoyadi">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.Label("Yazar Yorumu:", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="yazaryorum">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                    <button type="submit" class="btn btn-primary" id="btn-yazarekle">Yazar Ekle</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 
 
 
-        @section Scripts
+@section Scripts
     {
-            <script type="text/javascript">
+    <script type="text/javascript">
 
         $(document).ready(function()
         {
@@ -192,7 +215,7 @@ else
                 success: function (data) {
 
                     $.each(data.text, function (key, yazarDetaylari) {
-                        $("#ad").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
+                        $("#inputGroupSelect04").append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
                         //ad.append(`<option value="${yazarDetaylari["Value"]}">${yazarDetaylari["Text"]}</option>`);
 
                     });
@@ -285,5 +308,11 @@ else
 
 
 
-            </script>
-        }
+    </script>
+    }
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>

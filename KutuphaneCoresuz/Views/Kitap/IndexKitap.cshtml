@@ -135,7 +135,7 @@ else
 
             });//btn.click sonu
 
-            alert("nevar");
+          //  alert("nevar");
             $(".btn-kitapduzenle").click(function () {
                // alert("butona basıldı");
                 var id = $(this).data("id");
@@ -161,6 +161,7 @@ else
                         else if (data.text == "editKitap") {
 
                             window.location.href = `/Kitap/EditKitap?id=${id}`;
+                            alert("gitti");
                             //&kitapisim=${kitapadi}&yazarisim=${yazaradi}&yazarsoyisim=${yazarsoyadi}&yayinci=${yayinci}&aciklama=${aciklama}&yazaryorum=${yazaryorum}
                             //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
                         }

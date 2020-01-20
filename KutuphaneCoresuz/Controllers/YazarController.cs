@@ -114,17 +114,17 @@ namespace KutuphaneCoresuz.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult CreateYazarAction(string yazaradi,string yazarsoyadi, string yazaryorum)
+        public ActionResult CreateYazarAction(Yazar yazar)
         {
-            var yazarVarMi = db.Yazarlar.Where(y => y.Isim == yazaradi && y.Soyisim == yazarsoyadi && y.Yorum == yazaryorum).FirstOrDefault();
+            var yazarVarMi = db.Yazarlar.Where(y => y.Isim == yazar.Isim && y.Soyisim == yazar.Soyisim && y.Yorum == yazar.Yorum).FirstOrDefault();
             if(yazarVarMi==null)
             {
                 if (ModelState.IsValid)
                 {
                     Yazar yeniYazar = new Yazar();
-                    yeniYazar.Isim = yazaradi;
-                    yeniYazar.Soyisim = yazarsoyadi;
-                    yeniYazar.Yorum = yazaryorum;
+                    yeniYazar.Isim = yazar.Isim;
+                    yeniYazar.Soyisim = yazar.Soyisim;
+                    yeniYazar.Yorum = yazar.Yorum;
                     yeniYazar.aktiflik = 1;
                     
                     db.Yazarlar.Add(yeniYazar);
@@ -148,20 +148,64 @@ namespace KutuphaneCoresuz.Controllers
             else
             {
                 yazarVarMi.aktiflik = 1;
-                yazarVarMi.Isim = yazaradi;
-                yazarVarMi.Soyisim = yazarsoyadi;
-                yazarVarMi.Yorum = yazaryorum;
+                yazarVarMi.Isim = yazar.Isim;
+                yazarVarMi.Soyisim = yazar.Soyisim;
+                yazarVarMi.Yorum = yazar.Yorum;
                 db.Entry(yazarVarMi).State = EntityState.Modified;
                 db.SaveChanges();
 
-
-
             }
-           
 
+            //ViewBag["yazareklendi"] = "Yazar Başarılı Bir Şekilde Eklendi";
             return View();
         }
         // GET: Yazars/Details/5
+
+
+        [HttpPost]
+        [AllowAnonymous]
+
+
+        public JsonResult DetailsYazarJson(int? id, string isim)
+        {
+
+            bool basarliMi = true;
+            string sonuc = "EditUye";
+            List<Yazar> model = new List<Yazar>();
+            try
+            {
+                if (HttpContext.Session["KullaniciAdi"] == null)
+
+                {
+                    sonuc = "Login";
+                    return Json(new { ok = basarliMi, text = sonuc });
+                }
+                //sonuc = "EditUye";
+                var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
+
+                if (yazarResult != null)
+                {
+                    sonuc = "detailsYazar";
+                    model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Yorum = yazarResult.Yorum });
+                    //return View(model);
+
+                    return Json(new { ok = basarliMi, text = sonuc });
+
+                }
+                sonuc = "hata";
+                return Json(new { ok = basarliMi, text = sonuc });
+
+            }
+            catch (Exception)
+            {
+                basarliMi = false;
+                sonuc = "Başarısız İşlem";
+                return Json(new { ok = basarliMi, text = sonuc });
+                throw;
+            }
+
+
+        }
 
         [AllowAnonymous]
         public ActionResult DetailsYazar(int? id)
@@ -303,13 +347,20 @@ namespace KutuphaneCoresuz.Controllers
             List<Yazar> model = new List<Yazar>();
             // string gelneisim = isim;
             var yazarResult = db.Yazarlar.Where(u => u.ID == id).FirstOrDefault();
-            if(yazarResult.aktiflik==1)
+            if(yazarResult!=null)
             {
-                model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Soyisim=yazarResult.Soyisim, Yorum = yazarResult.Yorum });
-                return View(model);
+                if (yazarResult.aktiflik == 1)
+                {
+                    model.Add(new Yazar() { ID = yazarResult.ID, Isim = yazarResult.Isim, Soyisim = yazarResult.Soyisim, Yorum = yazarResult.Yorum });
+                    return View(model);
 
+                }
             }
-            return View("HATA");
+
+            ViewBag["yazaryok"] = "Hiç Yazar Yok";
+            return View();
+          
+            
 
         }
 

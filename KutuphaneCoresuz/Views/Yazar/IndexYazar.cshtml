@@ -75,7 +75,7 @@ else
                         @*onclick="location.href='/Yazar/EditYazarId?id=@item.ID&isim=@item.Isim&soyisim=@item.Soyisim&yorum=@item.Yorum'"*@
                         @*onclick="location.href='/Yazar/DeleteYazar?id=@item.ID'"*@
                         |  <button class="btn-outline-danger btn-yazarsil" data-id=@item.ID data-isim=@item.Isim data-soyisim=@item.Soyisim data-yorum=@item.Yorum>YAZARI SİL</button>
-                        |  <button class="btn-outline-dark" data-id=@item.ID data-isim=@item.Isim data-soyisim=@item.Soyisim data-yorum=@item.Yorum>YAZAR DETAY</button>|
+                        |  <button class="btn-outline-dark btn-yazardetay" data-id=@item.ID data-isim=@item.Isim data-soyisim=@item.Soyisim data-yorum=@item.Yorum>YAZAR DETAY</button>|
                     </td>
                 }
 
@@ -154,6 +154,36 @@ else
                         }
 
                         alert("gitmelisin")
+
+                    }//success sonu
+                });//  alert("Ajax sonu");
+
+            });//btn.click sonu
+             $(".btn-yazardetay").click(function () {
+              //  alert("butona basıldı");
+                var id = $(this).data("id");
+              //  alert(id);
+                $.ajax({
+                    url: `/Yazar/DetailsYazarJson?id=${id}`,
+                    //data: formData,
+                    method: "post",
+                    dataType: "json",
+                    success: function (data) {
+                      //  alert(data.text);
+                        if (data.text == "login") {
+                            window.location.href = `/Security/Login`;
+
+                        }
+                        else if (data.text == "detailsYazar") {
+
+                            window.location.href = `/Yazar/DetailsYazar?id=${id}`;
+                            //&isim=${isim}&kullaniciadi=${kullaniciAdi}&soyisim=${soyisim}&email=${email}&aciklama=${aciklama}&roleid=${role}
+                        }
+                        else {
+                            alert("hata");
+                        }
+
+                       // alert("gitmelisin")
 
                     }//success sonu
                 });//  alert("Ajax sonu");

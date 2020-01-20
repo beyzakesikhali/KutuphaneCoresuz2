@@ -3,8 +3,21 @@
     <div class="container">
 
         <div id="logo" class="pull-left" style="position:absolute; top:5px; left:10px;">
-            <h2 style="color:#10707f; " > Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString() </h2>
-        </div> 
+            @*@if (Context.Session["KullaniciAdi"].ToString() != null)
+            {*@ 
+            <h2 style="color:#10707f; ">Hoşgeldiniz @Context.Session["KullaniciAdi"].ToString()  </h2>
+            @*}
+            else
+            {
+                <script type="text/javascript">
+                    alert("Oturum süreniz doldu yönlendirliyorsunuz");
+                     setTimeout(function(){   
+        window.location.assign("/Security/Login");
+        //3 saniye sonra yönlenecek
+        }, 3000);
+                </script>
+            }*@
+        </div>
 
         @*@if(ViewContext.RouteData.Values["controller"].ToString()=="UyeAnaSayfasi")
         {
