@@ -15,7 +15,12 @@ else
 
     <div id="logo" class="pull-left" align="center">
 
-
+        @if (TempData["hata"] != null)
+        {
+            <script>
+      alert('@Html.Raw(TempData["hata"])')
+            </script>
+        }
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -27,87 +32,87 @@ else
 
             @foreach (var item in Model)
             {
-                using (Html.BeginForm("PostEditUye", "Uye",new { id=item.ID}, FormMethod.Post))
+                using (Html.BeginForm("PostEditUye", "Uye", new { id = item.ID }, FormMethod.Post))
                 {
-                <table class="table-hover myTable" style="width:20%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td>
-                            <p>
-                                @Html.Label("İsim")
+                    <table class="table-hover myTable" style="width:20%; padding:0; margin-left:250px" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td>
+                                <p>
+                                    @Html.Label("İsim")
 
 
-                            </p>
-                        </td>
-                        <td>
-                            <input type="text" value="@item.isim" class="form-control" name="isim" />
+                                </p>
+                            </td>
+                            <td>
+                                <input type="text" value="@item.isim" class="form-control" name="isim" />
 
 
-                            @*@Html.TextBox("Adı:", item.isim, new { htmlAttributes = new { @class = "form-control" } })*@
+                                @*@Html.TextBox("Adı:", item.isim, new { htmlAttributes = new { @class = "form-control" } })*@
 
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                @Html.Label("KullaniciAdi")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    @Html.Label("KullaniciAdi")
 
 
-                            </p>
-                        </td>
-                        <td>
+                                </p>
+                            </td>
+                            <td>
 
-                            <input type="text" value="@item.KullaniciAdi" class="form-control" name="kullaniciadi" />
+                                <input type="text" value="@item.KullaniciAdi" class="form-control" name="kullaniciadi" />
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
 
-                                @Html.Label("Soyisim", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.Label("Soyisim", htmlAttributes: new { @class = "control-label col-md-2" })
 
-                            </p>
-                        </td>
-                        <td>
+                                </p>
+                            </td>
+                            <td>
 
-                            <input type="text" value="@item.Soyisim" class="form-control" name="soyisim" />
+                                <input type="text" value="@item.Soyisim" class="form-control" name="soyisim" />
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
-
-
-                            </p>
-                        </td>
-                        <td>
-                            <input type="text" value="@item.Email" class="form-control" name="email" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
 
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
-                            </p>
-                        </td>
-                        <td>
-                            <input type="text" value="@item.Aciklama" class="form-control" name="aciklama" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <button class="btn-outline-info" type="submit" name="DetailsUye" onclick="location.href='Uye/PostEditUye?id=@item.ID&isim=@item.isim&kullaniciadi=@item.KullaniciAdi&soyisim=@item.Soyisim&email=@item.Email&aciklama=@item.Aciklama'">Değiştir</button>
-                        </td>
-                    </tr>
+                                </p>
+                            </td>
+                            <td>
+                                <input type="text" value="@item.Email" class="form-control" name="email" />
 
-                </table>
 
-            }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+                                </p>
+                            </td>
+                            <td>
+                                <input type="text" value="@item.Aciklama" class="form-control" name="aciklama" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button class="btn-outline-info" type="submit" name="DetailsUye" onclick="location.href='Uye/PostEditUye?id=@item.ID&isim=@item.isim&kullaniciadi=@item.KullaniciAdi&soyisim=@item.Soyisim&email=@item.Email&aciklama=@item.Aciklama'">Değiştir</button>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                }
             }
 
             @*//modal*@
@@ -173,7 +178,7 @@ else
 
 
 
-       
+
         <button class="btn-outline-secondary" type="button" name="DetailsUye" onclick="location.href='@Url.Action("UyeAnasayfasi", "Security")'">AnaSayfaya Dön</button>
 
     </div>

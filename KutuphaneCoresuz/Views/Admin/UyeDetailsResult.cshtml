@@ -74,52 +74,62 @@
             foreach (var item in Model)
             {
 
-                <tr>
+        <tr>
 
-                    <td>
-                        @item.UyeIsim
-                    </td>
-                    <td>
-                        @item.KullaniciAdi
-                    </td>
-                    <td>
-                        @item.Role
-                    </td>
-                    <td>
-                        @item.UyeSoyisim
-                    </td>
-                    <td>
-                        @item.UyeEmail
-                    </td>
-                    <td>
+            <td>
+                @item.UyeIsim
+            </td>
+            <td>
+                @item.KullaniciAdi
+            </td>
+            <td>
+                @item.Role
+            </td>
+            <td>
+                @item.UyeSoyisim
+            </td>
+            <td>
+                @item.UyeEmail
+            </td>
+            <td>
 
-                        @item.Aciklama
-                    </td>
-                    <td>
+                @item.Aciklama
+            </td>
+            <td>
 
-                        @item.KitapDurum
-                    </td>
-                    <td>
-                        @item.KitapAdi
-                    </td>
-                    <td>
-                        @item.yayinci
-                    </td>
-                    <td>
-                        @item.YazarAdi
-                    </td>
-                    <td>
-                        @item.YazarSoyadi
-                    </td>
+                @item.KitapDurum
+            </td>
+            <td>
+                @item.KitapAdi
+            </td>
+            <td>
+                @item.yayinci
+            </td>
+            <td>
+                @item.YazarAdi
+            </td>
+            <td>
+                @item.YazarSoyadi
+            </td>
 
-                    <td>
-                        @item.YazarYorum
-                    </td>
-                    <td colspan="2">
-                        <button type="submit" class="btn-outline-info btn-duzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum" >Üyenin Kitabını Düzenle</button>
-                    </td>
+            <td>
+                @item.YazarYorum
+            </td>
+            @if (item.KitapAdi != "Kayıtlı Kitabınız Yok")
+            {
+                <td colspan="2">
+                    <button type="submit" class="btn-outline-info btn-duzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum">Üyenin Kitabını Düzenle</button>
+                </td>
+            }
+            else
+            {
+                <td colspan="2">
+                    <button type="submit" class="btn-outline-info btn-duzenle" data-id=@item.id data-kullaniciadi="@item.KullaniciAdi" data-uyeisim="@item.UyeIsim" data-kitapadi="@item.KitapAdi" data-kitapdurum="@item.KitapDurum" onclick="location.href='/Admin/AdminAddUyeKitap?id=@item.id'">Üyeye Kitap Ekle</button>
+                </td>
+            }
 
-                </tr>
+
+        </tr>
 
             }
 

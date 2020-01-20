@@ -41,7 +41,29 @@
                         <div>
                             <div class="col-lg-6 login-btm login-button">
                                 <br />
-                                <button type="submit" class="btn-dark btn-outline-light" name="kayit" style="width:100px; height:50px; position:page; ">Giriş Yap</button>
+                                <button type="submit" class="btn-dark btn-outline-light" id="giris" name="kayit" style="width:100px; height:50px; position:page; ">Giriş Yap</button>
+                                @if (TempData["loginbasarili"] != null)
+                                {
+                                    <script>
+                                    alert('@Html.Raw(TempData["loginbasarili"])')
+                                    </script>
+                                }
+
+                                @if (TempData["loginbasarisiz"] != null)
+                                {
+                                    <script>
+                                    alert('@Html.Raw(TempData["loginbasarisiz"])')
+                                    </script>
+                                }
+
+
+                                @if (TempData["kayitsiz"] != null)
+                                {
+                                    <script>
+                                    alert('@Html.Raw(TempData["kayitsiz"])')
+                                    </script>
+                                }
+
                                 @*<form>*@
                                 <br />
                                 <button type="button" onclick="location.href='@Url.Action("CreateUye","Uye")'" class="btn-dark btn-outline-light" style="width:100px; height:50px; position:page; " name="giris"> Kayıt Ol</button>
@@ -51,25 +73,35 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 
+        @*<script type="text/javascript">
+            $(document).ready(function() {
+    console.log( "ready!" );
+});*@
+             @*$(document).ready(function() {
+                 alert("sfsd");
+                $("#giris").click(function () {
+                     if ('@TempData["loginbasarili"]' != null) 
+                    alert('@TempData["loginbasarili"]');
 
-@section Scripts
-    {
+            if ('@TempData["loginbasarisiz"]' != null)
+                    alert('@TempData["loginbasarisiz"]');
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-              //  alert('@ViewBag.Null');
-                //debugger
-               // alert('@ViewBag.LoginError');
-            });
+                  if ('@TempData["kayitsiz"]' != null)
+                    alert('@TempData["kayitsiz"]');
 
-        </script>
+                });
+
+                
+            });*@
+  
+        @*</script>*@
 
 
 
-    }
+    
 
 
 

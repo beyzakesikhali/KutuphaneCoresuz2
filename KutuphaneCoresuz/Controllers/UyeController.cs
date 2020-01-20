@@ -111,7 +111,7 @@ namespace KutuphaneCoresuz.Controllers
                     uye.RoleId = role;
                     db.Uyeler.Add(uye);
                     db.SaveChanges();
-                    ViewBag.LoginMesaj = "Başarılı Bir Şekilde Kayıt Oldunuz. Şimdi Giriş Yapınız";
+                    TempData["LoginMesaj"] = "Başarılı Bir Şekilde Kayıt Oldunuz. Şimdi Giriş Yapınız";
                     return RedirectToAction("Login", "Security");
 
                 }
@@ -132,7 +132,7 @@ namespace KutuphaneCoresuz.Controllers
                 }
             }
 
-            ViewBag.KadiMesaj = "Başka bir kullanıcı adı deneyin!";
+            TempData["hatakullaniciadi"] = "Başka bir kullanıcı adı deneyin!";
             return View(uye);
         }
 
@@ -151,6 +151,7 @@ namespace KutuphaneCoresuz.Controllers
             }
 
             if(id==null)
+                
             {
                 string mevcutKullanici = HttpContext.Session["KullaniciAdi"].ToString();
                 //Kullaniciadlari nin tekil olması sağlandı.
@@ -165,7 +166,7 @@ namespace KutuphaneCoresuz.Controllers
             {
                 return View(gelenUye);
             }
-
+            TempData["hata"] = "HATA";
 
                 return View();
 
@@ -211,11 +212,11 @@ namespace KutuphaneCoresuz.Controllers
 
 
         }
-        [AllowAnonymous]
-        public ActionResult PostEditUye()
-        {
-            return View();
-        }
+        //[AllowAnonymous]
+        //public ActionResult PostEditUye()
+        //{
+        //    return View();
+        //}
 
 
         [HttpPost]
@@ -249,7 +250,7 @@ namespace KutuphaneCoresuz.Controllers
                 db.SaveChanges();
 
             }
-            return View();
+            return RedirectToAction("DetailsUye","Uye");
 
 
         }
@@ -264,7 +265,7 @@ namespace KutuphaneCoresuz.Controllers
             var uye = db.Uyeler.Where(u => u.KullaniciAdi == uyeAdi).FirstOrDefault();
             if (uyeAdi != null)
             {
-                //TempData.Add("eminisin", "Hesabınızı Silmek İstediğinizden Emin Misiz?");
+                TempData["eminisin"]= "Hesabınızı Silmek İstediğinizden Emin Misiz?";
                 return View(uye);
             }
 
@@ -303,7 +304,9 @@ namespace KutuphaneCoresuz.Controllers
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    TempData["hata2"] = "Giriş Yapmadan Profil Silinemez";
+                    //  return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return View();
 
                 }
 

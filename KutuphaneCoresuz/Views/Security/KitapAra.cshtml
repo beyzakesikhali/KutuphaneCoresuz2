@@ -13,6 +13,13 @@ else
     @Html.Partial("~/Views/Shared/_HeaderUye.cshtml")
 }
 
+
+@if (TempData["kitaparayok"] != null)
+{
+    <script>
+    alert('@Html.Raw(TempData["kitaparayok"])')
+    </script>
+}
 @*<table class="table-responsive table-hover" >
     <tr>
         <td>*@
@@ -64,32 +71,32 @@ else
         $(document).ready(function () {
             var searchVal = $("#kitapSearch");
             $(".btn-ara").click(function () {
-              
-                    alert("butona basıldı");
+
+                alert("butona basıldı");
                 //Console.Log(searchVal.val());
                 alert(searchVal.val());
                 $.ajax({
                     type: "post", // POST call
                     url: `/Security/YazarSearch`, // call search action method of Home controller
                     data: { searchString: searchVal.val() },
-                        // pass the parameter to action method. Here searchString is parameter of Action method from controller.
-                        dataType: 'html', // return html to render
+                    // pass the parameter to action method. Here searchString is parameter of Action method from controller.
+                    dataType: 'html', // return html to render
                     success: function (htmlContent) {
                         debugger
-                            $('#divPartialView').html(htmlContent);
+                        $('#divPartialView').html(htmlContent);
 
-                            // Render filter result to div where partial view is there. We can render div and partial view should be inside div.
-                        },
-                        error: function () {
-                            alert("Hatalı dönüş");
-                        }
-                    });//ajax sonu
+                        // Render filter result to div where partial view is there. We can render div and partial view should be inside div.
+                    },
+                    error: function () {
+                        alert("Hatalı dönüş");
+                    }
+                });//ajax sonu
 
-                });
+            });
 
 
-            });//buton sonu
-               
+        });//buton sonu
+
     </script>
 
 }

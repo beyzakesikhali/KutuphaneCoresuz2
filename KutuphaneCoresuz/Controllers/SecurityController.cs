@@ -104,7 +104,7 @@ namespace KutuphaneCoresuz.Controllers
             int gelenRole = Convert.ToInt32(Role.Admin);
             if (mevcut == null)
             {
-                ViewBag.Null("Kayıtlı Değilsiniz");
+                TempData["kayitsiz"] = "Kayıtlı Değilsiniz.";
                 return View();
             }
 
@@ -122,12 +122,15 @@ namespace KutuphaneCoresuz.Controllers
                             return RedirectToAction("IndexAdmin", "Admin");
                         }
                         HttpContext.Session["KullaniciAdi"] = uye.KullaniciAdi;
+                        TempData["loginbasarili"] = "Başarılı";
                         return RedirectToAction("UyeAnaSayfasi", "Security");
 
                     }
                     else
                     {
-                        ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
+                        TempData["loginbasarisiz"] = "hatalı kullanıcı adı veya şifre";
+                        return View();
+                        //ViewBag.LoginError = "hatalı kullanıcı adı veya şifre";
 
                     }
                 }
@@ -203,7 +206,10 @@ namespace KutuphaneCoresuz.Controllers
                     return View(model);
                 }
             }
-
+            else
+            {
+                TempData["kitapyok"] = "Hiç Kitabınız Yok";
+            }
 
             return View();
 
@@ -326,6 +332,7 @@ namespace KutuphaneCoresuz.Controllers
             }
             else
             {
+                TempData["kitaparayok"] = "Sistemde Hiç Kitap Yok";
                 return RedirectToAction("Login", "Security");
             }
             //return View();

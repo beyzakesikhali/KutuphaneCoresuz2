@@ -18,6 +18,19 @@ else
 
 <br />
 <br />
+@if (TempData["eminmisin"] != null)
+{
+    <script>
+    alert('@Html.Raw(TempData["eminmisin"])')
+    </script>
+}
+@if (TempData["hata2"] != null)
+{
+    <script>
+    alert('@Html.Raw(TempData["hata2"])')
+    </script>
+}
+
 
 <div>
     @using (Html.BeginForm("DeleteUye", "Uye", new { id = Model.ID }, FormMethod.Post))
